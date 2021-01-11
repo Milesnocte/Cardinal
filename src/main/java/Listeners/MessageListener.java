@@ -24,6 +24,8 @@ public class MessageListener extends ListenerAdapter {
                 new CommandManager(event, args);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         if(event.getMessage().getContentRaw().replace("!","").equals(event.getJDA().getSelfUser().getAsMention())){

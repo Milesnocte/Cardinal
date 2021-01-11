@@ -19,6 +19,7 @@ public class JDA extends ListenerAdapter implements EventListener {
         jda.addEventListeners(new MessageListener());
         jda.addEventListeners(new CheatManager());
         jda.addEventListeners(new ReactRoles());
+        jda.addEventListeners(new CCIEvents());
         jda.setActivity(Activity.watching("for Cheaters"));
 
         // build the bot

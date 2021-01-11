@@ -11,7 +11,7 @@ import Main.*;
 
 
 public class CommandManager {
-    public CommandManager(GuildMessageReceivedEvent event, String[] args) throws IOException {
+    public CommandManager(GuildMessageReceivedEvent event, String[] args) throws Exception {
 
         String prefix = "$";
         DataBase db = new DataBase();
@@ -31,7 +31,7 @@ public class CommandManager {
             try {
                 if (args[1].length() <= 2) {
                     try {
-                        db.updateGuild("" + event.getGuild().getIdLong(), "" + args[1]);
+                        db.updateGuildPrefix("" + event.getGuild().getIdLong(), "" + args[1]);
                         event.getChannel().sendMessage("`" + args[1] + "` is now my prefix!").queue();
                     } catch (Exception e) {event.getChannel().sendMessage("Please specify a prefix").queue();}
                 } else {
@@ -131,7 +131,10 @@ public class CommandManager {
         }
 
         if(args[0].toLowerCase().equals("reactrole")) {
-            ReactRoles.createMenu(args[1],event.getChannel().getIdLong(), event);
+            ReactRoles.createMenu(event);
+        }
+        if(args[0].toLowerCase().equals("ccievents")) {
+            CCIEvents.createMenu(event);
         }
 
     }

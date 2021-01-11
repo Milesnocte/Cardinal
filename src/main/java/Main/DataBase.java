@@ -27,11 +27,13 @@ public class DataBase{
                 System.out.println("Table not found. Building the Guilds table.");
                 // Build the table
                 Statement statement2 = connect.createStatement();
-                statement2.execute("CREATE TABLE guilds(GuildID TEXT," + "prefix TEXT);");
+                statement2.execute("CREATE TABLE guilds(GuildID TEXT," + ",roleId TEXT,eventsId TEXT," + "prefix TEXT);");
 
-                PreparedStatement prepared = connect.prepareStatement("INSERT INTO guilds values(?,?);");
+                PreparedStatement prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?);");
                 prepared.setString(1,"433825");
-                prepared.setString(2,"$");
+                prepared.setString(2,"433827");
+                prepared.setString(3,"433826");
+                prepared.setString(4,"$");
                 prepared.execute();
 
             }
@@ -51,9 +53,12 @@ public class DataBase{
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         PreparedStatement prepared = null;
-        prepared = connect.prepareStatement("INSERT INTO guilds values(?,?);");
+        prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?);");
         prepared.setString(1,gID);
         prepared.setString(2,"$");
+        prepared.setString(2,"433827");
+        prepared.setString(3,"433826");
+        prepared.setString(4,"$");
         prepared.execute();
         connect.close();
     }
@@ -67,11 +72,28 @@ public class DataBase{
         connect.close();
     }
 
-    public void updateGuild(String gID, String prefix) throws Exception {
+    public void updateGuildPrefix(String gID, String prefix) throws Exception {
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         PreparedStatement prepared = null;
-        prepared = connect.prepareStatement("UPDATE guilds SET prefix = '" + prefix + "' WHERE GuildID = " + gID +";");
+        prepared = connect.prepareStatement("UPDATE guilds SET prefix = '" + prefix + "' WHERE GuildID = '" + gID + "';");
+        prepared.execute();
+        connect.close();
+    }
+    public void updateGuildRoleID(String gID, String roleID) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        PreparedStatement prepared = null;
+        prepared = connect.prepareStatement("UPDATE guilds SET roleId = '" + roleID + "' WHERE GuildID = '" + gID + "';");
+        prepared.execute();
+        connect.close();
+    }
+
+    public void updateGuildeventsId(String gID, String eventsId) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        PreparedStatement prepared = null;
+        prepared = connect.prepareStatement("UPDATE guilds SET eventsId = '" + eventsId + "' WHERE GuildID = '" + gID + "';");
         prepared.execute();
         connect.close();
     }
@@ -82,6 +104,26 @@ public class DataBase{
         Statement prepared = connect.createStatement();
         ResultSet guildPrefix = prepared.executeQuery("SELECT prefix FROM guilds WHERE GuildID = " + gID +";");
         String guildPrefixActual = guildPrefix.getString("prefix");
+        connect.close();
+        return guildPrefixActual;
+    }
+
+    public static String getReactRoleid(String gID) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        Statement prepared = connect.createStatement();
+        ResultSet guildPrefix = prepared.executeQuery("SELECT roleId FROM guilds WHERE GuildID = " + gID +";");
+        String guildPrefixActual = guildPrefix.getString("roleId");
+        connect.close();
+        return guildPrefixActual;
+    }
+
+    public static String getReacteventsId(String gID) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        Statement prepared = connect.createStatement();
+        ResultSet guildPrefix = prepared.executeQuery("SELECT eventsId FROM guilds WHERE GuildID = " + gID +";");
+        String guildPrefixActual = guildPrefix.getString("eventsId");
         connect.close();
         return guildPrefixActual;
     }
