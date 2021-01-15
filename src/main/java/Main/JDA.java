@@ -16,8 +16,8 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
         DefaultShardManagerBuilder.create(
-                GatewayIntent.GUILD_MEMBERS, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS
-        ).setToken(args[0])
+                GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES
+        ).setToken("Nzc2NjQzNjczMjY1MDEyNzY2.X633yQ.vm8fuUh4_ZCZqV7trUoHgpEhWIQ")
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .addEventListeners(
@@ -28,7 +28,9 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new ReactRoles(),
                         new CCIEvents(),
                         new JoinListener()
-                ).setActivity(Activity.watching("for Cheaters"))
+                )
+                .setActivity(Activity.watching("for Cheaters"))
+                .setRawEventsEnabled(true)
                 .build();
 
         System.out.println("https://discord.com/api/oauth2/authorize?client_id=" + "776643673265012766" + "&permissions=268446736&scope=bot");

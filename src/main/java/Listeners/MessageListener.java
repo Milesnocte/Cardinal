@@ -12,12 +12,6 @@ import java.io.IOException;
 public class MessageListener extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
-        event.getGuild().getTextChannelById("571834801380917269").sendMessage("Welcome " + event.getMember().getAsMention() + ", please visit "
-                + event.getGuild().getTextChannelById("618647310179762188").getAsMention() + " to select a class role!").queue();
-    }
-
-    @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         String prefix = "$";
