@@ -330,3 +330,5 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,macos,gradle,windows,intellij,intellij+all,intellij+iml
+
+VCP.db
