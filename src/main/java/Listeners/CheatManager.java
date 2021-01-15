@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class CheatManager extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        // TODO: Fix this shit
         String messageToLower = event.getMessage().getContentRaw().toLowerCase().replaceAll(" ","");
         if(messageToLower.contains("if(") || messageToLower.contains("elseif(") || messageToLower.contains("for(") || messageToLower.contains("while(")
         || messageToLower.contains("else{")){

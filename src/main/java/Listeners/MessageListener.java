@@ -3,12 +3,20 @@ package Listeners;
 import Main.DataBase;
 import Managers.CommandManager;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public class MessageListener extends ListenerAdapter {
+
+    @Override
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        event.getGuild().getTextChannelById("571834801380917269").sendMessage("Welcome " + event.getMember().getAsMention() + ", please visit "
+                + event.getGuild().getTextChannelById("618647310179762188").getAsMention() + " to select a class role!").queue();
+    }
+
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
