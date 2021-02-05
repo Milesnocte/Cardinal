@@ -7,14 +7,6 @@ public class DataBase{
     private static Connection connect = null;
     private static boolean hasData = false;
 
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.sqlite.JDBC");
-        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-        System.out.println("Connecting to DataBase..");
-        initialise();
-        return null;
-    }
-
     public void initialise() throws SQLException {
         if(!hasData){
             System.out.println("Initializing DataBase..");
@@ -124,6 +116,15 @@ public class DataBase{
         Statement prepared = connect.createStatement();
         ResultSet guildPrefix = prepared.executeQuery("SELECT eventsId FROM guilds WHERE GuildID = " + gID +";");
         String guildPrefixActual = guildPrefix.getString("eventsId");
+        connect.close();
+        return guildPrefixActual;
+    }
+    public static String getDrawing() throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        Statement prepared = connect.createStatement();
+        ResultSet guildPrefix = prepared.executeQuery("SELECT names FROM giveaway ORDER BY RANDOM() LIMIT 1;");
+        String guildPrefixActual = guildPrefix.getString("names");
         connect.close();
         return guildPrefixActual;
     }

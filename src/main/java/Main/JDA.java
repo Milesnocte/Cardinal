@@ -1,10 +1,7 @@
 package Main;
 
 import Listener.JoinListener;
-import Listeners.BotEventsListener;
-import Listeners.CheatManager;
-import Listeners.MessageListener;
-import Listeners.VoiceChannelListener;
+import Listeners.*;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -16,7 +13,7 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
         DefaultShardManagerBuilder.create(
-                GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES
+                GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
         ).setToken("Nzc2NjQzNjczMjY1MDEyNzY2.X633yQ.vm8fuUh4_ZCZqV7trUoHgpEhWIQ")
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
@@ -27,7 +24,8 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new CheatManager(),
                         new ReactRoles(),
                         new CCIEvents(),
-                        new JoinListener()
+                        new JoinListener(),
+                        new Giveaway()
                 )
                 .setActivity(Activity.watching("for Cheaters"))
                 .setRawEventsEnabled(true)

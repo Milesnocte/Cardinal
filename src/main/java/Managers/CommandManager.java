@@ -1,5 +1,6 @@
 package Managers;
 
+import Listeners.Giveaway;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Role;
@@ -130,12 +131,18 @@ public class CommandManager {
 
         }
 
-        if(args[0].toLowerCase().equals("reactrole")) {
+        if(args[0].toLowerCase().equals("reactrole") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
             ReactRoles.createMenu(event);
         }
-        if(args[0].toLowerCase().equals("ccievents")) {
+        if(args[0].toLowerCase().equals("ccievents") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
             CCIEvents.createMenu(event);
         }
-
+        if(args[0].toLowerCase().equals("giveaway") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
+            Giveaway.createReaction(event, args[1],args[2]);
+        }
+        if(args[0].toLowerCase().equals("draw") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
+            event.getMessage().delete().queue();
+            event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
+        }
     }
 }
