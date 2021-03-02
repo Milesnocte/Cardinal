@@ -23,6 +23,7 @@ public class ReactRoles extends ListenerAdapter {
     private static String id;
     private static DataBase db;
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
+        // Get all the class roles from the server
         Incoming = event.getGuild().getRolesByName("Incoming Student", true).get(0);
         Freshman = event.getGuild().getRolesByName("Freshman", true).get(0);
         Sophomore = event.getGuild().getRolesByName("Sophomore", true).get(0);
@@ -33,7 +34,9 @@ public class ReactRoles extends ListenerAdapter {
         classRoles = Arrays.asList(Incoming,Freshman,Sophomore,Junior,Senior,Graduate,Alumni);
         RestAction<Message> ra = event.getChannel().sendMessage("What is your current class standing?\n\n\uD83C\uDF92: Incoming Student\n\n\uD83D\uDC76: Freshman " +
         "\n\n\uD83D\uDC66: Sophomore\n\n\uD83D\uDC68: Junior\n\n\uD83D\uDC74: Senior\n\n\uD83C\uDF93: Graduate Student\n\n\uD83D\uDC68\u200D\uD83D\uDCBB: Alumni\n\n React below to receive your class standing role:");
+        // Wait for the message to actually send
         Message message = ra.complete();
+        // Adds all of the class role reactions to the massge after the message has been sent
         message.addReaction("\uD83C\uDF92").queue();
         message.addReaction("\uD83D\uDC76").queue();
         message.addReaction("\uD83D\uDC66").queue();
@@ -41,6 +44,7 @@ public class ReactRoles extends ListenerAdapter {
         message.addReaction("\uD83D\uDC74").queue();
         message.addReaction("\uD83C\uDF93").queue();
         message.addReaction("\uD83D\uDC68\u200D\uD83D\uDCBB").queue();
+        // Put the messages id into the database so we can use it in the future
         id = message.getId();
         db = new DataBase();
         db.updateGuildRoleID("" + event.getGuild().getIdLong(), id);
@@ -48,6 +52,7 @@ public class ReactRoles extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
+        // Get all of the class roles from the server, again. I could probably make this a method
         Incoming = event.getGuild().getRolesByName("Incoming Student", true).get(0);
         Freshman = event.getGuild().getRolesByName("Freshman", true).get(0);
         Sophomore = event.getGuild().getRolesByName("Sophomore", true).get(0);
@@ -57,6 +62,7 @@ public class ReactRoles extends ListenerAdapter {
         Alumni = event.getGuild().getRolesByName("Alumni", true).get(0);
         classRoles = Arrays.asList(Incoming,Freshman,Sophomore,Junior,Senior,Graduate,Alumni);
         try {
+            //Get the id of the reaction menu message
             id = db.getReactRoleid("" + event.getGuild().getIdLong());
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +71,7 @@ public class ReactRoles extends ListenerAdapter {
 
             List<Role> userRoles = event.getMember().getRoles();
 
+            //Removes any class role the user has, we will give them one again in the switch
             for(int k = 0; k < classRoles.size(); k++){
                 if(userRoles.contains(classRoles.get(k))){
                     event.getGuild().removeRoleFromMember(event.getMember(), classRoles.get(k)).queue();
@@ -73,6 +80,8 @@ public class ReactRoles extends ListenerAdapter {
                 }
             }
 
+            // using a switch here was far more efficient than if statements. Testing for each reaction to give the
+            // user their role, this will also direct message the user of the role they are given
             switch(event.getReaction().getReactionEmote().toString()){
                 case("RE:U+1f392"):
                     event.getGuild().addRoleToMember(event.getMember(), Incoming).queue();

@@ -14,10 +14,14 @@ public class CCIEvents extends ListenerAdapter {
     private static String id;
     private static DataBase db;
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
+        // Get the cci events role
         CCIEvents = event.getGuild().getRolesByName("CCI Events", true).get(0);
         RestAction<Message> ra = event.getChannel().sendMessage("Would you like to receive pings for CCI Events?");
+        // wait until the message has actually sent
         Message message = ra.complete();
+        // add the reaction role to the message
         message.addReaction("✅").queue();
+        // put the message id into the database
         id = message.getId();
         db = new DataBase();
         db.updateGuildeventsId("" + event.getGuild().getIdLong(), id);
