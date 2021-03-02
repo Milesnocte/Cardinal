@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
+
+        //Online the bot and create the listeners
         DefaultShardManagerBuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
         ).setToken(Credentials.TOCKEN)
@@ -27,6 +29,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new JoinListener(),
                         new Giveaway()
                 )
+                //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))
                 .setRawEventsEnabled(true)
                 .build();
