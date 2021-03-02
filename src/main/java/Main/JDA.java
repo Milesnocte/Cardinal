@@ -14,7 +14,7 @@ public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
         DefaultShardManagerBuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
-        ).setToken("Nzc2NjQzNjczMjY1MDEyNzY2.X633yQ.vm8fuUh4_ZCZqV7trUoHgpEhWIQ")
+        ).setToken(Credentials.TOCKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .addEventListeners(
@@ -31,7 +31,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                 .setRawEventsEnabled(true)
                 .build();
 
-        System.out.println("https://discord.com/api/oauth2/authorize?client_id=" + "776643673265012766" + "&permissions=268446736&scope=bot");
+        System.out.println("https://discord.com/api/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=268446736&scope=bot");
 
         DataBase db = new DataBase();
         db.databaseCycle();

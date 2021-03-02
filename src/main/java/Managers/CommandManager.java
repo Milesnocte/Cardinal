@@ -144,5 +144,9 @@ public class CommandManager {
             event.getMessage().delete().queue();
             event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
         }
+        if(args[0].toLowerCase().equals("me") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
+            event.getMessage().delete().queue();
+            event.getChannel().sendMessage(event.getMessage().getContentRaw().replace("$me","")).queue();
+        }
     }
 }
