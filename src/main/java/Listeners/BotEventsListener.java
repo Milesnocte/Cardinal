@@ -17,14 +17,6 @@ import java.awt.*;
 
 public class BotEventsListener extends ListenerAdapter {
 
-    // NUMBER OF GUILDS THE BOT IS IN
-    public static int guildCount;
-
-    @Override
-    public void onReady(@NotNull ReadyEvent event) {
-
-    }
-
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
 

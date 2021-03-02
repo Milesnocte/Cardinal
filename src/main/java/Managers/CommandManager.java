@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
-import java.io.IOException;
 import Main.*;
 
 
@@ -46,14 +45,15 @@ public class CommandManager {
             event.getChannel().sendMessage("You do not have enough permission to run this command!").queue();
         }
 
-        if(args[0].toLowerCase().equals("invite")) {
-
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(Color.cyan);
-            embed.addField("**Invite To Server**","[Link](https://discord.com/api/oauth2/authorize?client_id=776643673265012766&permissions=268446736&scope=bot)", false);
-            event.getChannel().sendMessage(embed.build()).queue();
-
-        }
+        //No longer used
+        //if(args[0].toLowerCase().equals("invite")) {
+        //
+        //    EmbedBuilder embed = new EmbedBuilder();
+        //    embed.setColor(Color.cyan);
+        //    embed.addField("**Invite To Server**","[Link](https://discord.com/api/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=268446736&scope=bot)", false);
+        //    event.getChannel().sendMessage(embed.build()).queue();
+        //
+        //}
 
         if(args[0].toLowerCase().equals("stats")) {
 
@@ -122,7 +122,7 @@ public class CommandManager {
 
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(Color.cyan);
-            embed.setDescription("VoiceTextChannel, use `" + prefix + "help` to show this message again!\n[Bot demonstration video](https://www.youtube.com/watch?v=Y-7tUBZHQFA&feature=youtu.be) ");
+            embed.setDescription("VoiceTextChannel, use `" + prefix + "help` to show this message again!");
             embed.addField("__" + prefix + "prefix or @the bot__", "Will return the prefix the bot is using in this server\n", false);
             embed.addField("__" + prefix + "setprefix__","Will set the prefix the bot uses, requires the manage roles permission\n", false);
             embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
@@ -144,7 +144,7 @@ public class CommandManager {
             event.getMessage().delete().queue();
             event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
         }
-        if(args[0].toLowerCase().equals("me") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
+        if(args[0].toLowerCase().equals("me") && event.getMember().getId().equals("225772174336720896")) {
             event.getMessage().delete().queue();
             event.getChannel().sendMessage(event.getMessage().getContentRaw().replace("$me","")).queue();
         }
