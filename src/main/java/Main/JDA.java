@@ -23,7 +23,6 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new VoiceChannelListener(),
                         new BotEventsListener(),
                         new MessageListener(),
-                        new CheatManager(),
                         new ReactRoles(),
                         new CCIEvents(),
                         new JoinListener(),

@@ -70,7 +70,8 @@ public class CommandManager {
             embed.addField("**Statistics**","`Ping:` " + currentTime + "ms" +
                     "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                     "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
-                    "\n`Rate Pool:` \n" + event.getJDA().getRateLimitPool().toString().substring(trim), false);
+                    "\n`Rate Pool:` \n" + event.getJDA().getRateLimitPool().toString().substring(trim) +
+                    "\nBot API: `JDA 4.2.0_227`", false);
             event.getChannel().sendMessage(embed.build()).queue();
 
         }
