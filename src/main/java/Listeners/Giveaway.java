@@ -47,22 +47,22 @@ public class Giveaway extends ListenerAdapter {
         Senior = event.getGuild().getRolesByName("Senior", true).get(0);
         Graduate = event.getGuild().getRolesByName("Graduate Student", true).get(0);
         Alumni = event.getGuild().getRolesByName("Alumni", true).get(0);
-        classRoles = Arrays.asList(Incoming,Freshman,Sophomore,Junior,Senior,Graduate,Alumni);
-        for(int k = 0; k < classRoles.size(); k++){
-            if(event.getMember().getRoles().contains(classRoles.get(k))){
+        classRoles = Arrays.asList(Incoming, Freshman, Sophomore, Junior, Senior, Graduate, Alumni);
+        for (int k = 0; k < classRoles.size(); k++) {
+            if (event.getMember().getRoles().contains(classRoles.get(k))) {
                 hasRole = true;
             }
         }
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-            Statement prepared1 = connect.createStatement();
-            Statement preparedName = connect.createStatement();
-            ResultSet guildPrefix = prepared1.executeQuery("SELECT M_id FROM giveaway WHERE rowid = 1;");
-            m_id = guildPrefix.getString("M_id");
-            ResultSet containsName = preparedName.executeQuery("SELECT names FROM giveaway WHERE names='" + event.getUser().getAsMention() + "';");
+        try {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        Statement prepared1 = connect.createStatement();
+        Statement preparedName = connect.createStatement();
+        ResultSet guildPrefix = prepared1.executeQuery("SELECT M_id FROM giveaway WHERE rowid = 1;");
+        m_id = guildPrefix.getString("M_id");
+        ResultSet containsName = preparedName.executeQuery("SELECT names FROM giveaway WHERE names='" + event.getUser().getAsMention() + "';");
 
-            if(event.getMessageId().equals(m_id) && !event.getUser().isBot() && hasRole && !containsName.next()) {
+            if (event.getMessageId().equals(m_id) && !event.getUser().isBot() && hasRole && !containsName.next()) {
                 PreparedStatement prepared2 = null;
                 prepared2 = connect.prepareStatement("INSERT INTO giveaway values(?,?);");
                 prepared2.setString(1, event.getUser().getAsMention());
@@ -70,9 +70,8 @@ public class Giveaway extends ListenerAdapter {
                 prepared2.execute();
             }
             connect.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -26,7 +26,8 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new ReactRoles(),
                         new CCIEvents(),
                         new JoinListener(),
-                        new Giveaway()
+                        new ScheduledTask()
+                        //new Giveaway()
                 )
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))

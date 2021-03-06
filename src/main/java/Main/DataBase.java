@@ -78,6 +78,7 @@ public class DataBase{
         prepared.execute();
         connect.close();
     }
+
     public void updateGuildRoleID(String gID, String roleID) throws Exception {
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
@@ -125,6 +126,7 @@ public class DataBase{
         connect.close();
         return guildPrefixActual;
     }
+
     public static String getDrawing() throws Exception {
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
