@@ -147,6 +147,10 @@ public class CommandManager {
             event.getMessage().delete().queue();
             event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
         }
+        if(args[0].toLowerCase().equals("me") && event.getMember().getId().equals("225772174336720896")) {
+            event.getMessage().delete().queue();
+            event.getChannel().sendMessage(event.getMessage().getContentRaw().replace("$me","")).queue();
+        }
         if(args[0].toLowerCase().equals("vctext") && event.getMember().getId().equals("225772174336720896")) {
             event.getGuild().getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
             TimeUnit.SECONDS.sleep(1);
