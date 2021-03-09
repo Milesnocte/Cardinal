@@ -2,6 +2,8 @@ package Main;
 
 import Listener.JoinListener;
 import Listeners.*;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -14,7 +16,7 @@ public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
 
         //Online the bot and create the listeners
-        DefaultShardManagerBuilder.create(
+        JDABuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
         ).setToken(Credentials.TOCKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -31,6 +33,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                 )
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))
+                .setStatus(OnlineStatus.ONLINE)
                 .setRawEventsEnabled(true)
                 .build();
 
@@ -40,5 +43,6 @@ public class JDA extends ListenerAdapter implements EventListener {
         //Test connect to the database
         DataBase db = new DataBase();
         db.databaseCycle();
+
     }
 }

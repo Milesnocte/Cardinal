@@ -54,13 +54,13 @@ public class Giveaway extends ListenerAdapter {
             }
         }
         try {
-        Class.forName("org.sqlite.JDBC");
-        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-        Statement prepared1 = connect.createStatement();
-        Statement preparedName = connect.createStatement();
-        ResultSet guildPrefix = prepared1.executeQuery("SELECT M_id FROM giveaway WHERE rowid = 1;");
-        m_id = guildPrefix.getString("M_id");
-        ResultSet containsName = preparedName.executeQuery("SELECT names FROM giveaway WHERE names='" + event.getUser().getAsMention() + "';");
+            Class.forName("org.sqlite.JDBC");
+            connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+            Statement prepared1 = connect.createStatement();
+            Statement preparedName = connect.createStatement();
+            ResultSet guildPrefix = prepared1.executeQuery("SELECT M_id FROM giveaway WHERE rowid = 1;");
+            m_id = guildPrefix.getString("M_id");
+            ResultSet containsName = preparedName.executeQuery("SELECT names FROM giveaway WHERE names='" + event.getUser().getAsMention() + "';");
 
             if (event.getMessageId().equals(m_id) && !event.getUser().isBot() && hasRole && !containsName.next()) {
                 PreparedStatement prepared2 = null;

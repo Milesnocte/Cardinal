@@ -1,8 +1,8 @@
 package Managers;
 
 import Listeners.Giveaway;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 import Main.*;
+import net.dv8tion.jda.api.sharding.DefaultShardManager;
 
 
 public class CommandManager {
@@ -29,6 +30,9 @@ public class CommandManager {
             }
         }
 
+        if(args[0].toLowerCase().equals("invite")) {
+            event.getChannel().sendMessage(event.getJDA().getInviteUrl(Permission.ADMINISTRATOR)).queue();
+        }
         if(args[0].toLowerCase().equals("setprefix") && event.getMember().getPermissions().contains(Permission.MANAGE_ROLES)) {
             try {
                 if (args[1].length() <= 2) {
@@ -156,5 +160,6 @@ public class CommandManager {
             TimeUnit.SECONDS.sleep(1);
             event.getGuild().getTextChannelsByName("vc-text", true).get(0).delete().queue();
         }
+
     }
 }
