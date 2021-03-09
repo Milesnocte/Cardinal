@@ -16,7 +16,7 @@ public class JDA extends ListenerAdapter implements EventListener {
     public static void main(String[] args) throws Exception {
 
         //Online the bot and create the listeners
-        JDABuilder.create(
+        DefaultShardManagerBuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
         ).setToken(Credentials.TOCKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
