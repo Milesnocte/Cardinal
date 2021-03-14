@@ -21,10 +21,9 @@ public class Giveaway extends ListenerAdapter {
     private static List<Role> classRoles;
     private static Connection connect = null;
     private static String m_id;
-    public static void createReaction(GuildMessageReceivedEvent event, String mid, String emote) throws ClassNotFoundException, SQLException {
-        String content = event.getMessage().getContentRaw();
-        String emojis = EmojiParser.extractEmojis(content).get(0);
-        event.getChannel().addReactionById(mid,emojis).queue();
+    public static void createReaction(GuildMessageReceivedEvent event, String mid, String emoji) throws ClassNotFoundException, SQLException {
+
+        event.getChannel().addReactionById(mid,emoji).queue();
 
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");

@@ -1,6 +1,7 @@
 package Managers;
 
 import Listeners.Giveaway;
+import com.vdurmont.emoji.EmojiParser;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Role;
@@ -71,7 +72,7 @@ public class CommandManager {
 
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(Color.cyan);
-            embed.setDescription("**VoiceChannelPlus By MilesNocte**");
+            embed.setDescription("**Woody By MilesNocte**");
             int trim = event.getJDA().getRateLimitPool().toString().indexOf("[");
             embed.addField("**Statistics**","`Ping:` " + currentTime + "ms" +
                     "\n`Guilds:` " + event.getJDA().getGuilds().size() +
@@ -133,7 +134,6 @@ public class CommandManager {
             embed.addField("__" + prefix + "prefix or @the bot__", "Will return the prefix the bot is using in this server\n", false);
             embed.addField("__" + prefix + "setprefix__","Will set the prefix the bot uses, requires the manage roles permission\n", false);
             embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
-            embed.addField("__" + prefix + "addrole__","Will create the inVoiceChannel role required for the bot to function, requires the manage roles permission", false);
             event.getChannel().sendMessage(embed.build()).queue();
 
         }
@@ -145,7 +145,14 @@ public class CommandManager {
             CCIEvents.createMenu(event);
         }
         if(args[0].toLowerCase().equals("giveaway") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
-            Giveaway.createReaction(event, args[1],args[2]);
+            try{
+                String content = event.getMessage().getContentRaw();
+                String emojis = EmojiParser.extractEmojis(content).get(0);
+                Giveaway.createReaction(event, args[1], emojis);
+            }catch (Exception e){
+                event.getChannel().sendMessage("Missing emoji, please use the command as `giveaway [message id] [emoji]`. Note that the emoji " +
+                        "can not be an emote. It needs to be a discord emoji, from no server.").queue();
+            }
         }
         if(args[0].toLowerCase().equals("draw") && event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS)) {
             event.getMessage().delete().queue();
