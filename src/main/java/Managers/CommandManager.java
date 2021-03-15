@@ -105,13 +105,13 @@ public class CommandManager {
             embed.setColor(Color.cyan);
             embed.setDescription("VoiceTextChannel, use `" + prefix + "help` to show this message again!");
             embed.addField("__" + prefix + "prefix or @the bot__", "Will return the prefix the bot is using in this server\n", false);
-            embed.addField("__" + prefix + "stats", "Will display some debug statistics\n", false);
-            embed.addField("__" + prefix + "reactrole", "Create a reaction role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
-            embed.addField("__" + prefix + "ccievents", "Create a cci events role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
-            embed.addField("__" + prefix + "giveaway", "Create a giveaway! THIS WILL OVERWRITE THE PREVIOUS GIVEAWAY\n", false);
+            embed.addField("__" + prefix + "stats__", "Will display some debug statistics\n", false);
+            embed.addField("__" + prefix + "reactrole__", "Create a reaction role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
+            embed.addField("__" + prefix + "ccievents__", "Create a cci events role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
+            embed.addField("__" + prefix + "giveaway__", "Create a giveaway! THIS WILL OVERWRITE THE PREVIOUS GIVEAWAY\n", false);
             embed.addField("__" + prefix + "setprefix__","Will set the prefix the bot uses, requires the manage roles permission\n", false);
             embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
-            embed.addField("__" + prefix + "purge-vctext","Delete and then create a new vc-text, requires the manage channel permission\n", false);
+            embed.addField("__" + prefix + "purge-vctext__","Delete and then create a new vc-text, requires the manage channel permission\n", false);
             event.getChannel().sendMessage(embed.build()).queue();
 
         }
