@@ -9,10 +9,12 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class CCIEvents extends ListenerAdapter {
     private static Role CCIEvents;
     private static String id;
-    private static DataBase db;
+
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
         // Get the cci events role
         CCIEvents = event.getGuild().getRolesByName("CCI Events", true).get(0);
@@ -23,7 +25,7 @@ public class CCIEvents extends ListenerAdapter {
         message.addReaction("✅").queue();
         // put the message id into the database
         id = message.getId();
-        db = new DataBase();
+        DataBase db = new DataBase();
         db.updateGuildeventsId("" + event.getGuild().getIdLong(), id);
     }
 
@@ -31,7 +33,7 @@ public class CCIEvents extends ListenerAdapter {
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
         CCIEvents = event.getGuild().getRolesByName("CCI Events", true).get(0);
         try {
-            id = db.getReacteventsId("" + event.getGuild().getIdLong());
+            id = DataBase.getReacteventsId("" + event.getGuild().getIdLong());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,12 +47,12 @@ public class CCIEvents extends ListenerAdapter {
     public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent event) {
         CCIEvents = event.getGuild().getRolesByName("CCI Events", true).get(0);
         try {
-            id = db.getReacteventsId("" + event.getGuild().getIdLong());
+            id = DataBase.getReacteventsId("" + event.getGuild().getIdLong());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(event.getMessageId().equals(id) && !event.getUser().isBot()){
-            event.getGuild().removeRoleFromMember(event.getMember(), CCIEvents).queue();
+        if(event.getMessageId().equals(id) && !Objects.requireNonNull(event.getUser()).isBot()){
+            event.getGuild().removeRoleFromMember(Objects.requireNonNull(event.getMember()), CCIEvents).queue();
             event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `CCI Events` role!").queue(null, null));
         }
     }

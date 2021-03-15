@@ -1,6 +1,5 @@
 package Main;
 
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -21,7 +20,7 @@ public class ReactRoles extends ListenerAdapter {
     private static Role Alumni;
     private static List<Role> classRoles;
     private static String id;
-    private static DataBase db;
+
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
         // Get all the class roles from the server
         Incoming = event.getGuild().getRolesByName("Incoming Student", true).get(0);
@@ -46,7 +45,7 @@ public class ReactRoles extends ListenerAdapter {
         message.addReaction("\uD83D\uDC68\u200D\uD83D\uDCBB").queue();
         // Put the messages id into the database so we can use it in the future
         id = message.getId();
-        db = new DataBase();
+        DataBase db = new DataBase();
         db.updateGuildRoleID("" + event.getGuild().getIdLong(), id);
     }
 
@@ -63,7 +62,7 @@ public class ReactRoles extends ListenerAdapter {
         classRoles = Arrays.asList(Incoming,Freshman,Sophomore,Junior,Senior,Graduate,Alumni);
         try {
             //Get the id of the reaction menu message
-            id = db.getReactRoleid("" + event.getGuild().getIdLong());
+            id = DataBase.getReactRoleid("" + event.getGuild().getIdLong());
         } catch (Exception e) {
             e.printStackTrace();
         }

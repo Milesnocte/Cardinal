@@ -1,14 +1,18 @@
 package Main;
 
+import java.awt.*;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ScheduledTask extends ListenerAdapter {
+public class ScheduledTask extends ListenerAdapter  {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
@@ -18,17 +22,22 @@ public class ScheduledTask extends ListenerAdapter {
             public void run(){
 
                 Calendar cal = Calendar.getInstance(); //this is the method you should use, not the Date(), because it is desperated.
-                int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day, from 0 to 23
+                int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day
+                int minute = cal.get(Calendar.MINUTE);//get the minute of the hour
 
-                if(hour == 7){
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
+                if(hour == 7 && minute == 0){
+                    Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
 
                     try { TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) { }
+                    }catch (Exception ignored){}
 
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelsByName("vc-text", true).get(0).delete().queue();
+                    Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).delete().queue();
 
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelById("582399042240118814").sendMessage("VC-Text purged").queue();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(Color.GREEN);
+                    embed.setDescription("VC-Text automatically purged!");
+
+                    Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelById("582399042240118814")).sendMessage(embed.build()).queue();
                 }
             }
         };

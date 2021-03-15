@@ -1,6 +1,5 @@
 package Listeners;
 
-import com.vdurmont.emoji.EmojiParser;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
@@ -11,14 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Giveaway extends ListenerAdapter {
-    private static Role Incoming;
-    private static Role Freshman;
-    private static Role Sophomore;
-    private static Role Junior;
-    private static Role Senior;
-    private static Role Graduate;
-    private static Role Alumni;
-    private static List<Role> classRoles;
     private static Connection connect = null;
     private static String m_id;
     public static void createReaction(GuildMessageReceivedEvent event, String mid, String emoji) throws ClassNotFoundException, SQLException {
@@ -27,7 +18,7 @@ public class Giveaway extends ListenerAdapter {
 
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-        PreparedStatement prepared = null;
+        PreparedStatement prepared;
         prepared = connect.prepareStatement("INSERT INTO giveaway values(?,?);");
         prepared.setString(1,"null");
         prepared.setString(2,mid);
@@ -39,16 +30,16 @@ public class Giveaway extends ListenerAdapter {
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event)  {
         boolean hasRole = false;
-        Incoming = event.getGuild().getRolesByName("Incoming Student", true).get(0);
-        Freshman = event.getGuild().getRolesByName("Freshman", true).get(0);
-        Sophomore = event.getGuild().getRolesByName("Sophomore", true).get(0);
-        Junior = event.getGuild().getRolesByName("Junior", true).get(0);
-        Senior = event.getGuild().getRolesByName("Senior", true).get(0);
-        Graduate = event.getGuild().getRolesByName("Graduate Student", true).get(0);
-        Alumni = event.getGuild().getRolesByName("Alumni", true).get(0);
-        classRoles = Arrays.asList(Incoming, Freshman, Sophomore, Junior, Senior, Graduate, Alumni);
-        for (int k = 0; k < classRoles.size(); k++) {
-            if (event.getMember().getRoles().contains(classRoles.get(k))) {
+        Role incoming = event.getGuild().getRolesByName("Incoming Student", true).get(0);
+        Role freshman = event.getGuild().getRolesByName("Freshman", true).get(0);
+        Role sophomore = event.getGuild().getRolesByName("Sophomore", true).get(0);
+        Role junior = event.getGuild().getRolesByName("Junior", true).get(0);
+        Role senior = event.getGuild().getRolesByName("Senior", true).get(0);
+        Role graduate = event.getGuild().getRolesByName("Graduate Student", true).get(0);
+        Role alumni = event.getGuild().getRolesByName("Alumni", true).get(0);
+        List<Role> classRoles = Arrays.asList(incoming, freshman, sophomore, junior, senior, graduate, alumni);
+        for (Role classRole : classRoles) {
+            if (event.getMember().getRoles().contains(classRole)) {
                 hasRole = true;
             }
         }
@@ -62,7 +53,7 @@ public class Giveaway extends ListenerAdapter {
             ResultSet containsName = preparedName.executeQuery("SELECT names FROM giveaway WHERE names='" + event.getUser().getAsMention() + "';");
 
             if (event.getMessageId().equals(m_id) && !event.getUser().isBot() && hasRole && !containsName.next()) {
-                PreparedStatement prepared2 = null;
+                PreparedStatement prepared2;
                 prepared2 = connect.prepareStatement("INSERT INTO giveaway values(?,?);");
                 prepared2.setString(1, event.getUser().getAsMention());
                 prepared2.setString(2, m_id);

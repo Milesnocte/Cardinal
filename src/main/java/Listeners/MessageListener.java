@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import java.io.IOException;
 
 public class MessageListener extends ListenerAdapter {
 
@@ -23,8 +22,6 @@ public class MessageListener extends ListenerAdapter {
             args[0] = args[0].replace(prefix,"");
             try {
                 new CommandManager(event, args);
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }

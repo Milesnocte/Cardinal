@@ -1,15 +1,11 @@
 package Listeners;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.RoleManager;
-import net.dv8tion.jda.api.requests.RestAction;
-import org.jetbrains.annotations.ApiStatus;
+import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import org.jetbrains.annotations.NotNull;
 import Main.*;
 
@@ -24,9 +20,9 @@ public class BotEventsListener extends ListenerAdapter {
         try {db.addGuild("" + event.getGuild().getIdLong());
         } catch (Exception e) {e.printStackTrace();}
 
-        Boolean roleExists = (event.getGuild().getRolesByName("InVoiceChannel", true).isEmpty());
+        boolean roleExists = (event.getGuild().getRolesByName("InVoiceChannel", true).isEmpty());
         if(roleExists) {
-            RestAction ra = event.getGuild().createRole().setMentionable(true).setName("InVoiceChannel").setColor(Color.CYAN);
+            RoleAction ra = event.getGuild().createRole().setMentionable(true).setName("InVoiceChannel").setColor(Color.CYAN);
             ra.complete();
             RoleManager roleManager = event.getGuild().getRolesByName("InVoiceChannel", true).get(0).getManager();
             roleManager.setPermissions(Permission.VOICE_CONNECT,Permission.VOICE_SPEAK,Permission.MESSAGE_HISTORY,Permission.MESSAGE_READ,Permission.MESSAGE_WRITE,
