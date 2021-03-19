@@ -5,12 +5,14 @@ import com.vdurmont.emoji.EmojiParser;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import Main.*;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 
 public class CommandManager {
@@ -108,6 +110,7 @@ public class CommandManager {
             embed.addField("__" + prefix + "stats__", "Will display some debug statistics\n", false);
             embed.addField("__" + prefix + "reactrole__", "Create a reaction role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
             embed.addField("__" + prefix + "ccievents__", "Create a cci events role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
+            embed.addField("__" + prefix + "reactions__", "Create a concentrations role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
             embed.addField("__" + prefix + "giveaway__", "Create a giveaway! THIS WILL OVERWRITE THE PREVIOUS GIVEAWAY\n", false);
             embed.addField("__" + prefix + "setprefix__","Will set the prefix the bot uses, requires the manage roles permission\n", false);
             embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
@@ -117,7 +120,7 @@ public class CommandManager {
         }
 
         if(args[0].equalsIgnoreCase("reactrole") && hasManagePermission) {
-            ReactRoles.createMenu(event);
+            YearMenu.createMenu(event);
         }
 
         if(args[0].equalsIgnoreCase("ccievents") && hasManagePermission) {
@@ -159,6 +162,19 @@ public class CommandManager {
             embed.setDescription("VC-Text purged by " + event.getMessage().getAuthor().getAsTag() + "!");
 
             Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelById("582399042240118814")).sendMessage(embed.build()).queue();
+        }
+
+        if(args[0].equalsIgnoreCase("connect") && event.getMember().getId().equals("225772174336720896")) {
+            event.getMessage().delete().queue();
+            VoiceChannel myChannel = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getVoiceChannelById("793689353703653386");
+            AudioManager audioManager = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getAudioManager();
+            audioManager.openAudioConnection(myChannel);
+        }
+        if(args[0].equalsIgnoreCase("leave") && event.getMember().getId().equals("225772174336720896")) {
+            event.getGuild().getAudioManager().closeAudioConnection();
+        }
+        if(args[0].equalsIgnoreCase("reaction") && hasManagePermission) {
+            Concentrations.createMenu(event);
         }
 
     }

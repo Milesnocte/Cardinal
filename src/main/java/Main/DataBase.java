@@ -22,14 +22,15 @@ public class DataBase{
                 System.out.println("Table not found. Building the Guilds table.");
                 // Build the table
                 Statement statement2 = connect.createStatement();
-                statement2.execute("CREATE TABLE guilds(GuildID TEXT," + ",roleId TEXT,eventsId TEXT," + "prefix TEXT);");
+                statement2.execute("CREATE TABLE guilds(GuildID TEXT," + ",roleId TEXT,eventsId TEXT," + "prefix TEXT," + "eventsId TEXT," + "concentrationId TEXT);");
 
                 //Create the rows
-                PreparedStatement prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?);");
-                prepared.setString(1,"433825");
-                prepared.setString(2,"433827");
-                prepared.setString(3,"433826");
-                prepared.setString(4,"$");
+                PreparedStatement prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?,?);");
+                prepared.setString(1,"clearme");
+                prepared.setString(2,"clearme");
+                prepared.setString(3,"clearme");
+                prepared.setString(4,"clearme");
+                prepared.setString(5,"clearme");
                 prepared.execute();
                 result.close();
                 prepared.close();
@@ -55,11 +56,12 @@ public class DataBase{
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         PreparedStatement prepared;
-        prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?);");
+        prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?,?);");
         prepared.setString(1,gID);
         prepared.setString(2,"null");
         prepared.setString(3,"$");
         prepared.setString(4,"null");
+        prepared.setString(5,"null");
         prepared.execute();
         connect.close();
     }
@@ -141,6 +143,27 @@ public class DataBase{
         Statement prepared = connect.createStatement();
         ResultSet guildPrefix = prepared.executeQuery("SELECT names FROM giveaway ORDER BY RANDOM() LIMIT 1;");
         String guildPrefixActual = guildPrefix.getString("names");
+        guildPrefix.close();
+        connect.close();
+        return guildPrefixActual;
+    }
+
+    public void updateConcentrationID(String gID, String roleID) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        PreparedStatement prepared;
+        prepared = connect.prepareStatement("UPDATE guilds SET concentrationId = '" + roleID + "' WHERE GuildID = '" + gID + "';");
+        prepared.execute();
+        connect.close();
+    }
+
+    public static String getConcentrationID(String gID) throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        Statement prepared;
+        connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        prepared = connect.createStatement();
+        ResultSet guildPrefix = prepared.executeQuery("SELECT concentrationId FROM guilds WHERE GuildID = " + gID +";");
+        String guildPrefixActual = guildPrefix.getString("concentrationId");
         guildPrefix.close();
         connect.close();
         return guildPrefixActual;

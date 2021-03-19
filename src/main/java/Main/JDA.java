@@ -24,10 +24,11 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new VoiceChannelListener(),
                         new BotEventsListener(),
                         new MessageListener(),
-                        new ReactRoles(),
+                        new YearMenu(),
                         new CCIEvents(),
                         new JoinListener(),
-                        new ScheduledTask()
+                        new ScheduledTask(),
+                        new Concentrations()
                         //new Giveaway()
                 )
                 //Set the bot activity to "Watching for cheaters"
