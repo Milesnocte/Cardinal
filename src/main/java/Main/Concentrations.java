@@ -81,9 +81,11 @@ public class Concentrations extends ListenerAdapter {
             List<Role> userRoles = event.getMember().getRoles();
 
             //Removes any class role the user has, we will give them one again in the switch
-            for (Role concRole : concRoles) {
-                if (userRoles.contains(concRole)) {
-                    event.getGuild().removeRoleFromMember(event.getMember(), concRole).queue();
+            for (int k = 0; k < concRoles.size(); k++) {
+                if (userRoles.contains(concRoles.get(k))) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), concRoles.get(k)).queue();
+                    int finalK = k;
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + concRoles.get(finalK).getName() + "`!").queue(null, null));
                 }
             }
 
@@ -93,38 +95,47 @@ public class Concentrations extends ListenerAdapter {
                 case("RE:U+1f916"):
                     event.getGuild().addRoleToMember(event.getMember(), aiGaming).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `AI Gaming` role!").queue(null, null));
                     break;
                 case("RE:U+1f4c3"):
                     event.getGuild().addRoleToMember(event.getMember(), dataSci).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Data Science` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f4bb"):
                     event.getGuild().addRoleToMember(event.getMember(), softwareSystems).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Systems` role!").queue(null, null));
                     break;
                 case("RE:U+1f510"):
                     event.getGuild().addRoleToMember(event.getMember(), cyberSec).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Cyber Sec` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f4bc"):
                     event.getGuild().addRoleToMember(event.getMember(), hci).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `HCI` role!").queue(null, null));
                     break;
                 case("RE:U+1f5a5"):
                     event.getGuild().addRoleToMember(event.getMember(), infoTech).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Info Tech` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f527"):
                     event.getGuild().addRoleToMember(event.getMember(), softwareEng).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Engineering` role!").queue(null, null));
                     break;
                 case("RE:U+1f4f1"):
                     event.getGuild().addRoleToMember(event.getMember(), webMobile).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Web Mobile` role!").queue(null, null));
                     break;
                 case("RE:U+2623"):
                     event.getGuild().addRoleToMember(event.getMember(), bioInf).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `BIOINF` role!").queue(null, null));
                     break;
             }
             event.getReaction().removeReaction(event.getUser()).queue();

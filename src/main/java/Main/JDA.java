@@ -28,8 +28,8 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new CCIEvents(),
                         new JoinListener(),
                         new ScheduledTask(),
-                        new Concentrations()
-                        //new Giveaway()
+                        new Concentrations(),
+                        new Giveaway()
                 )
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))

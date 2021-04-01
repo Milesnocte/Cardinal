@@ -3,11 +3,10 @@ package Managers;
 import Listeners.Giveaway;
 import com.vdurmont.emoji.EmojiParser;
 import net.dv8tion.jda.api.*;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +16,8 @@ import net.dv8tion.jda.api.managers.AudioManager;
 
 public class CommandManager {
     public CommandManager(GuildMessageReceivedEvent event, String[] args) throws Exception {
+
+        //TODO: This needs some serious refactoring
 
         String prefix = "$";
         DataBase db = new DataBase();
@@ -32,9 +33,6 @@ public class CommandManager {
             }
         }
 
-        if(args[0].equalsIgnoreCase("invite")) {
-            event.getChannel().sendMessage(event.getJDA().getInviteUrl(Permission.ADMINISTRATOR)).queue();
-        }
         if(args[0].equalsIgnoreCase("setprefix") && hasManagePermission) {
             try {
                 if (args[1].length() <= 2) {
@@ -105,7 +103,7 @@ public class CommandManager {
 
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(Color.cyan);
-            embed.setDescription("VoiceTextChannel, use `" + prefix + "help` to show this message again!");
+            embed.setDescription("Woody, use `" + prefix + "help` to show this message again!");
             embed.addField("__" + prefix + "prefix or @the bot__", "Will return the prefix the bot is using in this server\n", false);
             embed.addField("__" + prefix + "stats__", "Will display some debug statistics\n", false);
             embed.addField("__" + prefix + "reactrole__", "Create a reaction role menu! THIS WILL DELETE THE PREVIOUS MENU\n", false);
@@ -119,28 +117,61 @@ public class CommandManager {
 
         }
 
-        if(args[0].equalsIgnoreCase("reactrole") && hasManagePermission) {
-            YearMenu.createMenu(event);
-        }
+        // RWH specific commands
+        if(event.getGuild().getId().equals("433825343485247499")) {
 
-        if(args[0].equalsIgnoreCase("ccievents") && hasManagePermission) {
-            CCIEvents.createMenu(event);
-        }
+            if (args[0].equalsIgnoreCase("purge-vctext") && hasManagePermission) {
+                event.getMessage().delete().queue();
 
-        if(args[0].equalsIgnoreCase("giveaway") && hasManagePermission) {
-            try{
-                String content = event.getMessage().getContentRaw();
-                String emojis = EmojiParser.extractEmojis(content).get(0);
-                Giveaway.createReaction(event, args[1], emojis);
-            }catch (Exception e){
-                event.getChannel().sendMessage("Missing emoji, please use the command as `giveaway [message id] [emoji]`. Note that the emoji " +
-                        "can not be an emote. It needs to be a discord emoji, from no server.").queue();
+                Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
+
+                TimeUnit.SECONDS.sleep(1);
+
+                Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).delete().queue();
+
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setColor(Color.GREEN);
+                embed.setDescription("VC-Text purged by " + event.getMessage().getAuthor().getAsTag() + "!");
+
+                Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelById("582399042240118814")).sendMessage(embed.build()).queue();
             }
-        }
 
-        if(args[0].equalsIgnoreCase("draw") && hasManagePermission) {
-            event.getMessage().delete().queue();
-            event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
+            if (args[0].equalsIgnoreCase("yearroles") && hasManagePermission) {
+                YearMenu.createMenu(event);
+            }
+
+            if (args[0].equalsIgnoreCase("ccievents") && hasManagePermission) {
+                CCIEvents.createMenu(event);
+            }
+
+            if (args[0].equalsIgnoreCase("giveaway") && hasManagePermission) {
+                try {
+                    String content = event.getMessage().getContentRaw();
+                    String emojis = EmojiParser.extractEmojis(content).get(0);
+                    Giveaway.createReaction(event, args[1], emojis);
+                } catch (Exception e) {
+                    event.getChannel().sendMessage("Missing emoji, please use the command as `giveaway [message id] [emoji]`. Note that the emoji " +
+                            "can not be an emote. It needs to be a discord emoji, from no server.").queue();
+                }
+            }
+
+            if (args[0].equalsIgnoreCase("draw") && hasManagePermission) {
+                event.getMessage().delete().queue();
+                event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
+            }
+
+            if (args[0].equalsIgnoreCase("connect") && event.getMember().getId().equals("225772174336720896")) {
+                event.getMessage().delete().queue();
+                VoiceChannel myChannel = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getVoiceChannelById("793689353703653386");
+                AudioManager audioManager = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getAudioManager();
+                audioManager.openAudioConnection(myChannel);
+            }
+            if (args[0].equalsIgnoreCase("leave") && event.getMember().getId().equals("225772174336720896")) {
+                event.getGuild().getAudioManager().closeAudioConnection();
+            }
+            if (args[0].equalsIgnoreCase("concentration") && hasManagePermission) {
+                Concentrations.createMenu(event);
+            }
         }
 
         if(args[0].equalsIgnoreCase("me") && event.getMember().getId().equals("225772174336720896")) {
@@ -148,33 +179,42 @@ public class CommandManager {
             event.getChannel().sendMessage(event.getMessage().getContentRaw().replace("$me","")).queue();
         }
 
-        if(args[0].equalsIgnoreCase("purge-vctext") && hasManagePermission) {
-            event.getMessage().delete().queue();
+        if(args[0].equalsIgnoreCase("whois")) {
+            try{
+                String userid = args[1].replace("<","").replace("@","").replace(">","").replace("!","");
+                User user = event.getGuild().getMemberById(userid).getUser();
+                Member member = event.getGuild().getMemberById(userid);
+                EmbedBuilder embed = new EmbedBuilder();
+                String roles = "";
 
-            Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
+                for(int k = 0; k < member.getRoles().size(); k++){
+                    roles += member.getRoles().get(k).getAsMention() + " ";
+                }
 
-            TimeUnit.SECONDS.sleep(1);
+                embed.setThumbnail(user.getAvatarUrl());
+                embed.setTitle(user.getAsTag());
+                embed.addField("Created", "" + member.getTimeCreated().format(DateTimeFormatter.ofPattern("MMM dd yyyy")), true);
+                embed.addField("Joined", "" + member.getTimeJoined().format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + "            ", true);
 
-            Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelsByName("vc-text", true).get(0).delete().queue();
+                if(member.getTimeBoosted() != null){ embed.addField("Booster", "Yes", true);
+                }else{ embed.addField("Booster", "No", true); }
 
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(Color.GREEN);
-            embed.setDescription("VC-Text purged by " + event.getMessage().getAuthor().getAsTag() + "!");
+                if(member.getNickname() != null){embed.addField("NickName", member.getNickname(),true);}
+                else { embed.addField("NickName", member.getEffectiveName(), true); }
 
-            Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getTextChannelById("582399042240118814")).sendMessage(embed.build()).queue();
-        }
+                embed.addField("ID",user.getId(), true);
+                embed.addField("Roles",roles, false);
+                embed.addField("Perms",member.getPermissions().toString(), false);
+                if(member.getId().equals("225772174336720896")){
+                    embed.setFooter("\u2B50 BeanBot dev \u2B50");
+                }
+                event.getChannel().sendMessage(embed.build()).queue();
 
-        if(args[0].equalsIgnoreCase("connect") && event.getMember().getId().equals("225772174336720896")) {
-            event.getMessage().delete().queue();
-            VoiceChannel myChannel = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getVoiceChannelById("793689353703653386");
-            AudioManager audioManager = Objects.requireNonNull(event.getJDA().getGuildById("433825343485247499")).getAudioManager();
-            audioManager.openAudioConnection(myChannel);
-        }
-        if(args[0].equalsIgnoreCase("leave") && event.getMember().getId().equals("225772174336720896")) {
-            event.getGuild().getAudioManager().closeAudioConnection();
-        }
-        if(args[0].equalsIgnoreCase("reaction") && hasManagePermission) {
-            Concentrations.createMenu(event);
+            }catch (Exception e){
+                e.printStackTrace();
+                event.getChannel().sendMessage("Invalid userid argument, please copy the id for a valid user!").queue();
+            }
+
         }
 
     }
