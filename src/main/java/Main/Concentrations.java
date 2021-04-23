@@ -1,7 +1,6 @@
 package Main;
 
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -12,29 +11,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Concentrations extends ListenerAdapter {
-    private static Role aiGaming;
-    private static Role dataSci;
-    private static Role softwareSystems;
-    private static Role cyberSec;
-    private static Role hci;
-    private static Role infoTech;
-    private static Role softwareEng;
-    private static Role webMobile;
-    private static Role bioInf;
-    private static List<Role> concRoles;
-    private static String id;
+    private static final long AI_GAMING = 822305355828559893L;
+    private static final long DATA_SCIENCE = 822305557426864170L;
+    private static final long SOFTWARE_SYSTEMS = 822305633327120404L;
+    private static final long CYBER_SECURITY = 822305682882691094L;
+    private static final long HCI = 822305742476148786L;
+    private static final long INFO_TECH = 822305775967141930L;
+    private static final long SOFTWARE_ENGINEER = 822305835086512178L;
+    private static final long WEB_MOBILE = 822305884712992818L;
+    private static final long BIO_INFORMATICS = 822305921672937472L;
+
+    private static final List<Long> concentrationRoles = Arrays.asList(AI_GAMING, DATA_SCIENCE, SOFTWARE_SYSTEMS, CYBER_SECURITY, HCI, INFO_TECH, SOFTWARE_ENGINEER, WEB_MOBILE, BIO_INFORMATICS);
+    private static String messageId;
+
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
-        // Get all the class roles from the server
-        aiGaming = event.getGuild().getRolesByName("ai-gaming", true).get(0);
-        dataSci = event.getGuild().getRolesByName("data-sci", true).get(0);
-        softwareSystems = event.getGuild().getRolesByName("software-systems", true).get(0);
-        cyberSec = event.getGuild().getRolesByName("cyber-sec", true).get(0);
-        hci = event.getGuild().getRolesByName("hci", true).get(0);
-        infoTech = event.getGuild().getRolesByName("info-tech", true).get(0);
-        softwareEng = event.getGuild().getRolesByName("software-eng", true).get(0);
-        webMobile = event.getGuild().getRolesByName("web-mobile", true).get(0);
-        bioInf = event.getGuild().getRolesByName("bio-inf", true).get(0);
-        concRoles = Arrays.asList(aiGaming,dataSci,softwareSystems,cyberSec,hci,infoTech,softwareEng,webMobile,bioInf);
+
         RestAction<Message> ra = event.getChannel().sendMessage("What is your declared/intended concentration?\n\n\uD83E\uDD16: AI, Robotics, and Gaming \n\n\uD83D\uDCC3: Data Science " +
                 "\n\n\uD83E\uDDD1\u200D\uD83D\uDCBB : Software, Systems, and Networks \n\n\uD83D\uDD10: Cybersecurity \n\n\uD83E\uDDD1\u200D\uD83D\uDCBC: Human-Computer Interaction\n\n\uD83D\uDDA5: Information Technology\n\n\uD83E\uDDD1\u200D\uD83D\uDD27: " +
                 "Software Engineering\n\n\uD83D\uDCF1: Web and Mobile\n\n\u2623: Bioinformatics\n\nReact below to receive your concentration role:");
@@ -51,41 +42,29 @@ public class Concentrations extends ListenerAdapter {
         message.addReaction("\uD83D\uDCF1").queue();
         message.addReaction("\u2623").queue();
         // Put the messages id into the database so we can use it in the future
-        id = message.getId();
+        messageId = message.getId();
         DataBase db = new DataBase();
-        db.updateConcentrationID("" + event.getGuild().getIdLong(), id);
+        db.updateConcentrationID(String.valueOf(event.getGuild().getIdLong()), messageId);
     }
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
 
-        // Get all the class roles from the server
-        aiGaming = event.getGuild().getRolesByName("ai-gaming", true).get(0);
-        dataSci = event.getGuild().getRolesByName("data-sci", true).get(0);
-        softwareSystems = event.getGuild().getRolesByName("software-systems", true).get(0);
-        cyberSec = event.getGuild().getRolesByName("cyber-sec", true).get(0);
-        hci = event.getGuild().getRolesByName("hci", true).get(0);
-        infoTech = event.getGuild().getRolesByName("info-tech", true).get(0);
-        softwareEng = event.getGuild().getRolesByName("software-eng", true).get(0);
-        webMobile = event.getGuild().getRolesByName("web-mobile", true).get(0);
-        bioInf = event.getGuild().getRolesByName("bio-inf", true).get(0);
-        concRoles = Arrays.asList(aiGaming,dataSci,softwareSystems,cyberSec,hci,infoTech,softwareEng,webMobile,bioInf);
         try {
             //Get the id of the reaction menu message
-            id = DataBase.getConcentrationID("" + event.getGuild().getIdLong());
+            messageId = DataBase.getConcentrationID(String.valueOf(event.getGuild().getIdLong()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(event.getMessageId().equals(id) && !event.getUser().isBot()){
 
-            List<Role> userRoles = event.getMember().getRoles();
+        if(event.getMessageId().equals(messageId) && !event.getUser().isBot()){
 
             //Removes any class role the user has, we will give them one again in the switch
-            for (int k = 0; k < concRoles.size(); k++) {
-                if (userRoles.contains(concRoles.get(k))) {
-                    event.getGuild().removeRoleFromMember(event.getMember(), concRoles.get(k)).queue();
+            for (int k = 0; k < concentrationRoles.size(); k++) {
+                if (event.getMember().getRoles().get(k).getIdLong() == concentrationRoles.get(k)) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getMember().getRoles().get(k)).queue();
                     int finalK = k;
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + concRoles.get(finalK).getName() + "`!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getMember().getRoles().get(finalK).getName() + "`!").queue());
                 }
             }
 
@@ -93,47 +72,47 @@ public class Concentrations extends ListenerAdapter {
             // user their role, this will also direct message the user of the role they are given
             switch(event.getReaction().getReactionEmote().toString()){
                 case("RE:U+1f916"):
-                    event.getGuild().addRoleToMember(event.getMember(), aiGaming).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(AI_GAMING)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `AI Gaming` role!").queue(null, null));
                     break;
                 case("RE:U+1f4c3"):
-                    event.getGuild().addRoleToMember(event.getMember(), dataSci).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DATA_SCIENCE)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Data Science` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f4bb"):
-                    event.getGuild().addRoleToMember(event.getMember(), softwareSystems).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_SYSTEMS)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Systems` role!").queue(null, null));
                     break;
                 case("RE:U+1f510"):
-                    event.getGuild().addRoleToMember(event.getMember(), cyberSec).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(CYBER_SECURITY)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Cyber Sec` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f4bc"):
-                    event.getGuild().addRoleToMember(event.getMember(), hci).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(HCI)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `HCI` role!").queue(null, null));
                     break;
                 case("RE:U+1f5a5"):
-                    event.getGuild().addRoleToMember(event.getMember(), infoTech).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INFO_TECH)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Info Tech` role!").queue(null, null));
                     break;
                 case("RE:U+1f9d1U+200dU+1f527"):
-                    event.getGuild().addRoleToMember(event.getMember(), softwareEng).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_ENGINEER)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Engineering` role!").queue(null, null));
                     break;
                 case("RE:U+1f4f1"):
-                    event.getGuild().addRoleToMember(event.getMember(), webMobile).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(WEB_MOBILE)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Web Mobile` role!").queue(null, null));
                     break;
                 case("RE:U+2623"):
-                    event.getGuild().addRoleToMember(event.getMember(), bioInf).queue();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(BIO_INFORMATICS)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `BIOINF` role!").queue(null, null));
                     break;

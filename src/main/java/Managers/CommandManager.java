@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
+import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -114,7 +115,6 @@ public class CommandManager {
             embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
             embed.addField("__" + prefix + "purge-vctext__","Delete and then create a new vc-text, requires the manage channel permission\n", false);
             event.getChannel().sendMessage(embed.build()).queue();
-
         }
 
         // RWH specific commands
@@ -155,6 +155,19 @@ public class CommandManager {
                 }
             }
 
+            if(args[0].equalsIgnoreCase("av")) {
+                try{
+                    String userid = args[1].replace("<","").replace("@","").replace(">","").replace("!","");
+                    event.getChannel().sendMessage(
+                            Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(userid)).getUser().getAvatarUrl())
+                    ).queue();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    event.getChannel().sendMessage("Invalid userid argument, please copy the id for a valid user!").queue();
+                }
+
+            }
+
             if (args[0].equalsIgnoreCase("draw") && hasManagePermission) {
                 event.getMessage().delete().queue();
                 event.getChannel().sendMessage("Congratulations " + DataBase.getDrawing() + ", you won the giveaway! <@!573339588442193930> will be in contact as soon as possible!").queue();
@@ -179,16 +192,27 @@ public class CommandManager {
             event.getChannel().sendMessage(event.getMessage().getContentRaw().replace("$me","")).queue();
         }
 
+        if(args[0].equalsIgnoreCase("sees") && event.getMember().getId().equals("225772174336720896")) {
+            event.getMessage().delete().queue();
+            File file = new File("E:\\User data\\Desktop\\output_free (2).mp4");
+            event.getChannel().sendFile(file).queue();
+        }
+
+        if(args[0].equalsIgnoreCase("leave") && event.getMember().getId().equals("225772174336720896")) {
+            event.getMessage().delete().queue();
+            event.getGuild().leave().queue();
+        }
+
         if(args[0].equalsIgnoreCase("whois")) {
             try{
                 String userid = args[1].replace("<","").replace("@","").replace(">","").replace("!","");
                 User user = event.getGuild().getMemberById(userid).getUser();
                 Member member = event.getGuild().getMemberById(userid);
                 EmbedBuilder embed = new EmbedBuilder();
-                String roles = "";
+                StringBuilder roles = new StringBuilder();
 
                 for(int k = 0; k < member.getRoles().size(); k++){
-                    roles += member.getRoles().get(k).getAsMention() + " ";
+                    roles.append(member.getRoles().get(k).getAsMention()).append(" ");
                 }
 
                 embed.setThumbnail(user.getAvatarUrl());
@@ -203,7 +227,7 @@ public class CommandManager {
                 else { embed.addField("NickName", member.getEffectiveName(), true); }
 
                 embed.addField("ID",user.getId(), true);
-                embed.addField("Roles",roles, false);
+                embed.addField("Roles", roles.toString(), false);
                 embed.addField("Perms",member.getPermissions().toString(), false);
                 if(member.getId().equals("225772174336720896")){
                     embed.setFooter("\u2B50 BeanBot dev \u2B50");
