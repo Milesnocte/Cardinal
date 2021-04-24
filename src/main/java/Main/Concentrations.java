@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,12 +60,18 @@ public class Concentrations extends ListenerAdapter {
 
         if(event.getMessageId().equals(messageId) && !event.getUser().isBot()){
 
+            List<Long> roleIDs = new ArrayList<>();
+
+            for(int k = 0; k < event.getMember().getRoles().size(); k++){
+                roleIDs.add(event.getMember().getRoles().get(k).getIdLong());
+            }
+
             //Removes any class role the user has, we will give them one again in the switch
             for (int k = 0; k < concentrationRoles.size(); k++) {
-                if (event.getMember().getRoles().get(k).getIdLong() == concentrationRoles.get(k)) {
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getMember().getRoles().get(k)).queue();
+                if (roleIDs.contains(concentrationRoles.get(k))) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(concentrationRoles.get(k))).queue();
                     int finalK = k;
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getMember().getRoles().get(finalK).getName() + "`!").queue());
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getGuild().getRoleById(concentrationRoles.get(finalK)).getName() + "`!").queue());
                 }
             }
 
@@ -118,6 +125,8 @@ public class Concentrations extends ListenerAdapter {
                     break;
             }
             event.getReaction().removeReaction(event.getUser()).queue();
+
+            roleIDs.clear();
         }
     }
 }

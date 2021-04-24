@@ -6,17 +6,19 @@ import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class YearMenu extends ListenerAdapter {
-    private static final long INCOMING = 822305355828559893L;
-    private static final long FRESHMAN = 822305557426864170L;
-    private static final long SOPHOMORE = 822305633327120404L;
-    private static final long JUNIOR = 822305682882691094L;
-    private static final long SENIOR = 822305742476148786L;
-    private static final long GRADUATE = 822305775967141930L;
-    private static final long ALUMNI = 822305835086512178L;
+    private static final long INCOMING = 618643756580601857L;
+    private static final long FRESHMAN = 581614531789455363L;
+    private static final long SOPHOMORE = 618643636665712640L;
+    private static final long JUNIOR = 618643685432623135L;
+    private static final long SENIOR = 618643717384831017L;
+    private static final long GRADUATE = 618643752327708682L;
+    private static final long ALUMNI = 449689803219271681L;
 
     private static final List<Long> yearRoles = Arrays.asList(INCOMING, FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, GRADUATE, ALUMNI);
     private static String messageId;
@@ -48,12 +50,18 @@ public class YearMenu extends ListenerAdapter {
         } catch (Exception ignored) {}
         if(event.getMessageId().equals(messageId) && !event.getUser().isBot()){
 
+            List<Long> roleIDs = new ArrayList<>();
+
+            for(int k = 0; k < event.getMember().getRoles().size(); k++){
+                roleIDs.add(event.getMember().getRoles().get(k).getIdLong());
+            }
+
             //Removes any class role the user has, we will give them one again in the switch
             for (int k = 0; k < yearRoles.size(); k++) {
-                if (event.getMember().getRoles().get(k).getIdLong() == yearRoles.get(k)) {
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getMember().getRoles().get(k)).queue();
+                if (roleIDs.contains(yearRoles.get(k))) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(yearRoles.get(k))).queue();
                     int finalK = k;
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getMember().getRoles().get(finalK).getName() + "`!").queue());
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getGuild().getRoleById(yearRoles.get(finalK)).getName() + "`!").queue());
                 }
             }
 
@@ -97,6 +105,8 @@ public class YearMenu extends ListenerAdapter {
                     break;
             }
             event.getReaction().removeReaction(event.getUser()).queue();
+
+            roleIDs.clear();
         }
     }
 }
