@@ -1,5 +1,6 @@
-package Main;
+package RoleMenus;
 
+import Main.DataBase;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
@@ -67,42 +68,42 @@ public class YearMenu extends ListenerAdapter {
 
             // using a switch here was far more efficient than if statements. Testing for each reaction to give the
             // user their role, this will also direct message the user of the role they are given
-            switch(event.getReaction().getReactionEmote().toString()){
-                case("RE:U+1f392"):
+            switch (event.getReaction().getReactionEmote().toString()) {
+                case ("RE:U+1f392") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INCOMING)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Incoming Student` role!").queue(null, null));
-                    break;
-                case("RE:U+1f476"):
+                }
+                case ("RE:U+1f476") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(FRESHMAN)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Freshman` role!").queue(null, null));
-                    break;
-                case("RE:U+1f466"):
+                }
+                case ("RE:U+1f466") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOPHOMORE)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Sophomore` role!").queue(null, null));
                     event.getReaction().removeReaction(event.getUser()).queue();
-                    break;
-                case("RE:U+1f468"):
+                }
+                case ("RE:U+1f468") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(JUNIOR)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Junior` role!").queue(null, null));
                     event.getReaction().removeReaction(event.getUser()).queue();
-                    break;
-                case("RE:U+1f474"):
+                }
+                case ("RE:U+1f474") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SENIOR)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Senior` role!").queue(null, null));
                     event.getReaction().removeReaction(event.getUser()).queue();
-                    break;
-                case("RE:U+1f393"):
+                }
+                case ("RE:U+1f393") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(GRADUATE)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Graduate Student` role!").queue(null, null));
                     event.getReaction().removeReaction(event.getUser()).queue();
-                    break;
-                case("RE:U+1f468U+200dU+1f4bb"):
+                }
+                case ("RE:U+1f468U+200dU+1f4bb") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(ALUMNI)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Alumni` role!").queue(null, null));
                     event.getReaction().removeReaction(event.getUser()).queue();
-                    break;
+                }
             }
             event.getReaction().removeReaction(event.getUser()).queue();
 

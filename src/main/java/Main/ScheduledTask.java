@@ -1,16 +1,16 @@
 package Main;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.concurrent.TimeUnit;
-import net.dv8tion.jda.api.events.ReadyEvent;
-import org.jetbrains.annotations.NotNull;
 
 public class ScheduledTask extends ListenerAdapter  {
 

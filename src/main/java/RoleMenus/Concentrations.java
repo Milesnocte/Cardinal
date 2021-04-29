@@ -1,5 +1,6 @@
-package Main;
+package RoleMenus;
 
+import Main.DataBase;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
@@ -77,52 +78,52 @@ public class Concentrations extends ListenerAdapter {
 
             // using a switch here was far more efficient than if statements. Testing for each reaction to give the
             // user their role, this will also direct message the user of the role they are given
-            switch(event.getReaction().getReactionEmote().toString()){
-                case("RE:U+1f916"):
+            switch (event.getReaction().getReactionEmote().toString()) {
+                case ("RE:U+1f916") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(AI_GAMING)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `AI Gaming` role!").queue(null, null));
-                    break;
-                case("RE:U+1f4c3"):
+                }
+                case ("RE:U+1f4c3") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DATA_SCIENCE)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Data Science` role!").queue(null, null));
-                    break;
-                case("RE:U+1f9d1U+200dU+1f4bb"):
+                }
+                case ("RE:U+1f9d1U+200dU+1f4bb") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_SYSTEMS)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Systems` role!").queue(null, null));
-                    break;
-                case("RE:U+1f510"):
+                }
+                case ("RE:U+1f510") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(CYBER_SECURITY)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Cyber Sec` role!").queue(null, null));
-                    break;
-                case("RE:U+1f9d1U+200dU+1f4bc"):
+                }
+                case ("RE:U+1f9d1U+200dU+1f4bc") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(HCI)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `HCI` role!").queue(null, null));
-                    break;
-                case("RE:U+1f5a5"):
+                }
+                case ("RE:U+1f5a5") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INFO_TECH)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Info Tech` role!").queue(null, null));
-                    break;
-                case("RE:U+1f9d1U+200dU+1f527"):
+                }
+                case ("RE:U+1f9d1U+200dU+1f527") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_ENGINEER)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Engineering` role!").queue(null, null));
-                    break;
-                case("RE:U+1f4f1"):
+                }
+                case ("RE:U+1f4f1") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(WEB_MOBILE)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Web Mobile` role!").queue(null, null));
-                    break;
-                case("RE:U+2623"):
+                }
+                case ("RE:U+2623") -> {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(BIO_INFORMATICS)).queue();
                     event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `BIOINF` role!").queue(null, null));
-                    break;
+                }
             }
             event.getReaction().removeReaction(event.getUser()).queue();
 

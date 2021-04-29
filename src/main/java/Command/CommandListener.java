@@ -1,13 +1,14 @@
-package Listeners;
+package Command;
 
 import Main.DataBase;
-import Managers.CommandManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-public class MessageListener extends ListenerAdapter {
+public class CommandListener extends ListenerAdapter {
+
+    public final CommandManager commandManager = new CommandManager();
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -17,15 +18,10 @@ public class MessageListener extends ListenerAdapter {
         try {prefix = db.getPrefix("" + event.getGuild().getIdLong());
         } catch (Exception e) {e.printStackTrace();}
 
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].startsWith(prefix) && !event.getAuthor().isBot()){
-            args[0] = args[0].replace(prefix,"");
-            try {
-                new CommandManager(event, args);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        try {
+            commandManager.run(event);
+        } catch (Exception e) { e.printStackTrace(); }
+
         if(event.getMessage().getContentRaw().replace("!","").equals(event.getJDA().getSelfUser().getAsMention())){
             if(!event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL)){
                 event.getChannel().sendMessage("I am missing the `MANAGE_CHANNEL` permission! This permission is critical for the bot to function.").queue();
@@ -35,5 +31,6 @@ public class MessageListener extends ListenerAdapter {
             }
             event.getChannel().sendMessage("My prefix is `" + prefix + "`").queue();
         }
+
     }
 }

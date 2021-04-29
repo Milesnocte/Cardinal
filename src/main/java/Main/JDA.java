@@ -1,7 +1,12 @@
 package Main;
 
+import Command.CommandListener;
 import Listener.JoinListener;
-import Listeners.*;
+import Listeners.BotEventsListener;
+import Listeners.VoiceChannelListener;
+import RoleMenus.CCIEvents;
+import RoleMenus.Concentrations;
+import RoleMenus.YearMenu;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -23,7 +28,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                 .addEventListeners(
                         new VoiceChannelListener(),
                         new BotEventsListener(),
-                        new MessageListener(),
+                        new CommandListener(),
                         new YearMenu(),
                         new CCIEvents(),
                         new JoinListener(),

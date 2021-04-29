@@ -1,15 +1,13 @@
-package Main;
+package RoleMenus;
 
+import Main.DataBase;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class CCIEvents extends ListenerAdapter {
     private static final long CCI_EVENT_ROLE = 618652464643571712L;
