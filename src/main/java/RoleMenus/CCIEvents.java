@@ -15,7 +15,7 @@ public class CCIEvents extends ListenerAdapter {
     private static final DataBase database = new DataBase();
 
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
-        RestAction<Message> ra = event.getChannel().sendMessage("Would you like to receive pings for CCI Events?");
+        RestAction<Message> ra = event.getChannel().sendMessage("***__Would you like to receive pings for CCI Events?__***");
         Message message = ra.complete();
         message.addReaction("✅").queue();
         MessageId = message.getId();

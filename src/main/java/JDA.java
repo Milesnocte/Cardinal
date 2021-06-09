@@ -1,9 +1,12 @@
-package Main;
-
 import Command.CommandListener;
+import Command.SlashCommandListener;
+import Command.SlashCommandManager;
 import Listener.JoinListener;
 import Listeners.BotEventsListener;
 import Listeners.VoiceChannelListener;
+import Main.Credentials;
+import Main.DataBase;
+import Main.ScheduledTask;
 import RoleMenus.CCIEvents;
 import RoleMenus.Concentrations;
 import RoleMenus.YearMenu;
@@ -22,10 +25,11 @@ public class JDA extends ListenerAdapter implements EventListener {
         //Online the bot and create the listeners
         DefaultShardManagerBuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES
-        ).setToken(Credentials.TOCKEN)
+        ).setToken(Credentials.TOKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .addEventListeners(
+                        new SlashCommandListener(),
                         new VoiceChannelListener(),
                         new BotEventsListener(),
                         new CommandListener(),

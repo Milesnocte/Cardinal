@@ -2,6 +2,7 @@ package Listeners;
 
 import Main.DataBase;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -12,6 +13,16 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 public class BotEventsListener extends ListenerAdapter {
+
+    @Override
+    public void onReady(@NotNull ReadyEvent event) {
+        event.getJDA().getGuildById("496396181174484992").upsertCommand("ping","Ping the bot").queue();
+        event.getJDA().getGuildById("433825343485247499").upsertCommand("ping","Ping the bot").queue();
+        event.getJDA().getGuildById("496396181174484992").upsertCommand("yearroles","yearroles menu").queue();
+        event.getJDA().getGuildById("433825343485247499").upsertCommand("yearroles","yearroles menu").queue();
+        event.getJDA().getGuildById("496396181174484992").upsertCommand("concentrations","concentrations menu").queue();
+        event.getJDA().getGuildById("433825343485247499").upsertCommand("concentrations","concentrations menu").queue();
+    }
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {

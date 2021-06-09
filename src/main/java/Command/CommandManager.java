@@ -31,6 +31,7 @@ public class CommandManager {
         addCommand(new DrawGiveaway());
         addCommand(new ConcentrationRoles());
         addCommand(new CCIEventsRole());
+        addCommand(new Me());
     }
 
     private void addCommand(ICommand c) {
@@ -38,25 +39,18 @@ public class CommandManager {
 
             commands.put(c.getCommandName(), c);
 
-            if(!(c.getCommandName().isEmpty())){
+            if(!(c.getCommandAlias().isEmpty())){
                 for(String k : c.getCommandAlias()){
                     commands.put(k, c);
                 }
             }else{
-                System.out.println(c.getCommandAlias() + " had no aliases");
+                System.out.println(c.getCommandName() + " had no aliases");
             }
         }
     }
 
     public Collection<ICommand> getCommands(){
         return commands.values();
-    }
-
-    public ICommand getCommand(String commandName){
-        if(commandName == null){
-            return null;
-        }
-        return commands.get(commandName);
     }
 
     void run(GuildMessageReceivedEvent event) throws Exception {

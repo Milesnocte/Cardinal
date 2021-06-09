@@ -25,7 +25,7 @@ public class YearMenu extends ListenerAdapter {
     private static String messageId;
 
     public static void createMenu(GuildMessageReceivedEvent event) throws Exception {
-        RestAction<Message> ra = event.getChannel().sendMessage("What is your current class standing?\n\n\uD83C\uDF92: Incoming Student\n\n\uD83D\uDC76: Freshman " +
+        RestAction<Message> ra = event.getChannel().sendMessage("***__What is your current class standing?__***\n\n\uD83C\uDF92: Incoming Student\n\n\uD83D\uDC76: Freshman " +
         "\n\n\uD83D\uDC66: Sophomore\n\n\uD83D\uDC68: Junior\n\n\uD83D\uDC74: Senior\n\n\uD83C\uDF93: Graduate Student\n\n\uD83D\uDC68\u200D\uD83D\uDCBB: Alumni\n\n React below to receive your class standing role:");
         // Wait for the message to actually send
         Message message = ra.complete();
@@ -69,40 +69,33 @@ public class YearMenu extends ListenerAdapter {
             // using a switch here was far more efficient than if statements. Testing for each reaction to give the
             // user their role, this will also direct message the user of the role they are given
             switch (event.getReaction().getReactionEmote().toString()) {
-                case ("RE:U+1f392") -> {
+                case ("RE:U+1f392"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INCOMING)).queue();
-                    event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Incoming Student` role!").queue(null, null));
                 }
-                case ("RE:U+1f476") -> {
+                case ("RE:U+1f476"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(FRESHMAN)).queue();
-                    event.getReaction().removeReaction(event.getUser()).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Freshman` role!").queue(null, null));
                 }
-                case ("RE:U+1f466") -> {
+                case ("RE:U+1f466"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOPHOMORE)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Sophomore` role!").queue(null, null));
-                    event.getReaction().removeReaction(event.getUser()).queue();
                 }
-                case ("RE:U+1f468") -> {
+                case ("RE:U+1f468"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(JUNIOR)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Junior` role!").queue(null, null));
-                    event.getReaction().removeReaction(event.getUser()).queue();
                 }
-                case ("RE:U+1f474") -> {
+                case ("RE:U+1f474"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SENIOR)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Senior` role!").queue(null, null));
-                    event.getReaction().removeReaction(event.getUser()).queue();
                 }
-                case ("RE:U+1f393") -> {
+                case ("RE:U+1f393"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(GRADUATE)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Graduate Student` role!").queue(null, null));
-                    event.getReaction().removeReaction(event.getUser()).queue();
                 }
-                case ("RE:U+1f468U+200dU+1f4bb") -> {
+                case ("RE:U+1f468U+200dU+1f4bb"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(ALUMNI)).queue();
                     event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Alumni` role!").queue(null, null));
-                    event.getReaction().removeReaction(event.getUser()).queue();
                 }
             }
             event.getReaction().removeReaction(event.getUser()).queue();

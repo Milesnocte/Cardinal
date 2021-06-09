@@ -27,7 +27,7 @@ public class Help implements ICommand {
         embed.addField("__" + prefix + "giveaway__", "Create a giveaway! THIS WILL OVERWRITE THE PREVIOUS GIVEAWAY\n", false);
         embed.addField("__" + prefix + "setprefix__","Will set the prefix the bot uses, requires the manage roles permission\n", false);
         embed.addField("__" + prefix + "addchannel {TextChannelMention}__","Set the channel as a voice text channel, requires the manage channel permission\n", false);
-        embed.addField("__" + prefix + "purge-vctext__","Delete and then create a new vc-text, requires the manage channel permission\n", false);
+        embed.addField("__" + prefix + "purgevc__","Delete and then create a new vc-text, requires the manage channel permission\n", false);
         event.getChannel().sendMessage(embed.build()).queue();
     }
 
