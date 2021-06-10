@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Menus implements ISlashCommand {
 
@@ -149,8 +150,8 @@ public class Menus implements ISlashCommand {
 
     @Override
     public List<String> buttons() {
-        return Arrays.asList("Incoming","Freshman","Sophomore","Junior","Senior","Grad","Alumni","SE","Bioinformatics",
-                "ARG","Data Science","IT","WM","HCI","Cybersecurity","SSN","UD","YES_CCIEVENTS","NO_CCIEVENTS");
+        return Arrays.asList("Year_Incoming","Year_Freshman","Year_Sophomore","Year_Junior","Year_Senior","Year_Grad","Year_Alumni","Conc_SE","Conc_Bioinformatics",
+                "Conc_ARG","Conc_Data Science","Conc_IT","Conc_WM","Conc_HCI","Conc_Cybersecurity","Conc_SSN","Conc_UD","CCI_YES_CCIEVENTS","CCI_NO_CCIEVENTS");
     }
 
     @Override

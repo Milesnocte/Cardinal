@@ -28,6 +28,10 @@ public class SlashCommandManager {
         }
     }
 
+    public Collection<ISlashCommand> getCommands(){
+        return commands.values();
+    }
+
     void run(SlashCommandEvent event) throws Exception {
         final String name = event.getName();
         if(event.getUser().isBot()){

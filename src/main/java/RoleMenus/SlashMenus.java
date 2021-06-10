@@ -49,7 +49,7 @@ public class SlashMenus {
     public static void SlashConcetrationMenu(SlashCommandEvent event){
         event.reply("\n**__What is your concentration?__**\n").addActionRow(
                 Button.primary("Conc_SE", "Software Engineering"),
-                Button.primary("Bioinformatics", "Bioinformatics")
+                Button.primary("Conc_Bioinformatics", "Bioinformatics")
         ).addActionRow(
                 Button.primary("Conc_ARG", "AI, Robotics, and Gaming"),
                 Button.primary("Conc_Data Science", "Data Science")

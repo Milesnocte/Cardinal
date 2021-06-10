@@ -49,6 +49,10 @@ public class CommandManager {
         }
     }
 
+    public Collection<ICommand> getCommands(){
+        return commands.values();
+    }
+
     void run(GuildMessageReceivedEvent event) throws Exception {
         final DataBase db = new DataBase();
         final String msg = event.getMessage().getContentRaw();
