@@ -3,9 +3,6 @@ package Command.Commands;
 import Command.ICommand;
 import Main.DataBase;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;

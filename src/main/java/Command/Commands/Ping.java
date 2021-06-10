@@ -10,9 +10,8 @@ public class Ping implements ICommand {
 
     @Override
     public void run(List<String> args, GuildMessageReceivedEvent event) {
-        event.getChannel().sendMessage("Pong! " + event.getJDA().getGatewayPing() + "ms").queue(msg -> {
-            msg.editMessage("Pong! Took " + event.getJDA().getGatewayPing() + "ms").queue();
-        });
+        event.getChannel().sendMessage("Pong! " + event.getJDA().getGatewayPing() + "ms").queue(msg ->
+                msg.editMessage("Pong! Took " + event.getJDA().getGatewayPing() + "ms").queue());
     }
 
     @Override

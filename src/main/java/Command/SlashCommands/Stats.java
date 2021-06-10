@@ -22,7 +22,6 @@ public class Stats implements ISlashCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.cyan);
         embed.setDescription("**Woody By MilesNocte**");
-        int trim = event.getJDA().getRateLimitPool().toString().indexOf("[");
         embed.addField("**Woody's Stats**","`Ping:` " + currentTime + "ms" +
                 "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +

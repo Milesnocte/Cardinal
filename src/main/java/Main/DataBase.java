@@ -5,48 +5,12 @@ import java.sql.*;
 public class DataBase{
 
     private static Connection connect = null;
-    private static boolean hasData = false;
-
-    //All this isnt necessary as the bot only has 1 server, but ill keep it for later use
-    public void initialise() throws SQLException {
-        if(!hasData){
-            System.out.println("Initializing DataBase..");
-            hasData = true;
-
-            Statement statement = connect.createStatement();
-            //Fetch the guilds table
-            ResultSet result = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='guilds'");
-
-            //If it doesn't exist we create it here
-            if( !result.next() ){
-                System.out.println("Table not found. Building the Guilds table.");
-                // Build the table
-                Statement statement2 = connect.createStatement();
-                statement2.execute("CREATE TABLE guilds(GuildID TEXT," + ",roleId TEXT,eventsId TEXT," + "prefix TEXT," + "eventsId TEXT," + "concentrationId TEXT);");
-
-                //Create the rows
-                PreparedStatement prepared = connect.prepareStatement("INSERT INTO guilds values(?,?,?,?,?);");
-                prepared.setString(1,"clearme");
-                prepared.setString(2,"clearme");
-                prepared.setString(3,"clearme");
-                prepared.setString(4,"clearme");
-                prepared.setString(5,"clearme");
-                prepared.execute();
-                result.close();
-                prepared.close();
-                statement.close();
-                statement2.close();
-
-            }
-        }
-    }
 
     //Make sure we can connect to the database
     public void databaseCycle() throws Exception {
         System.out.println("Connecting to database...");
         Class.forName("org.sqlite.JDBC");
         connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-        initialise();
         System.out.println("Database cycled\nClosing Database");
         connect.close();
     }

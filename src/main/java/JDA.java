@@ -1,6 +1,5 @@
 import Command.CommandListener;
 import Command.SlashCommandListener;
-import Command.SlashCommandManager;
 import Listener.JoinListener;
 import Listeners.BotEventsListener;
 import Listeners.VoiceChannelListener;

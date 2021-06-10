@@ -4,10 +4,8 @@ import Command.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Avatar implements ISlashCommand {
     @Override
