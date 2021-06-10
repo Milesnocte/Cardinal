@@ -72,7 +72,8 @@ public class Concentrations extends ListenerAdapter {
                 if (roleIDs.contains(concentrationRoles.get(k))) {
                     event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(concentrationRoles.get(k))).queue();
                     int finalK = k;
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" + event.getGuild().getRoleById(concentrationRoles.get(finalK)).getName() + "`!").queue());
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Removed `" +
+                            event.getGuild().getRoleById(concentrationRoles.get(finalK)).getName() + "`!").queue());
                 }
             }
 
@@ -81,39 +82,39 @@ public class Concentrations extends ListenerAdapter {
             switch (event.getReaction().getReactionEmote().toString()) {
                 case ("RE:U+1f916"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(AI_GAMING)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `AI Gaming` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `AI Gaming` role!").queue());
                 }
                 case ("RE:U+1f4c3"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DATA_SCIENCE)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Data Science` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Data Science` role!").queue());
                 }
                 case ("RE:U+1f9d1U+200dU+1f4bb"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_SYSTEMS)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Systems` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Systems` role!").queue());
                 }
                 case ("RE:U+1f510"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(CYBER_SECURITY)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Cyber Sec` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Cyber Sec` role!").queue());
                 }
                 case ("RE:U+1f9d1U+200dU+1f4bc"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(HCI)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `HCI` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `HCI` role!").queue());
                 }
                 case ("RE:U+1f5a5"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INFO_TECH)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Info Tech` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Info Tech` role!").queue());
                 }
                 case ("RE:U+1f9d1U+200dU+1f527"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_ENGINEER)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Engineering` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Software Engineering` role!").queue());
                 }
                 case ("RE:U+1f4f1"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(WEB_MOBILE)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Web Mobile` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `Web Mobile` role!").queue());
                 }
                 case ("RE:U+2623"): {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(BIO_INFORMATICS)).queue();
-                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `BIOINF` role!").queue(null, null));
+                    event.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Added the `BIOINF` role!").queue());
                 }
             }
             event.getReaction().removeReaction(event.getUser()).queue();

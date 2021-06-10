@@ -3,8 +3,6 @@ package Command.SlashCommands;
 import Command.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

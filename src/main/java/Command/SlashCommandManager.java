@@ -1,8 +1,6 @@
 package Command;
 
-import Command.SlashCommands.Concentrations;
-import Command.SlashCommands.Ping;
-import Command.SlashCommands.YearRoles;
+import Command.SlashCommands.*;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import java.util.*;
@@ -13,20 +11,20 @@ public class SlashCommandManager {
 
     SlashCommandManager() {
         addCommand(new Ping());
-        addCommand(new YearRoles());
-        addCommand(new Concentrations());
+        addCommand(new Menus());
+        addCommand(new PurgeVCText());
+        addCommand(new WhoIs());
+        addCommand(new Avatar());
+        addCommand(new Purge());
+        addCommand(new Stats());
     }
 
     private void addCommand(ISlashCommand c) {
-        if(!commands.containsKey(c.commandName())){
-            commands.put(c.commandName(), c);
-        }
+        commands.putIfAbsent(c.commandName(), c);
         if(!(c.buttons().isEmpty())){
             for(String k : c.buttons()){
-                commands.put(k, c);
+                commands.putIfAbsent(k, c);
             }
-        }else{
-            System.out.println(c.commandName() + " had no buttons");
         }
     }
 
@@ -43,6 +41,7 @@ public class SlashCommandManager {
             commands.get(name).run(event);
         }
     }
+
     void run(ButtonClickEvent event) throws Exception {
         final String name = event.getComponentId();
         if(event.getUser().isBot()){

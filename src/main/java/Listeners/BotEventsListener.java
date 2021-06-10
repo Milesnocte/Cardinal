@@ -6,6 +6,9 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.managers.RoleManager;
 import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import org.jetbrains.annotations.NotNull;
@@ -16,12 +19,23 @@ public class BotEventsListener extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        event.getJDA().getGuildById("496396181174484992").upsertCommand("ping","Ping the bot").queue();
-        event.getJDA().getGuildById("433825343485247499").upsertCommand("ping","Ping the bot").queue();
-        event.getJDA().getGuildById("496396181174484992").upsertCommand("yearroles","yearroles menu").queue();
-        event.getJDA().getGuildById("433825343485247499").upsertCommand("yearroles","yearroles menu").queue();
-        event.getJDA().getGuildById("496396181174484992").upsertCommand("concentrations","concentrations menu").queue();
-        event.getJDA().getGuildById("433825343485247499").upsertCommand("concentrations","concentrations menu").queue();
+        event.getJDA().getGuildById("433825343485247499").updateCommands()
+                .addCommands(
+                        new CommandData("ping","Ping the bot"),
+                        new CommandData("purgevctxt","Purge vc text"),
+                        new CommandData("stats","Get Woody's status"),
+                        new CommandData("avatar","Get user avatar")
+                                .addOption(OptionType.USER,"user","user to get avatar from", false),
+                        new CommandData("whois","Get information about user")
+                                .addOption(OptionType.USER,"user","user to get information about", false),
+                        new CommandData("purge","bulk delete")
+                                .addOption(OptionType.INTEGER,"num_messages","number of messages to delete 1-100", true),
+                        new CommandData("menus","Role Menus")
+                                .addSubcommands(
+                                        new SubcommandData("yearroles","create a year role menu"),
+                                        new SubcommandData("concentration","create a concentration role menu"),
+                                        new SubcommandData("ccievents","create a cci events role menu")
+                )).queue();
     }
 
     @Override
