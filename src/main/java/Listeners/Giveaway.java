@@ -11,13 +11,13 @@ import java.util.List;
 
 public class Giveaway extends ListenerAdapter {
 
-    private static final long INCOMING = 822305355828559893L;
-    private static final long FRESHMAN = 822305557426864170L;
-    private static final long SOPHOMORE = 822305633327120404L;
-    private static final long JUNIOR = 822305682882691094L;
-    private static final long SENIOR = 822305742476148786L;
-    private static final long GRADUATE = 822305775967141930L;
-    private static final long ALUMNI = 822305835086512178L;
+    private static final long INCOMING = 618643756580601857L;
+    private static final long FRESHMAN = 581614531789455363L;
+    private static final long SOPHOMORE = 618643636665712640L;
+    private static final long JUNIOR = 618643685432623135L;
+    private static final long SENIOR = 618643717384831017L;
+    private static final long GRADUATE = 618643752327708682L;
+    private static final long ALUMNI = 449689803219271681L;
 
     private static final List<Long> yearRoles = Arrays.asList(INCOMING, FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, GRADUATE, ALUMNI);
     private static Connection connect = null;
@@ -42,9 +42,12 @@ public class Giveaway extends ListenerAdapter {
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event)  {
         boolean hasRole = false;
 
-        for (int k = 0; k < yearRoles.size(); k++) {
-            if (event.getMember().getRoles().get(k).getIdLong() == yearRoles.get(k)) {
-                hasRole = true;
+        for (int k = 0; k < event.getMember().getRoles().size(); k++) {
+            for (Long yearRole : yearRoles) {
+                if (event.getMember().getRoles().get(k).getId().equals("" + yearRole)) {
+                    hasRole = true;
+                    break;
+                }
             }
         }
 

@@ -21,6 +21,7 @@ public class Giveaway implements ICommand {
                         "can not be an emote. It needs to be a discord emoji, from no server.").queue();
 
             }
+            event.getMessage().delete().queue();
         }
     }
 

@@ -2,6 +2,7 @@ import Command.CommandListener;
 import Command.SlashCommandListener;
 import Listener.JoinListener;
 import Listeners.BotEventsListener;
+import Listeners.Giveaway;
 import Listeners.VoiceChannelListener;
 import Main.Credentials;
 import Main.DataBase;
@@ -35,7 +36,6 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new YearMenu(),
                         new CCIEvents(),
                         new JoinListener(),
-                        new ScheduledTask(),
                         new Concentrations()
                         //new Giveaway()
                 )
