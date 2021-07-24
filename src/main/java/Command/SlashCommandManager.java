@@ -17,6 +17,7 @@ public class SlashCommandManager {
         addCommand(new Avatar());
         addCommand(new Purge());
         addCommand(new Stats());
+        addCommand(new Define());
     }
 
     private void addCommand(ISlashCommand c) {

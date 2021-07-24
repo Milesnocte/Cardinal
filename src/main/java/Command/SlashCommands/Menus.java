@@ -5,9 +5,7 @@ import RoleMenus.SlashMenus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class Menus implements ISlashCommand {
 

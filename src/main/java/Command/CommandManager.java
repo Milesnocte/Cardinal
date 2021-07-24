@@ -27,8 +27,8 @@ public class CommandManager {
         addCommand(new Help());
         addCommand(new PurgeVCText());
         addCommand(new YearRoles());
-        addCommand(new Giveaway());
-        addCommand(new DrawGiveaway());
+        //addCommand(new Giveaway());
+        //addCommand(new DrawGiveaway());
         addCommand(new ConcentrationRoles());
         addCommand(new CCIEventsRole());
         addCommand(new Me());
