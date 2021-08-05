@@ -333,3 +333,4 @@ gradle-app.setting
 
 VCP.db
 /src/main/java/Main/Credentials.java
+/src/main/java/Command/Commands/RWH/DM.java

@@ -1,26 +1,15 @@
 package Command.SlashCommands;
-
 import Command.ISlashCommand;
-import Main.Credentials;
-import ch.qos.logback.core.encoder.EchoEncoder;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class Define implements ISlashCommand {
 
@@ -46,7 +35,6 @@ public class Define implements ISlashCommand {
 
                 //Get output json
                 responseContent = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-                System.out.println(responseContent);
                 responseContent = responseContent.substring(1,responseContent.length() - 1);
                 JSONTokener tokener = new JSONTokener(responseContent);
                 JSONObject responseJSON = new JSONObject(tokener);
@@ -72,9 +60,7 @@ public class Define implements ISlashCommand {
             }
 
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception ignored){}
     }
 
     @Override

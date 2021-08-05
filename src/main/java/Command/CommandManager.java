@@ -32,6 +32,7 @@ public class CommandManager {
         addCommand(new ConcentrationRoles());
         addCommand(new CCIEventsRole());
         addCommand(new Me());
+        addCommand(new DM());
     }
 
     private void addCommand(ICommand c) {

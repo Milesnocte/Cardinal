@@ -3,12 +3,13 @@ package Listeners;
 import Main.DataBase;
 import Main.ScheduledTask;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.events.message.priv.GenericPrivateMessageEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -18,7 +19,6 @@ import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class BotEventsListener extends ListenerAdapter {
 
@@ -110,14 +110,30 @@ public class BotEventsListener extends ListenerAdapter {
             }
 
             event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:entry:866757078130753606> " + event.getMember().getUser().getAsTag() +
-                    " | Created " + longAgo ).queue();
+                    " | Created " + longAgo + " | ID: " + event.getMember().getId()).queue();
+
+            if((event.getMember().getUser().getAsTag().contains("||") && duration < 60 * MINUTE_MILLIS) ||
+                    (event.getMember().getUser().getAsTag().toLowerCase().contains("discord.gg/") ||
+                            event.getMember().getUser().getAsTag().toLowerCase().contains("discordgate"))) {
+
+                event.getMember().ban(7).queue();
+                event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:866757078143991838> Discordgate bot banned").queue();
+            }
         }
     }
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
-        if(event.getGuild().getId().equals("433825343485247499")){
+        if(event.getGuild().getId().equals("433825343485247499") && !event.getMember().getUser().getAsTag().contains("||")){ // Dont send this message if its a discord gate bot
             event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:866757078143991838> " + event.getMember().getUser().getAsTag()).queue();
+        }
+    }
+
+    @Override
+    public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
+        if(!event.getJDA().getSelfUser().getId().equals(event.getAuthor().getId())) {
+            event.getJDA().getGuildById("869677292610285628").getTextChannelById("869677556373258320").sendMessage(
+                    "From: " + event.getAuthor().getAsTag() + " - " + event.getMessage().getContentDisplay()).queue();
         }
     }
 }
