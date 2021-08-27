@@ -68,8 +68,6 @@ public class Giveaway extends ListenerAdapter {
                 prepared2.execute();
             }
             connect.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) { }
     }
 }
