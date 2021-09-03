@@ -31,6 +31,5 @@ public class CommandListener extends ListenerAdapter {
             }
             event.getChannel().sendMessage("My prefix is `" + prefix + "`").queue();
         }
-
     }
 }
