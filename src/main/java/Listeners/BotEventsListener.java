@@ -31,6 +31,8 @@ public class BotEventsListener extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
+
+        // RWH
         event.getJDA().getGuildById("433825343485247499").updateCommands()
                 .addCommands(
                         new CommandData("ping","Ping the bot"),
@@ -51,6 +53,29 @@ public class BotEventsListener extends ListenerAdapter {
                         new CommandData("define","Get definition of word")
                                 .addOption(OptionType.STRING,"word_to_define","A word to define", true)
                 ).queue();
+
+        // Niner Nation
+        event.getJDA().getGuildById("883776641539657759").updateCommands()
+                .addCommands(
+                        new CommandData("ping","Ping the bot"),
+                        new CommandData("purgevctxt","Purge vc text"),
+                        new CommandData("stats","Get Woody's status"),
+                        new CommandData("avatar","Get user avatar")
+                                .addOption(OptionType.USER,"user","user to get avatar from", false),
+                        new CommandData("whois","Get information about user")
+                                .addOption(OptionType.USER,"user","user to get information about", false),
+                        new CommandData("purge","bulk delete")
+                                .addOption(OptionType.INTEGER,"num_messages","number of messages to delete 1-100", true),
+                        new CommandData("menus","Role Menus")
+                                .addSubcommands(
+                                        new SubcommandData("yearroles","create a year role menu"),
+                                        new SubcommandData("pronounroles","create a pronoun role menu"),
+                                        new SubcommandData("collegeroles","create a college role menu")
+                                ),
+                        new CommandData("define","Get definition of word")
+                                .addOption(OptionType.STRING,"word_to_define","A word to define", true)
+                ).queue();
+
         new ScheduledTask(event);
     }
 

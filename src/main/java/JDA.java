@@ -6,10 +6,6 @@ import Listeners.Giveaway;
 import Listeners.VoiceChannelListener;
 import Main.Credentials;
 import Main.DataBase;
-import Main.ScheduledTask;
-import RoleMenus.CCIEvents;
-import RoleMenus.Concentrations;
-import RoleMenus.YearMenu;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -33,10 +29,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new VoiceChannelListener(),
                         new BotEventsListener(),
                         new CommandListener(),
-                        new YearMenu(),
-                        new CCIEvents(),
                         new JoinListener(),
-                        new Concentrations(),
                         new Giveaway()
                 )
                 //Set the bot activity to "Watching for cheaters"
