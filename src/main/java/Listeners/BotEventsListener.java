@@ -70,6 +70,7 @@ public class BotEventsListener extends ListenerAdapter {
                                 .addSubcommands(
                                         new SubcommandData("yearroles","create a year role menu"),
                                         new SubcommandData("pronounroles","create a pronoun role menu"),
+                                        new SubcommandData("polirole","create a debate role menu"),
                                         new SubcommandData("collegeroles","create a college role menu")
                                 ),
                         new CommandData("define","Get definition of word")

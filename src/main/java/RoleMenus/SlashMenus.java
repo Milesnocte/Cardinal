@@ -53,6 +53,13 @@ public class SlashMenus {
                 Button.primary("College_Undec", "Undeclared")
         ).queue();
     }
+    public static void PoliMenu(SlashCommandEvent event){
+        event.reply("\n**__Would you like access to politics?__**\nMature and potentially triggering subjects may be discussed here.")
+                .addActionRow(
+                Button.success("POLI_YES", "Yes"),
+                Button.danger("POLI_NO", "No")
+        ).queue();
+    }
 
     public static void RemoveYearRole(ButtonClickEvent event){
 

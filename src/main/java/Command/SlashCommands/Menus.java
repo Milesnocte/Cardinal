@@ -29,6 +29,7 @@ public class Menus implements ISlashCommand {
             if(event.getSubcommandName().equals("yearroles")) SlashMenus.SlashYearMenu(event);
             if(event.getSubcommandName().equals("pronounroles")) SlashMenus.PronounMenu(event);
             if(event.getSubcommandName().equals("collegeroles")) SlashMenus.CollegeMenu(event);
+            if(event.getSubcommandName().equals("polirole")) SlashMenus.PoliMenu(event);
             if(event.getSubcommandName().equals("concentration")) RWHSlashMenus.SlashConcetrationMenu(event);
             if(event.getSubcommandName().equals("ccievents")) RWHSlashMenus.SlashCCIEvents(event);
         }else{
@@ -38,6 +39,30 @@ public class Menus implements ISlashCommand {
 
     @Override
     public void run(ButtonClickEvent event) throws Exception {
+
+        //Give or take Debate role
+        if(event.getComponentId().startsWith("POLI_")){
+            final long DEBATE = event.getGuild().getRolesByName("Debate",true).get(0).getIdLong();
+            switch(event.getComponentId()) {
+                case ("POLI_YES"):
+                    if (!event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(DEBATE)).contains(event.getMember())) {
+                        event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DEBATE)).queue();
+                        event.reply("You will now have access to politics!").setEphemeral(true).queue();
+                    } else {
+                        event.reply("You have already opted in for politics!").setEphemeral(true).queue();
+                    }
+                    break;
+                case ("POLI_NO"):
+                    if (event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(DEBATE)).contains(event.getMember())) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(DEBATE)).queue();
+                        event.reply("You will no longer have access to politics!").setEphemeral(true).queue();
+                    } else {
+                        event.reply("You don't need to opt-out for politics if you never opted-in!").setEphemeral(true).queue();
+                    }
+                    break;
+            }
+        }
+
         //Give or take CCI Events role
         if(event.getComponentId().startsWith("CCI_")){
             switch(event.getComponentId()) {
@@ -254,7 +279,7 @@ public class Menus implements ISlashCommand {
         return Arrays.asList("Year_Incoming","Year_Freshman","Year_Sophomore","Year_Junior","Year_Senior","Year_Grad","Year_Alumni","Conc_SE","Conc_Bioinformatics",
                 "Conc_ARG","Conc_Data Science","Conc_IT","Conc_WM","Conc_HCI","Conc_Cybersecurity","Conc_SSN","Conc_UD","CCI_YES_CCIEVENTS","CCI_NO_CCIEVENTS",
                 "Pron_He","Pron_She","Pron_They","Pron_HeThey","Pron_SheThey","Pron_Ask","College_Data","College_Liberal","College_Health",
-                "College_Engineering","College_Education","College_Computing","College_Arts","College_Business","College_Undec");
+                "College_Engineering","College_Education","College_Computing","College_Arts","College_Business","College_Undec","POLI_YES","POLI_NO");
     }
 
     @Override
