@@ -20,11 +20,15 @@ class JoinListener : EventListener {
     }
 
     private fun onGuildMemberJoinEvent(event: GuildMemberJoinEvent) {
-        newMembers += event.user.idLong
+        if(!event.user.isBot) {
+            newMembers += event.user.idLong
+        }
     }
 
     private fun onGuildMemberRemoveEvent(event: GuildMemberRemoveEvent) {
-        newMembers -= event.user.idLong
+        if(!event.user.isBot) {
+            newMembers -= event.user.idLong
+        }
     }
 
     private fun onRawGatewayEvent(event: RawGatewayEvent) {
