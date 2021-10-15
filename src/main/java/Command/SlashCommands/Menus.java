@@ -4,24 +4,12 @@ import Command.ISlashCommand;
 import RoleMenus.RWHSlashMenus;
 import RoleMenus.SlashMenus;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import java.util.*;
 
 public class Menus implements ISlashCommand {
-
-    // RWH Sepecific buttons ids
-    private static final long AI_GAMING = 822305355828559893L;
-    private static final long DATA_SCIENCE = 822305557426864170L;
-    private static final long SOFTWARE_SYSTEMS = 822305633327120404L;
-    private static final long CYBER_SECURITY = 822305682882691094L;
-    private static final long HCI = 822305742476148786L;
-    private static final long INFO_TECH = 822305775967141930L;
-    private static final long SOFTWARE_ENGINEER = 822305835086512178L;
-    private static final long WEB_MOBILE = 822305884712992818L;
-    private static final long BIO_INFORMATICS = 822305921672937472L;
-    private static final long UNDECLARED = 852049528458444831L;
-    private static final long CCI_EVENTS = 618652464643571712L;
 
     @Override
     public void run(SlashCommandEvent event) throws Exception {
@@ -65,6 +53,10 @@ public class Menus implements ISlashCommand {
 
         //Give or take CCI Events role
         if(event.getComponentId().startsWith("CCI_")){
+
+            Guild guild = event.getGuild();
+            long CCI_EVENTS = guild.getRolesByName("CCI Events", true).get(0).getIdLong();
+
             switch(event.getComponentId()) {
                 case ("CCI_YES_CCIEVENTS"):
                     if (!event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(CCI_EVENTS)).contains(event.getMember())) {
@@ -95,8 +87,6 @@ public class Menus implements ISlashCommand {
             final long ARTS = event.getGuild().getRolesByName("Arts + Architecture",true).get(0).getIdLong();
             final long BUSINESS = event.getGuild().getRolesByName("Business",true).get(0).getIdLong();
             final long UNDEC = event.getGuild().getRolesByName("Undeclared",true).get(0).getIdLong();
-
-            final List<Long> pronRoles = Arrays.asList(DATA, LIBERAL, HEALTH, ENGINEER, EDU, COMPUTER, ARTS, BUSINESS, UNDEC);
 
             // Remove college role
             SlashMenus.RemoveCollegeRole(event);
@@ -227,6 +217,20 @@ public class Menus implements ISlashCommand {
         }
         // Give concentration role to memeber
         if(event.getComponentId().startsWith("Conc_")){
+
+            Guild guild = event.getGuild();
+
+            long AI_GAMING = guild.getRolesByName("ai-gaming", true).get(0).getIdLong();
+            long DATA_SCIENCE = guild.getRolesByName("data-sci", true).get(0).getIdLong();
+            long SOFTWARE_SYSTEMS = guild.getRolesByName("software-systems", true).get(0).getIdLong();
+            long CYBER_SECURITY = guild.getRolesByName("cyber-sec", true).get(0).getIdLong();
+            long HCI = guild.getRolesByName("hci", true).get(0).getIdLong();
+            long INFO_TECH = guild.getRolesByName("info-tech", true).get(0).getIdLong();
+            long SOFTWARE_ENGINEER = guild.getRolesByName("software-eng", true).get(0).getIdLong();
+            long WEB_MOBILE = guild.getRolesByName("web-mobile", true).get(0).getIdLong();
+            long BIO_INFORMATICS = guild.getRolesByName("bio-inf", true).get(0).getIdLong();
+            long UNDECLARED = guild.getRolesByName("Undeclared", true).get(0).getIdLong();
+
             //remove existing concentration role
             RWHSlashMenus.RemoveConcRole(event);
             switch(event.getComponentId()) {

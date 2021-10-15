@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
-import net.dv8tion.jda.api.events.message.priv.GenericPrivateMessageEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -72,6 +71,27 @@ public class BotEventsListener extends ListenerAdapter {
                                         new SubcommandData("pronounroles","create a pronoun role menu"),
                                         new SubcommandData("polirole","create a debate role menu"),
                                         new SubcommandData("collegeroles","create a college role menu")
+                                ),
+                        new CommandData("define","Get definition of word")
+                                .addOption(OptionType.STRING,"word_to_define","A word to define", true)
+                ).queue();
+
+        event.getJDA().getGuildById("898423784460124232").updateCommands()
+                .addCommands(
+                        new CommandData("ping","Ping the bot"),
+                        new CommandData("purgevctxt","Purge vc text"),
+                        new CommandData("stats","Get Woody's status"),
+                        new CommandData("avatar","Get user avatar")
+                                .addOption(OptionType.USER,"user","user to get avatar from", false),
+                        new CommandData("whois","Get information about user")
+                                .addOption(OptionType.USER,"user","user to get information about", false),
+                        new CommandData("purge","bulk delete")
+                                .addOption(OptionType.INTEGER,"num_messages","number of messages to delete 1-100", true),
+                        new CommandData("menus","Role Menus")
+                                .addSubcommands(
+                                        new SubcommandData("yearroles","create a year role menu"),
+                                        new SubcommandData("concentration","create a concentration role menu"),
+                                        new SubcommandData("ccievents","create a cci events role menu")
                                 ),
                         new CommandData("define","Get definition of word")
                                 .addOption(OptionType.STRING,"word_to_define","A word to define", true)
