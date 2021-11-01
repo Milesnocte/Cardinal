@@ -3,6 +3,7 @@ import Command.SlashCommandListener;
 import Listener.JoinListener;
 import Listeners.BotEventsListener;
 import Listeners.Giveaway;
+import Listeners.StarBoardListener;
 import Listeners.VoiceChannelListener;
 import Main.Credentials;
 import Main.DataBase;
@@ -20,7 +21,8 @@ public class JDA extends ListenerAdapter implements EventListener {
 
         //Online the bot and create the listeners
         DefaultShardManagerBuilder.create(
-                GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES
+                GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES,
+                GatewayIntent.GUILD_EMOJIS
         ).setToken(Credentials.TOKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
@@ -30,7 +32,8 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new BotEventsListener(),
                         new CommandListener(),
                         new JoinListener(),
-                        new Giveaway()
+                        new Giveaway(),
+                        new StarBoardListener()
                 )
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))
