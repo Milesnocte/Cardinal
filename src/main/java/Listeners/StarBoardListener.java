@@ -9,38 +9,49 @@ import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class StarBoardListener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
         if(event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")){
+            if(!event.getChannel().getName().equals("star-board")) {
 
-            int stars = 0;
+                int stars = 0;
 
-            try{
-                stars = tesMessageID(event.getMessageId());
-            }catch (Exception ignored){}
+                try {
+                    stars = getSars(event.getMessageId());
+                } catch (Exception ignored) {
+                }
 
-            if(stars > 0){
-                addStar(event.getMessageId());
-            }else{
-                addMessage(event);
-            }
+                if (stars > 0) {
+                    addStar(event.getMessageId());
+                } else {
+                    addMessage(event);
+                }
 
-            event.getChannel().sendMessage(stars + " <:PauseChamp:890080347793010750>").queue();
+                // Add the star that was just reacted
+                stars += 1;
 
-            if(stars >= 5){
-                RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
-                Message message = action.complete();
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setTitle("__" + message.getAuthor().getName() + "__");
-                embed.setFooter("ID: " + message.getId());
-                embed.setDescription(message.getJumpUrl());
-                embed.addField("",message.getContentDisplay(),false);
-                embed.addField("",message.getAttachments().get(0).getProxyUrl(),false);
-                event.getGuild().getTextChannelsByName("star-board", true)
-                        .get(0).sendMessageEmbeds(embed.build()).queue();
+                if (stars >= 5 && !getPosted(event.getMessageId())) {
+                    setPosted(event.getMessageId());
+                    RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
+                    Message message = action.complete();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setAuthor(message.getAuthor().getAsTag(), null, message.getAuthor().getAvatarUrl());
+                    if (message.getReferencedMessage() != null) {
+                        embed.addField("**Reply to**", message.getReferencedMessage().getContentDisplay(), false);
+                    }
+                    if (!message.getContentDisplay().isBlank()) {
+                        embed.addField("**Message**", message.getContentDisplay(), false);
+                    }
+                    if (message.getAttachments().size() > 0) {
+                        embed.setImage(message.getAttachments().get(0).getUrl());
+                    }
+                    embed.setFooter("Sent on: " + message.getTimeCreated().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+                    event.getGuild().getTextChannelsByName("star-board", true).get(0).sendMessageEmbeds(embed.build()).queue();
+                }
             }
         }
     }
@@ -52,10 +63,8 @@ public class StarBoardListener extends ListenerAdapter {
             int stars = 0;
 
             try{
-                stars = tesMessageID(event.getMessageId());
+                stars = getSars(event.getMessageId());
             }catch (Exception ignored){}
-
-            event.getChannel().sendMessage(stars + " <:PauseChamp:890080347793010750>").queue();
 
             if(stars > 0){
                 revokeStar(event.getMessageId());
@@ -63,7 +72,7 @@ public class StarBoardListener extends ListenerAdapter {
         }
     }
 
-    private int tesMessageID(String messageID){
+    private int getSars(String messageID){
         try {
             Class.forName("org.sqlite.JDBC");
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
@@ -72,10 +81,21 @@ public class StarBoardListener extends ListenerAdapter {
             int messageIn = inStarBoard.getInt(1);
             connect.close();
             return messageIn;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
         return 0;
+    }
+
+    private boolean getPosted(String messageID){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+            Statement prepared = connect.createStatement();
+            ResultSet inStarBoard = prepared.executeQuery("SELECT Posted FROM StarBoard WHERE MessageID =  " + messageID + ";");
+            boolean messagePosted = inStarBoard.getBoolean(1);
+            connect.close();
+            return messagePosted;
+        } catch (Exception ignored) {}
+        return true;
     }
 
     private void addStar(String messageID){
@@ -102,6 +122,16 @@ public class StarBoardListener extends ListenerAdapter {
         }
     }
 
+    private void setPosted(String messageID){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+            PreparedStatement prepared = connect.prepareStatement("UPDATE StarBoard SET Posted = true WHERE MessageID = " + messageID);
+            prepared.execute();
+            connect.close();
+        }catch (Exception ignored){}
+    }
+
     private void addMessage(GuildMessageReactionAddEvent event){
         RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
         Message message = action.complete();
@@ -110,10 +140,11 @@ public class StarBoardListener extends ListenerAdapter {
             Class.forName("org.sqlite.JDBC");
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
             PreparedStatement prepared;
-            prepared = connect.prepareStatement("INSERT INTO StarBoard values(?,?,?);");
+            prepared = connect.prepareStatement("INSERT INTO StarBoard values(?,?,?,?);");
             prepared.setString(1,event.getMessageId());
             prepared.setInt(2,1);
             prepared.setString(3,message.getAuthor().getAsMention());
+            prepared.setBoolean(4,false);
             prepared.execute();
         }catch (Exception e){
             e.printStackTrace();

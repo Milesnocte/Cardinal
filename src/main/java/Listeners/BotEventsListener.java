@@ -50,11 +50,13 @@ public class BotEventsListener extends ListenerAdapter {
                                         new SubcommandData("ccievents","create a cci events role menu")
                                         ),
                         new CommandData("define","Get definition of word")
-                                .addOption(OptionType.STRING,"word_to_define","A word to define", true)
+                                .addOption(OptionType.STRING,"word_to_define","A word to define", true),
+                        new CommandData("eightball","Shake the 8-ball")
+                                .addOption(OptionType.STRING,"question","Ask the 8-ball a question.", true)
                 ).queue();
 
         // Niner Nation
-        event.getJDA().getGuildById("883776641539657759").updateCommands()
+        event.getJDA().updateCommands()
                 .addCommands(
                         new CommandData("ping","Ping the bot"),
                         new CommandData("purgevctxt","Purge vc text"),
@@ -73,7 +75,9 @@ public class BotEventsListener extends ListenerAdapter {
                                         new SubcommandData("collegeroles","create a college role menu")
                                 ),
                         new CommandData("define","Get definition of word")
-                                .addOption(OptionType.STRING,"word_to_define","A word to define", true)
+                                .addOption(OptionType.STRING,"word_to_define","A word to define", true),
+                        new CommandData("eightball","Shake the 8-ball")
+                            .addOption(OptionType.STRING,"question","Ask the 8-ball a question.", true)
                 ).queue();
 
         event.getJDA().getGuildById("898423784460124232").updateCommands()

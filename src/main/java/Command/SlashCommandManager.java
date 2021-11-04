@@ -18,6 +18,7 @@ public class SlashCommandManager {
         addCommand(new Purge());
         addCommand(new Stats());
         addCommand(new Define());
+        addCommand(new EightBall());
     }
 
     private void addCommand(ISlashCommand c) {
