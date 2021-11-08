@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class StarBoardListener extends ListenerAdapter {
@@ -39,9 +40,10 @@ public class StarBoardListener extends ListenerAdapter {
                     RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
                     Message message = action.complete();
                     EmbedBuilder embed = new EmbedBuilder();
-                    embed.setAuthor(message.getAuthor().getAsTag(), null, message.getAuthor().getAvatarUrl());
+                    embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
                     if (message.getReferencedMessage() != null) {
-                        embed.addField("**Reply to**", message.getReferencedMessage().getContentDisplay(), false);
+                        embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
+                                message.getReferencedMessage().getContentDisplay(), false);
                     }
                     if (!message.getContentDisplay().isBlank()) {
                         embed.addField("**Message**", message.getContentDisplay(), false);
@@ -49,7 +51,8 @@ public class StarBoardListener extends ListenerAdapter {
                     if (message.getAttachments().size() > 0) {
                         embed.setImage(message.getAttachments().get(0).getUrl());
                     }
-                    embed.setFooter("Sent on: " + message.getTimeCreated().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+                    embed.setFooter("Sent on: " + message.getTimeCreated().atZoneSameInstant(ZoneId.of("America/New_York"))
+                            .format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a")));
                     event.getGuild().getTextChannelsByName("star-board", true).get(0).sendMessageEmbeds(embed.build()).queue();
                 }
             }
