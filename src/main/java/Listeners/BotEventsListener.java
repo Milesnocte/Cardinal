@@ -34,29 +34,31 @@ public class BotEventsListener extends ListenerAdapter {
         // Niner Nation
         event.getJDA().updateCommands()
                 .addCommands(
-                        new CommandData("ping", "Ping the bot"),
-                        new CommandData("purgevctxt", "Purge vc text"),
-                        new CommandData("stats", "Get Woody's status"),
-                        new CommandData("avatar", "Get user avatar")
-                                .addOption(OptionType.USER, "user", "user to get avatar from", false),
-                        new CommandData("whois", "Get information about user")
-                                .addOption(OptionType.USER, "user", "user to get information about", false),
-                        new CommandData("purge", "bulk delete")
-                                .addOption(OptionType.INTEGER, "num_messages", "number of messages to delete 1-100", true),
-                        new CommandData("menus", "Role Menus")
+                        new CommandData("ping","Ping the bot"),
+                        new CommandData("purgevctxt","Purge vc text"),
+                        new CommandData("stats","Get Woody's status"),
+                        new CommandData("avatar","Get user avatar")
+                                .addOption(OptionType.USER,"user","user to get avatar from", false),
+                        new CommandData("whois","Get information about user")
+                                .addOption(OptionType.USER,"user","user to get information about", false),
+                        new CommandData("purge","bulk delete")
+                                .addOption(OptionType.INTEGER,"num_messages","number of messages to delete 1-100", true),
+                        new CommandData("menus","Role Menus")
                                 .addSubcommands(
-                                        new SubcommandData("yearroles", "create a year role menu"),
-                                        new SubcommandData("pronounroles", "create a pronoun role menu"),
-                                        new SubcommandData("polirole", "create a debate role menu"),
-                                        new SubcommandData("collegeroles", "create a college role menu"),
-                                        new SubcommandData("concentration", "create a concentration role menu"),
-                                        new SubcommandData("ccievents", "create a cci events role menu")
+                                        new SubcommandData("yearroles","create a year role menu"),
+                                        new SubcommandData("pronounroles","create a pronoun role menu"),
+                                        new SubcommandData("polirole","create a debate role menu"),
+                                        new SubcommandData("collegeroles","create a college role menu"),
+                                        new SubcommandData("concentration","create a concentration role menu"),
+                                        new SubcommandData("ccievents","create a cci events role menu")
                                 ),
-                        new CommandData("define", "Get definition of word")
-                                .addOption(OptionType.STRING, "word_to_define", "A word to define", true),
-                        new CommandData("eightball", "Shake the 8-ball")
-                                .addOption(OptionType.STRING, "question", "Ask the 8-ball a question.", true)
+                        new CommandData("define","Get definition of word")
+                                .addOption(OptionType.STRING,"word_to_define","A word to define", true),
+                        new CommandData("eightball","Shake the 8-ball")
+                            .addOption(OptionType.STRING,"question","Ask the 8-ball a question.", true)
                 ).queue();
+
+        new ScheduledTask(event);
     }
 
     @Override
