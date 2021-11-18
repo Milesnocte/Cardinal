@@ -108,9 +108,7 @@ public class StarBoardListener extends ListenerAdapter {
             PreparedStatement prepared = connect.prepareStatement("UPDATE StarBoard SET Stars = Stars + 1 WHERE MessageID = " + messageID);
             prepared.execute();
             connect.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception ignored){}
     }
 
     private void revokeStar(String messageID){
@@ -120,9 +118,7 @@ public class StarBoardListener extends ListenerAdapter {
             PreparedStatement prepared = connect.prepareStatement("UPDATE StarBoard SET Stars = Stars - 1 WHERE MessageID = " + messageID);
             prepared.execute();
             connect.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception ignored){}
     }
 
     private void setPosted(String messageID){
@@ -149,8 +145,6 @@ public class StarBoardListener extends ListenerAdapter {
             prepared.setString(3,message.getAuthor().getAsMention());
             prepared.setBoolean(4,false);
             prepared.execute();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception ignored){}
     }
 }

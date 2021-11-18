@@ -1,6 +1,7 @@
 package Command.SlashCommands;
 
 import Command.ISlashCommand;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import java.util.Collections;
@@ -17,7 +18,8 @@ public class EightBall implements ISlashCommand {
                 "Ask again later", "Cannot predict now", "Concentrate and ask again", "Don’t count on it", "Outlook not so good",
                 "My sources say no", "Very doubtful", "My reply is no"};
 
-        event.reply("\uD83D\uDE4B: " + event.getOption("question").getAsString() +"\n\uD83C\uDFB1: " + answers[roll]).queue();
+        event.reply("\uD83D\uDE4B: " + event.getOption("question").getAsString() +"\n\uD83C\uDFB1: " + answers[roll])
+                .allowedMentions(Collections.singleton(Message.MentionType.USER)).queue();
     }
 
     @Override

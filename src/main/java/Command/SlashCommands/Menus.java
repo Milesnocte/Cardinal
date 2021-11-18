@@ -244,7 +244,7 @@ public class Menus implements ISlashCommand {
                     break;
                 case ("Conc_ARG"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(AI_GAMING)).queue();
-                    event.reply("Added AI, Robotics, and Gaminge role!").setEphemeral(true).queue();
+                    event.reply("Added AI, Robotics, and Gaming role!").setEphemeral(true).queue();
                     break;
                 case ("Conc_Data Science"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DATA_SCIENCE)).queue();

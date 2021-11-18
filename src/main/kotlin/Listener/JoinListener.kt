@@ -20,7 +20,7 @@ class JoinListener : EventListener {
     }
 
     private fun onGuildMemberJoinEvent(event: GuildMemberJoinEvent) {
-        if(!event.user.isBot) {
+        if(!event.user.isBot && (event.guild.id == "433825343485247499")) {
             newMembers += event.user.idLong
         }
     }
