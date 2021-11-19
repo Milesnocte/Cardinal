@@ -5,6 +5,7 @@ import Listeners.BotEventsListener;
 import Listeners.Giveaway;
 import Listeners.StarBoardListener;
 import Listeners.VoiceChannelListener;
+import Main.CatalogParser;
 import Main.Credentials;
 import Main.DataBase;
 import net.dv8tion.jda.api.OnlineStatus;

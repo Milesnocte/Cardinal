@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.0'
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
@@ -10,19 +10,21 @@ mainClassName = 'JDA'
 
 repositories {
     mavenCentral()
-    jcenter()
     maven { // on kotlin dsl use `maven("https://m2.dv8tion.net/releases")` instead
-        url "https://m2.dv8tion.net/releases"
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
     }
 }
 
 dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
-    compile 'org.jetbrains:annotations:22.0.0'
-    compile ("net.dv8tion:JDA:4.3.0_314")
-    compile('ch.qos.logback:logback-classic:1.2.6')
-    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
-    compile 'com.vdurmont:emoji-java:5.1.1'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+    implementation 'org.jetbrains:annotations:22.0.0'
+    implementation 'net.dv8tion:JDA:4.3.0_346'
+    implementation 'ch.qos.logback:logback-classic:1.2.7'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
+    implementation 'com.vdurmont:emoji-java:5.1.1'
+    implementation 'org.jsoup:jsoup:1.14.3'
 }
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17

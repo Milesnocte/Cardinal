@@ -26,7 +26,7 @@ public class Stats implements ISlashCommand {
                 "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
-                "\n`Bot API:` JDA 4.2.1_273", false);
+                "\n`Bot API:` JDA 4.3.0_346", false);
         event.replyEmbeds(embed.build()).addActionRow(
                 Button.link("https://discordstatus.com/", "Discord Status")
         ).queue();
