@@ -14,6 +14,7 @@ public class UpdateCommands implements ICommand {
     @Override
     public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
         if (event.getAuthor().getId().equals(Credentials.OWNER)) {
+
             event.getChannel().sendMessage("This might take a moment").queue();
             event.getJDA().updateCommands()
                     .addCommands(
@@ -37,7 +38,9 @@ public class UpdateCommands implements ICommand {
                             new CommandData("define", "Get definition of word")
                                     .addOption(OptionType.STRING, "word_to_define", "A word to define", true),
                             new CommandData("eightball", "Shake the 8-ball")
-                                    .addOption(OptionType.STRING, "question", "Ask the 8-ball a question.", true)
+                                    .addOption(OptionType.STRING, "question", "Ask the 8-ball a question.", true),
+                            new CommandData("shutdown", "shutdown the bot"),
+                            new CommandData("restart", "restart the bot")
                     ).queue();
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
         }

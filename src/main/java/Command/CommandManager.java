@@ -30,7 +30,6 @@ public class CommandManager {
         addCommand(new DrawGiveaway());
         addCommand(new Me());
         addCommand(new UpdateCommands());
-        addCommand(new Shutdown());
     }
 
     private void addCommand(ICommand c) {
