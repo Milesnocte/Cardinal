@@ -30,7 +30,6 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new BotEventsListener(),
                         new CommandListener(),
                         new JoinListener(),
-                        new Giveaway(),
                         new StarBoardListener()
                 )
                 //Set the bot activity to "Watching for cheaters"
