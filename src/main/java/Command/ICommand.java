@@ -8,5 +8,4 @@ public interface ICommand {
     void run(List<String> args, GuildMessageReceivedEvent event) throws Exception;
     String getCommandName();
     List<String> getCommandAlias();
-    String getHelp();
 }

@@ -30,9 +30,4 @@ public class Avatar implements ICommand {
     public List<String> getCommandAlias() {
         return Collections.singletonList("av");
     }
-
-    @Override
-    public String getHelp() {
-        return null;
-    }
 }

@@ -5,9 +5,7 @@ import Listeners.BotEventsListener;
 import Listeners.Giveaway;
 import Listeners.StarBoardListener;
 import Listeners.VoiceChannelListener;
-import Main.CatalogParser;
 import Main.Credentials;
-import Main.DataBase;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -44,10 +42,6 @@ public class JDA extends ListenerAdapter implements EventListener {
 
         //Print invite link to console
         System.out.println("https://discord.com/api/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=268446736&scope=bot");
-
-        //Test connect to the database
-        DataBase db = new DataBase();
-        db.databaseCycle();
 
     }
 }

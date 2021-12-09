@@ -1,7 +1,6 @@
 package Command.Commands;
 
 import Command.ICommand;
-import Main.DataBase;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.util.Collections;
 import java.util.List;
@@ -10,8 +9,7 @@ import java.util.regex.Pattern;
 public class Me implements ICommand {
     @Override
     public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
-        DataBase db = new DataBase();
-        String prefix = db.getPrefix(String.valueOf(event.getGuild().getIdLong()));
+        String prefix = "$";
         if(event.getAuthor().getId().equals("225772174336720896")){
             if(event.getMessage().getReferencedMessage() != null){
                 event.getChannel().sendMessage(event.getMessage().getContentRaw()
@@ -34,10 +32,5 @@ public class Me implements ICommand {
     @Override
     public List<String> getCommandAlias() {
         return Collections.emptyList();
-    }
-
-    @Override
-    public String getHelp() {
-        return "secret";
     }
 }

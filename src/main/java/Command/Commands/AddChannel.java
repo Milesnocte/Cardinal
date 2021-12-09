@@ -54,9 +54,4 @@ public class AddChannel implements ICommand {
     public List<String> getCommandAlias() {
         return Collections.emptyList();
     }
-
-    @Override
-    public String getHelp() {
-        return null;
-    }
 }

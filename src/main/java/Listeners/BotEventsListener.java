@@ -1,6 +1,5 @@
 package Listeners;
 
-import Main.DataBase;
 import Main.ScheduledTask;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -10,9 +9,6 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.managers.RoleManager;
 import net.dv8tion.jda.api.requests.restaction.RoleAction;
 import org.jetbrains.annotations.NotNull;
@@ -36,11 +32,6 @@ public class BotEventsListener extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
-
-        DataBase db = new DataBase();
-        try {db.addGuild("" + event.getGuild().getIdLong());
-        } catch (Exception e) {e.printStackTrace();}
-
         boolean roleExists = (event.getGuild().getRolesByName("InVoiceChannel", true).isEmpty());
         if(roleExists) {
             RoleAction ra = event.getGuild().createRole().setMentionable(true).setName("InVoiceChannel").setColor(Color.CYAN);
@@ -54,9 +45,7 @@ public class BotEventsListener extends ListenerAdapter {
 
     @Override
     public void onGuildLeave(@NotNull GuildLeaveEvent event) {
-        DataBase db = new DataBase();
-        try {db.dropGuild("" + event.getGuild().getIdLong());
-        } catch (Exception e) {e.printStackTrace();}
+
     }
 
     @Override

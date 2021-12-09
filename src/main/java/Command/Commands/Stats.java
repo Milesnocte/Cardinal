@@ -25,7 +25,7 @@ public class Stats implements ICommand {
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
                 "\n`Bot API:` JDA 4.2.1_273", false);
-        event.getChannel().sendMessage(embed.build()).queue();
+        event.getChannel().sendMessageEmbeds(embed.build()).queue();
     }
 
     @Override
@@ -36,10 +36,5 @@ public class Stats implements ICommand {
     @Override
     public List<String> getCommandAlias() {
         return Collections.emptyList();
-    }
-
-    @Override
-    public String getHelp() {
-        return null;
     }
 }

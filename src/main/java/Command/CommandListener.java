@@ -1,6 +1,5 @@
 package Command;
 
-import Main.DataBase;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -14,9 +13,6 @@ public class CommandListener extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         String prefix = "$";
-        DataBase db = new DataBase();
-        try {prefix = db.getPrefix("" + event.getGuild().getIdLong());
-        } catch (Exception e) {e.printStackTrace();}
 
         try {
             commandManager.run(event);
