@@ -13,13 +13,13 @@ public class Echo implements ICommand {
         if(event.getAuthor().getId().equals("225772174336720896")){
             if(event.getMessage().getReferencedMessage() != null){
                 event.getChannel().sendMessage(event.getMessage().getContentRaw()
-                        .replaceFirst("(?i)" + Pattern.quote(prefix + "me "), ""))
+                        .replaceFirst("(?i)" + Pattern.quote(prefix + "echo "), ""))
                         .reference(event.getMessage().getReferencedMessage()).queue();
                 event.getMessage().delete().queue();
             }else{
                 event.getMessage().delete().queue();
                 event.getChannel().sendMessage(event.getMessage().getContentRaw()
-                        .replaceFirst("(?i)" + Pattern.quote(prefix + "me "), "")).queue();
+                        .replaceFirst("(?i)" + Pattern.quote(prefix + "echo "), "")).queue();
             }
         }
     }

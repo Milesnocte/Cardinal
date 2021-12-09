@@ -9,12 +9,12 @@ import org.jetbrains.annotations.NotNull;
 public class VoiceChannelListener extends ListenerAdapter implements EventListener {
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-        event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRolesByName("InVoiceChannel", true).get(0)).queue();
+        event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRolesByName("InVC", true).get(0)).queue();
     }
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-        event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRolesByName("InVoiceChannel", true).get(0)).queue();
+        event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRolesByName("InVC", true).get(0)).queue();
     }
 }
 

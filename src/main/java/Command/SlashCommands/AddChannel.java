@@ -22,7 +22,7 @@ public class AddChannel implements ISlashCommand {
             }else{
                 String channelId = event.getOption("channel").getAsMessageChannel().getId();
                 TextChannel channel = event.getGuild().getTextChannelById(channelId);
-                Role inVoiceChannel = event.getGuild().getRolesByName("InVoiceChannel", true).get(0);
+                Role inVoiceChannel = event.getGuild().getRolesByName("InVC", true).get(0);
                 event.getGuild().addRoleToMember(event.getGuild().getSelfMember(), inVoiceChannel).queue();
 
                 try {
@@ -35,7 +35,7 @@ public class AddChannel implements ISlashCommand {
                             , Permission.MESSAGE_ADD_REACTION, Permission.MESSAGE_EXT_EMOJI, Permission.MESSAGE_ATTACH_FILES, Permission.MESSAGE_HISTORY).queue();
                 }
 
-                event.getChannel().sendMessage(Objects.requireNonNull(event.getGuild().getTextChannelById(channelId)).getAsMention() +
+                event.reply(Objects.requireNonNull(event.getGuild().getTextChannelById(channelId)).getAsMention() +
                         " is now a Voice Text Channel!").queue();
                  channel.upsertPermissionOverride(event.getGuild().getPublicRole()).deny(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ).queue();
             }

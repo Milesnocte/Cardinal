@@ -2,7 +2,6 @@ import Command.CommandListener;
 import Command.SlashCommandListener;
 import Listener.JoinListener;
 import Listeners.BotEventsListener;
-import Listeners.Giveaway;
 import Listeners.StarBoardListener;
 import Listeners.VoiceChannelListener;
 import Main.Credentials;

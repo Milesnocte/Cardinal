@@ -32,9 +32,9 @@ public class BotEventsListener extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
-        boolean roleExists = (event.getGuild().getRolesByName("InVoiceChannel", true).isEmpty());
+        boolean roleExists = (event.getGuild().getRolesByName("InVC", true).isEmpty());
         if(roleExists) {
-            RoleAction ra = event.getGuild().createRole().setMentionable(true).setName("InVoiceChannel").setColor(Color.CYAN);
+            RoleAction ra = event.getGuild().createRole().setMentionable(true).setName("InVC").setColor(Color.CYAN);
             ra.complete();
             RoleManager roleManager = event.getGuild().getRolesByName("InVoiceChannel", true).get(0).getManager();
             roleManager.setPermissions(Permission.VOICE_CONNECT,Permission.VOICE_SPEAK,Permission.MESSAGE_HISTORY,Permission.MESSAGE_READ,Permission.MESSAGE_WRITE,
