@@ -89,7 +89,7 @@ public class BotEventsListener extends ListenerAdapter {
                 longAgo = duration/YEAR_MILLIS + " years ago";
             }
 
-            event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:entry:866757078130753606> " + event.getMember().getUser().getAsTag() +
+            event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:entry:918599108502102036> " + event.getMember().getUser().getAsTag() +
                     " | Created " + longAgo + " | ID: " + event.getMember().getId()).queue();
 
             if((event.getMember().getUser().getAsTag().contains("||") && duration < 60 * MINUTE_MILLIS) ||
@@ -97,7 +97,7 @@ public class BotEventsListener extends ListenerAdapter {
                             event.getMember().getUser().getAsTag().toLowerCase().contains("discordgate"))) {
 
                 event.getMember().ban(7).queue();
-                event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:866757078143991838> Discordgate bot banned").queue();
+                event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:918599099484373042> Discordgate bot banned").queue();
             }
         }
     }
