@@ -105,7 +105,7 @@ public class BotEventsListener extends ListenerAdapter {
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
         if(event.getGuild().getId().equals("433825343485247499") && !event.getMember().getUser().getAsTag().contains("||")){ // Dont send this message if its a discord gate bot
-            event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:866757078143991838> " + event.getMember().getUser().getAsTag()).queue();
+            event.getGuild().getTextChannelById("582399523649880065").sendMessage("<:exit:918599099484373042> " + event.getMember().getUser().getAsTag()).queue();
         }
     }
 
