@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-public class ConcentrationLeaderBoard implements ICommand {
+public class TopConcentration implements ICommand {
 
     @Override
     public void run(List<String> args, GuildMessageReceivedEvent event) {
@@ -60,7 +60,7 @@ public class ConcentrationLeaderBoard implements ICommand {
 
     @Override
     public String getCommandName() {
-        return "leaderboard";
+        return "topconc";
     }
 
     @Override

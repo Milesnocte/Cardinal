@@ -22,7 +22,7 @@ public class CommandManager {
         addCommand(new ConnectToVC());
         addCommand(new LeaveVC());
         addCommand(new WhoIs());
-        addCommand(new ConcentrationLeaderBoard());
+        addCommand(new TopConcentration());
         addCommand(new Purge());
         addCommand(new Help());
         addCommand(new PurgeVCText());
