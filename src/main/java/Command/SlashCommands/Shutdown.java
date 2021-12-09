@@ -16,7 +16,7 @@ public class Shutdown implements ISlashCommand {
             Thread.sleep(1000);
             System.exit(0);
         }else {
-            event.reply("Why would you even try? <a:fightmehoe:892929182772895744>").queue();
+            event.reply("Why would you even try this command? (Not Bot Owner)").queue();
         }
     }
 

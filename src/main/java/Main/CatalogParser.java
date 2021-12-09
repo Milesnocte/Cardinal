@@ -79,10 +79,6 @@ public class CatalogParser {
 
         classNames.sort(Comparator.naturalOrder());
 
-        for (String s : classNames) {
-            System.out.println(s);
-        }
-
         return classNames;
     }
 }

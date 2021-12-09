@@ -21,8 +21,9 @@ public class SlashCommandManager {
         addCommand(new EightBall());
         addCommand(new Restart());
         addCommand(new Shutdown());
-        addCommand(new TopConcentration());
+        addCommand(new TopConcentrations());
         addCommand(new TopStars());
+        addCommand(new AddChannel());
     }
 
     private void addCommand(ISlashCommand c) {

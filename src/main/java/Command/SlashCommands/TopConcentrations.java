@@ -1,18 +1,15 @@
 package Command.SlashCommands;
 
-import Command.ICommand;
 import Command.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-public class TopConcentration implements ISlashCommand {
+public class TopConcentrations implements ISlashCommand {
 
     @Override
     public void run(SlashCommandEvent event) throws Exception {
@@ -29,7 +26,7 @@ public class TopConcentration implements ISlashCommand {
             final List<Long> concentrationRoles = Arrays.asList(AI_GAMING, DATA_SCIENCE, SOFTWARE_SYSTEMS, CYBER_SECURITY, HCI, INFO_TECH, SOFTWARE_ENGINEER, WEB_MOBILE, BIO_INFORMATICS);
             List<String> roleNumberArray = new ArrayList<>();
 
-            // Grab all of the role names and number of members
+            // Grab all the role names and number of members
             for (int k = 0; k < 9; k++) {
                 roleNumberArray.add(k, event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(concentrationRoles.get(k))).size()
                         + " " + event.getGuild().getRoleById(concentrationRoles.get(k)).getName().toUpperCase());

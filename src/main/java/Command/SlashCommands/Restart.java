@@ -16,7 +16,7 @@ public class Restart implements ISlashCommand {
             Thread.sleep(1000);
             Runtime.getRuntime().exec("sh woody.sh");
             System.exit(0);
-        }event.reply("Why would you even try? <a:fightmehoe:892929182772895744>").queue();
+        }event.reply("Why would you even try this command? (Not Bot Owner)").queue();
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Me implements ICommand {
+public class Echo implements ICommand {
     @Override
     public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
         String prefix = "$";
@@ -26,7 +26,7 @@ public class Me implements ICommand {
 
     @Override
     public String getCommandName() {
-        return "me";
+        return "echo";
     }
 
     @Override

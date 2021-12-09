@@ -11,10 +11,7 @@ public class CommandManager {
     private final Map<String, ICommand> commands = new HashMap<>();
 
     CommandManager() {
-        addCommand(new AddChannel());
-        addCommand(new Stats());
-        addCommand(new Avatar());
-        addCommand(new Me());
+        addCommand(new Echo());
         addCommand(new UpdateCommands());
     }
 

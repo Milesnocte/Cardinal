@@ -15,22 +15,25 @@ public class UpdateCommands implements ICommand {
     public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
         if (event.getAuthor().getId().equals(Credentials.OWNER)) {
 
-            event.getJDA().getGuildById("869677292610285628").updateCommands().queue();
-
-            event.getJDA().getGuildById("433825343485247499").updateCommands().queue();
-
             event.getChannel().sendMessage("This might take a moment").queue();
+
             event.getJDA().updateCommands()
                     .addCommands(
                             new CommandData("ping", "Ping the bot"),
+
                             new CommandData("purgevctxt", "Purge vc text"),
+
                             new CommandData("stats", "Get Woody's status"),
+
                             new CommandData("avatar", "Get user avatar")
                                     .addOption(OptionType.USER, "user", "user to get avatar from", false),
+
                             new CommandData("whois", "Get information about user")
                                     .addOption(OptionType.USER, "user", "user to get information about", false),
+
                             new CommandData("purge", "bulk delete")
                                     .addOption(OptionType.INTEGER, "num_messages", "number of messages to delete 1-100", true),
+
                             new CommandData("menus", "Role Menus")
                                     .addSubcommands(
                                             new SubcommandData("yearroles", "create a year role menu"),
@@ -39,14 +42,23 @@ public class UpdateCommands implements ICommand {
                                             new SubcommandData("collegeroles", "create a college role menu"),
                                             new SubcommandData("concentration", "create a concentration role menu")
                                     ),
+
                             new CommandData("define", "Get definition of word")
                                     .addOption(OptionType.STRING, "word_to_define", "A word to define", true),
+
                             new CommandData("eightball", "Shake the 8-ball")
                                     .addOption(OptionType.STRING, "question", "Ask the 8-ball a question.", true),
+
                             new CommandData("shutdown", "shutdown the bot"),
+
                             new CommandData("restart", "restart the bot"),
+
                             new CommandData("topconcentrations", "Get concentrations leaderboard"),
-                            new CommandData("topstars", "Get starfroot leaderboard")
+
+                            new CommandData("topstars", "Get starfroot leaderboard"),
+
+                            new CommandData("addchannel", "Set text channel as vc-text channel")
+                                    .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true)
                     ).queue();
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
         }
