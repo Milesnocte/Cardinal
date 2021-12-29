@@ -22,9 +22,10 @@ public class StarBoardListener extends ListenerAdapter {
                 int stars = 0;
                 boolean logged = true;
 
+
                 try {
                     stars = getStars(event.getMessageId());
-                } catch (Exception ignored) {
+                } catch (Exception e) {
                     logged = false;
                     addMessage(event);
                 }
@@ -76,8 +77,7 @@ public class StarBoardListener extends ListenerAdapter {
         }
     }
 
-    private int getStars(String messageID){
-        try {
+    private int getStars(String messageID) throws SQLException, ClassNotFoundException {
             Class.forName("org.sqlite.JDBC");
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
             Statement prepared = connect.createStatement();
@@ -85,8 +85,6 @@ public class StarBoardListener extends ListenerAdapter {
             int messageIn = inStarBoard.getInt(1);
             connect.close();
             return messageIn;
-        } catch (Exception ignored) {}
-        return 0;
     }
 
     private boolean getPosted(String messageID){
