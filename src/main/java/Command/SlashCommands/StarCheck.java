@@ -14,10 +14,19 @@ import java.util.List;
 public class StarCheck implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        String author = event.getOption("user").getAsMentionable().getAsMention();
-        HashMap<String, Integer> userlist = getStarsSum();
-        int stars = userlist.get(author);
-        event.reply(event.getOption("user").getAsMember().getAsMention() + " has " + stars + "<:starfroot:468218976430981140>")
+        String author;
+        if(event.getOption("user") != null){
+            author = event.getOption("user").getAsUser().getAsMention();
+        } else {
+            author = event.getMember().getUser().getAsMention();
+        }
+        int stars = 0;
+        try {
+            HashMap<String, Integer> userlist = getStarsSum();
+            stars = userlist.get(author);
+        } catch (Exception ignored){}
+
+        event.reply(author + " has " + stars + "<:starfroot:468218976430981140>")
                 .allowedMentions(Collections.emptyList()).queue();
     }
 
@@ -33,7 +42,6 @@ public class StarCheck implements ISlashCommand {
     }
 
     public HashMap<String, Integer> getStarsSum() throws ClassNotFoundException, SQLException {
-        ArrayList<String> topStars = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");
         Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         Statement prepared = connect.createStatement();

@@ -61,7 +61,7 @@ public class UpdateCommands implements ICommand {
                                     .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true),
 
                             new CommandData("starcheck", "Check the number of stars a user has")
-                                    .addOption(OptionType.USER, "user", "The user to check", true)
+                                    .addOption(OptionType.USER, "user", "The user to check", false)
 
                     ).queue();
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
