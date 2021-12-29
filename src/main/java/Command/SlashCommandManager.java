@@ -24,6 +24,7 @@ public class SlashCommandManager {
         addCommand(new TopConcentrations());
         addCommand(new TopStars());
         addCommand(new AddChannel());
+        addCommand(new StarCheck());
     }
 
     private void addCommand(ISlashCommand c) {

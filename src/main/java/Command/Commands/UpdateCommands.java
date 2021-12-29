@@ -58,7 +58,11 @@ public class UpdateCommands implements ICommand {
                             new CommandData("topstars", "Get starfroot leaderboard"),
 
                             new CommandData("addchannel", "Set text channel as vc-text channel")
-                                    .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true)
+                                    .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true),
+
+                            new CommandData("starcheck", "Check the number of stars a user has")
+                                    .addOption(OptionType.USER, "user", "The user to check", true)
+
                     ).queue();
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
         }

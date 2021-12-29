@@ -16,63 +16,76 @@ public class StarBoardListener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
-        if(event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")){
-            if(!event.getChannel().getName().equals("star-board")) {
+        boolean star; //True = starfroot, false = antifroot
 
-                int stars = 0;
-                boolean logged = true;
+        if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
+            star = true;
+        } else if (event.getReaction().getReactionEmote().toString().equals("RE:antifroot(925216399360671807)")) {
+            star = false;
+        } else return;
 
+        if (!event.getChannel().getName().equals("star-board")) {
 
-                try {
-                    stars = getStars(event.getMessageId());
-                } catch (Exception e) {
-                    logged = false;
-                    addMessage(event);
-                }
+            int stars = 0;
+            boolean logged = true;
 
-                if (logged) {
+            try {
+                stars = getStars(event.getMessageId());
+            } catch (Exception ignored) {
+                logged = false;
+                addMessage(event, star ? 1 : -1); // Initialize entry based on whether first reaction is star or anti
+            }
+
+            if (logged) {
+                if (star) {
                     addStar(event.getMessageId());
+                } else {
+                    revokeStar(event.getMessageId());
                 }
+            }
 
-                // Add the star that was just reacted
-                stars += 1;
+            // Add the star that was just reacted
+            stars += 1;
 
-                if (stars >= 5 && !getPosted(event.getMessageId())) {
-                    setPosted(event.getMessageId());
-                    RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
-                    Message message = action.complete();
-                    EmbedBuilder embed = new EmbedBuilder();
-                    embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
-                    if (message.getReferencedMessage() != null) {
-                        embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
-                                message.getReferencedMessage().getContentDisplay(), false);
-                    }
-                    if (!message.getContentDisplay().isBlank()) {
-                        embed.addField("**Message**", message.getContentDisplay(), false);
-                    }
-                    if (message.getAttachments().size() > 0) {
-                        embed.setImage(message.getAttachments().get(0).getUrl());
-                    }
-                    embed.setFooter("Sent on: " + message.getTimeCreated().atZoneSameInstant(ZoneId.of("America/New_York"))
-                            .format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a")));
-                    event.getGuild().getTextChannelsByName("star-board", true).get(0).sendMessageEmbeds(embed.build()).queue();
+            if (stars >= 5 && !getPosted(event.getMessageId())) {
+                setPosted(event.getMessageId());
+                RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
+                Message message = action.complete();
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
+                if (message.getReferencedMessage() != null) {
+                    embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
+                            message.getReferencedMessage().getContentDisplay(), false);
                 }
+                if (!message.getContentDisplay().isBlank()) {
+                    embed.addField("**Message**", message.getContentDisplay(), false);
+                }
+                if (message.getAttachments().size() > 0) {
+                    embed.setImage(message.getAttachments().get(0).getUrl());
+                }
+                embed.setFooter("Sent on: " + message.getTimeCreated().atZoneSameInstant(ZoneId.of("America/New_York"))
+                        .format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a")));
+                event.getGuild().getTextChannelsByName("star-board", true).get(0).sendMessageEmbeds(embed.build()).queue();
             }
         }
     }
 
+
     @Override
     public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent event) {
-        if(event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")){
+        boolean star; //True = starfroot, false = antifroot
 
-            int stars = 0;
+        if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
+            star = true;
+        } else if (event.getReaction().getReactionEmote().toString().equals("RE:antifroot(925216399360671807)")) {
+            star = false;
+        } else return;
 
-            try{
-                stars = getStars(event.getMessageId());
-            }catch (Exception ignored){}
-
-            if(stars > 0){
+        if (!event.getChannel().getName().equals("star-board")) {
+            if (star) {
                 revokeStar(event.getMessageId());
+            } else {
+                addStar(event.getMessageId());
             }
         }
     }
@@ -130,7 +143,7 @@ public class StarBoardListener extends ListenerAdapter {
         }catch (Exception ignored){}
     }
 
-    private void addMessage(GuildMessageReactionAddEvent event){
+    private void addMessage(GuildMessageReactionAddEvent event, int starCount) {
         RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
         Message message = action.complete();
 
@@ -139,11 +152,12 @@ public class StarBoardListener extends ListenerAdapter {
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
             PreparedStatement prepared;
             prepared = connect.prepareStatement("INSERT INTO StarBoard values(?,?,?,?);");
-            prepared.setString(1,event.getMessageId());
-            prepared.setInt(2,1);
-            prepared.setString(3,message.getAuthor().getAsMention());
-            prepared.setBoolean(4,false);
+            prepared.setString(1, event.getMessageId());
+            prepared.setInt(2, starCount);
+            prepared.setString(3, message.getAuthor().getAsMention());
+            prepared.setBoolean(4, false);
             prepared.execute();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 }
