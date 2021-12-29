@@ -20,16 +20,17 @@ public class StarBoardListener extends ListenerAdapter {
             if(!event.getChannel().getName().equals("star-board")) {
 
                 int stars = 0;
+                boolean logged = true;
 
                 try {
-                    stars = getSars(event.getMessageId());
+                    stars = getStars(event.getMessageId());
                 } catch (Exception ignored) {
+                    logged = false;
+                    addMessage(event);
                 }
 
-                if (stars > 0) {
+                if (logged) {
                     addStar(event.getMessageId());
-                } else {
-                    addMessage(event);
                 }
 
                 // Add the star that was just reacted
@@ -66,7 +67,7 @@ public class StarBoardListener extends ListenerAdapter {
             int stars = 0;
 
             try{
-                stars = getSars(event.getMessageId());
+                stars = getStars(event.getMessageId());
             }catch (Exception ignored){}
 
             if(stars > 0){
@@ -75,7 +76,7 @@ public class StarBoardListener extends ListenerAdapter {
         }
     }
 
-    private int getSars(String messageID){
+    private int getStars(String messageID){
         try {
             Class.forName("org.sqlite.JDBC");
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
