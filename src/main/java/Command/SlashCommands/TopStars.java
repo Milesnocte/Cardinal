@@ -14,6 +14,10 @@ import java.util.List;
 public class TopStars implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
+
+        event.reply("This command has been disabled.").setEphemeral(true).queue();
+
+        /* Disabled command
         ArrayList<String> topStars = getTopStars();
         StringBuilder starList = new StringBuilder();
         for (int k = 0; k < 15; k++) {
@@ -24,6 +28,7 @@ public class TopStars implements ISlashCommand {
         embed.setDescription("Check out the <#904851888460152863>!");
         embed.addField("Starfroot Leaderboard", starList.toString(), false);
         event.replyEmbeds(embed.build()).queue();
+         */
     }
 
     @Override

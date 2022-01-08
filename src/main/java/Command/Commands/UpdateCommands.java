@@ -17,6 +17,20 @@ public class UpdateCommands implements ICommand {
 
             event.getChannel().sendMessage("This might take a moment").queue();
 
+            event.getJDA().getGuildById("433825343485247499").updateCommands().addCommands(
+                    new CommandData("translate", "Role Menus")
+                            .addSubcommands(
+                                    new SubcommandData("korean_to_english", "create a year role menu")
+                                            .addOption(OptionType.STRING, "text", "text to translate", true),
+                                    new SubcommandData("english_to_korean", "create a pronoun role menu")
+                                            .addOption(OptionType.STRING, "text", "text to translate", true),
+                                    new SubcommandData("spanish_to_english", "create a year role menu")
+                                            .addOption(OptionType.STRING, "text", "text to translate", true),
+                                    new SubcommandData("english_to_spanish", "create a pronoun role menu")
+                                            .addOption(OptionType.STRING, "text", "text to translate", true)
+                            )
+            ).queue();
+
             event.getJDA().updateCommands()
                     .addCommands(
                             new CommandData("ping", "Ping the bot"),
@@ -62,7 +76,6 @@ public class UpdateCommands implements ICommand {
 
                             new CommandData("starcheck", "Check the number of stars a user has")
                                     .addOption(OptionType.USER, "user", "The user to check", false)
-
                     ).queue();
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
         }
