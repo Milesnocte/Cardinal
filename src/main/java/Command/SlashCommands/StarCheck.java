@@ -22,7 +22,7 @@ public class StarCheck implements ISlashCommand {
         }
         int stars = 0;
         try {
-            HashMap<String, Integer> userlist = getStarsSum();
+            HashMap<String, Integer> userlist = getStarsSum(event);
             stars = userlist.get(author);
         } catch (Exception ignored){}
 
@@ -41,11 +41,11 @@ public class StarCheck implements ISlashCommand {
         return "starcheck";
     }
 
-    public HashMap<String, Integer> getStarsSum() throws ClassNotFoundException, SQLException {
+    public HashMap<String, Integer> getStarsSum(SlashCommandEvent event) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         Statement prepared = connect.createStatement();
-        ResultSet result = prepared.executeQuery("SELECT Author, SUM(Stars) FROM StarBoard GROUP BY Author ORDER BY SUM(Stars);");
+        ResultSet result = prepared.executeQuery("SELECT Author, SUM(Stars) FROM StarBoard WHERE GuildID ='" + event.getGuild().getId() + "' GROUP BY Author ORDER BY SUM(Stars);");
         HashMap<String, Integer> users = new HashMap<>();
         while(result.next()){
             users.put(result.getString("Author"), result.getInt("SUM(Stars)"));
