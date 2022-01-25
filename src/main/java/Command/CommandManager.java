@@ -1,7 +1,7 @@
 package Command;
 
 import Command.Commands.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -13,6 +13,7 @@ public class CommandManager {
     CommandManager() {
         addCommand(new Echo());
         addCommand(new UpdateCommands());
+        addCommand(new UpdateDatabase());
     }
 
     private void addCommand(ICommand c) {
@@ -34,7 +35,7 @@ public class CommandManager {
         return commands.values();
     }
 
-    void run(GuildMessageReceivedEvent event) throws Exception {
+    void run(MessageReceivedEvent event) throws Exception {
         final String msg = event.getMessage().getContentRaw();
         final String prefix = "$";
         if((!msg.startsWith(prefix)) || event.getAuthor().isBot()){

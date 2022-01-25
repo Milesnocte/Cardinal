@@ -1,7 +1,7 @@
 import Command.CommandListener;
 import Command.SlashCommandListener;
-import Listener.JoinListener;
 import Listeners.BotEventsListener;
+import Listeners.JoinLeaveListener;
 import Listeners.StarBoardListener;
 import Listeners.VoiceChannelListener;
 import Main.Credentials;
@@ -29,7 +29,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new VoiceChannelListener(),
                         new BotEventsListener(),
                         new CommandListener(),
-                        new JoinListener(),
+                        new JoinLeaveListener(),
                         new StarBoardListener()
                 )
                 //Set the bot activity to "Watching for cheaters"
@@ -39,7 +39,7 @@ public class JDA extends ListenerAdapter implements EventListener {
                 .build();
 
         //Print invite link to console
-        System.out.println("https://discord.com/api/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=268446736&scope=bot");
+        System.out.println("https://discord.com/oauth2/authorize?client_id="+ Credentials.BOTID +"&permissions=8&scope=bot+applications.commands");
 
     }
 }

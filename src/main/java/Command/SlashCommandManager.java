@@ -25,7 +25,6 @@ public class SlashCommandManager {
         addCommand(new TopStars());
         addCommand(new AddChannel());
         addCommand(new StarCheck());
-        addCommand(new Translate());
     }
 
     private void addCommand(ISlashCommand c) {
@@ -47,7 +46,11 @@ public class SlashCommandManager {
             return;
         }
         if(commands.containsKey(name)){
-            commands.get(name).run(event);
+            if(commands.get(name).enabled()) {
+                commands.get(name).run(event);
+            } else {
+                event.reply("This command is disabled!").setEphemeral(true).queue();
+            }
         }
     }
 
@@ -57,7 +60,9 @@ public class SlashCommandManager {
             return;
         }
         if(commands.containsKey(name)){
-            commands.get(name).run(event);
+            if(commands.get(name).enabled()) {
+                commands.get(name).run(event);
+            }
         }
     }
 }

@@ -15,10 +15,10 @@ import java.util.List;
 public class WhoIs implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        try{
+        try {
             event.deferReply(false).queue();
             String userid;
-            if(event.getOption("user") != null){
+            if (event.getOption("user") != null) {
                 userid = event.getOption("user").getAsMember().getId();
             } else {
                 userid = event.getMember().getId();
@@ -28,7 +28,7 @@ public class WhoIs implements ISlashCommand {
             EmbedBuilder embed = new EmbedBuilder();
             StringBuilder roles = new StringBuilder();
 
-            for(int k = 0; k < member.getRoles().size(); k++){
+            for (int k = 0; k < member.getRoles().size(); k++) {
                 roles.append(member.getRoles().get(k).getAsMention()).append(" ");
             }
 
@@ -37,20 +37,26 @@ public class WhoIs implements ISlashCommand {
             embed.addField("Created", "" + member.getTimeCreated().format(DateTimeFormatter.ofPattern("MMM dd yyyy")), true);
             embed.addField("Joined", "" + member.getTimeJoined().format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + "            ", true);
 
-            if(member.getTimeBoosted() != null){ embed.addField("Booster", "Yes", true);
-            }else{ embed.addField("Booster", "No", true); }
+            if (member.getTimeBoosted() != null) {
+                embed.addField("Booster", "Yes", true);
+            } else {
+                embed.addField("Booster", "No", true);
+            }
 
-            if(member.getNickname() != null){embed.addField("NickName", member.getNickname(),true);}
-            else { embed.addField("NickName", member.getEffectiveName(), true); }
+            if (member.getNickname() != null) {
+                embed.addField("NickName", member.getNickname(), true);
+            } else {
+                embed.addField("NickName", member.getEffectiveName(), true);
+            }
 
-            embed.addField("ID",user.getId(), true);
+            embed.addField("ID", user.getId(), true);
             embed.addField("Roles", roles.toString(), false);
-            if(member.getId().equals(Credentials.OWNER)){
+            if (member.getId().equals(Credentials.OWNER)) {
                 embed.setFooter("\u2B50 Woody dev \u2B50");
             }
             event.getHook().editOriginalEmbeds(embed.build()).queue();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -68,5 +74,10 @@ public class WhoIs implements ISlashCommand {
     @Override
     public String commandName() {
         return "whois";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

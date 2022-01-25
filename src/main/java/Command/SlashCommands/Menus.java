@@ -7,20 +7,22 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Menus implements ISlashCommand {
 
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        if(event.getMember().hasPermission(Permission.MANAGE_ROLES)) {
-            if(event.getSubcommandName().equals("yearroles")) SlashMenus.SlashYearMenu(event);
-            if(event.getSubcommandName().equals("pronounroles")) SlashMenus.PronounMenu(event);
-            if(event.getSubcommandName().equals("collegeroles")) SlashMenus.CollegeMenu(event);
-            if(event.getSubcommandName().equals("polirole")) SlashMenus.PoliMenu(event);
-            if(event.getSubcommandName().equals("concentration")) RWHSlashMenus.SlashConcetrationMenu(event);
-            if(event.getSubcommandName().equals("ccievents")) RWHSlashMenus.SlashCCIEvents(event);
-        }else{
+        if (event.getMember().hasPermission(Permission.MANAGE_ROLES)) {
+            if (event.getSubcommandName().equals("yearroles")) SlashMenus.SlashYearMenu(event);
+            if (event.getSubcommandName().equals("pronounroles")) SlashMenus.PronounMenu(event);
+            if (event.getSubcommandName().equals("collegeroles")) SlashMenus.CollegeMenu(event);
+            if (event.getSubcommandName().equals("polirole")) SlashMenus.PoliMenu(event);
+            if (event.getSubcommandName().equals("concentration")) RWHSlashMenus.SlashConcetrationMenu(event);
+            if (event.getSubcommandName().equals("ccievents")) RWHSlashMenus.SlashCCIEvents(event);
+        } else {
             event.reply("You don't have the `MANAGE_ROLES` permission, which is required to run this command!").setEphemeral(true).queue();
         }
     }
@@ -29,9 +31,9 @@ public class Menus implements ISlashCommand {
     public void run(ButtonClickEvent event) throws Exception {
 
         //Give or take Debate role
-        if(event.getComponentId().startsWith("POLI_")){
-            final long DEBATE = event.getGuild().getRolesByName("Debate",true).get(0).getIdLong();
-            switch(event.getComponentId()) {
+        if (event.getComponentId().startsWith("POLI_")) {
+            final long DEBATE = event.getGuild().getRolesByName("Debate", true).get(0).getIdLong();
+            switch (event.getComponentId()) {
                 case ("POLI_YES"):
                     if (!event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(DEBATE)).contains(event.getMember())) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DEBATE)).queue();
@@ -52,12 +54,12 @@ public class Menus implements ISlashCommand {
         }
 
         //Give or take CCI Events role
-        if(event.getComponentId().startsWith("CCI_")){
+        if (event.getComponentId().startsWith("CCI_")) {
 
             Guild guild = event.getGuild();
             long CCI_EVENTS = guild.getRolesByName("CCI Events", true).get(0).getIdLong();
 
-            switch(event.getComponentId()) {
+            switch (event.getComponentId()) {
                 case ("CCI_YES_CCIEVENTS"):
                     if (!event.getGuild().getMembersWithRoles(event.getGuild().getRoleById(CCI_EVENTS)).contains(event.getMember())) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(CCI_EVENTS)).queue();
@@ -77,21 +79,21 @@ public class Menus implements ISlashCommand {
             }
         }
 
-        if(event.getComponentId().startsWith("College_")){
-            final long DATA = event.getGuild().getRolesByName("Data Science",true).get(0).getIdLong();
-            final long LIBERAL = event.getGuild().getRolesByName("Liberal Arts & Sciences",true).get(0).getIdLong();
-            final long HEALTH = event.getGuild().getRolesByName("Health & Human Services",true).get(0).getIdLong();
-            final long ENGINEER = event.getGuild().getRolesByName("Engineering",true).get(0).getIdLong();
-            final long EDU = event.getGuild().getRolesByName("Education",true).get(0).getIdLong();
-            final long COMPUTER = event.getGuild().getRolesByName("Computing & Informatics",true).get(0).getIdLong();
-            final long ARTS = event.getGuild().getRolesByName("Arts + Architecture",true).get(0).getIdLong();
-            final long BUSINESS = event.getGuild().getRolesByName("Business",true).get(0).getIdLong();
-            final long UNDEC = event.getGuild().getRolesByName("Undeclared",true).get(0).getIdLong();
+        if (event.getComponentId().startsWith("College_")) {
+            final long DATA = event.getGuild().getRolesByName("Data Science", true).get(0).getIdLong();
+            final long LIBERAL = event.getGuild().getRolesByName("Liberal Arts & Sciences", true).get(0).getIdLong();
+            final long HEALTH = event.getGuild().getRolesByName("Health & Human Services", true).get(0).getIdLong();
+            final long ENGINEER = event.getGuild().getRolesByName("Engineering", true).get(0).getIdLong();
+            final long EDU = event.getGuild().getRolesByName("Education", true).get(0).getIdLong();
+            final long COMPUTER = event.getGuild().getRolesByName("Computing & Informatics", true).get(0).getIdLong();
+            final long ARTS = event.getGuild().getRolesByName("Arts + Architecture", true).get(0).getIdLong();
+            final long BUSINESS = event.getGuild().getRolesByName("Business", true).get(0).getIdLong();
+            final long UNDEC = event.getGuild().getRolesByName("Undeclared", true).get(0).getIdLong();
 
             // Remove college role
             SlashMenus.RemoveCollegeRole(event);
 
-            switch(event.getComponentId()) {
+            switch (event.getComponentId()) {
                 case ("College_Data"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(DATA)).queue();
                     event.reply("Added Data Science role!").setEphemeral(true).queue();
@@ -132,18 +134,18 @@ public class Menus implements ISlashCommand {
         }
 
         // Give year role to memeber
-        if(event.getComponentId().startsWith("Pron_")){
+        if (event.getComponentId().startsWith("Pron_")) {
 
-            final long HE = event.getGuild().getRolesByName("He/Him",true).get(0).getIdLong();
-            final long SHE = event.getGuild().getRolesByName("She/Her",true).get(0).getIdLong();
-            final long THEY = event.getGuild().getRolesByName("They/Them",true).get(0).getIdLong();
-            final long HETHEY = event.getGuild().getRolesByName("He/They",true).get(0).getIdLong();
-            final long SHETHEY = event.getGuild().getRolesByName("She/They",true).get(0).getIdLong();
-            final long ASK = event.getGuild().getRolesByName("Ask pronouns",true).get(0).getIdLong();
+            final long HE = event.getGuild().getRolesByName("He/Him", true).get(0).getIdLong();
+            final long SHE = event.getGuild().getRolesByName("She/Her", true).get(0).getIdLong();
+            final long THEY = event.getGuild().getRolesByName("They/Them", true).get(0).getIdLong();
+            final long HETHEY = event.getGuild().getRolesByName("He/They", true).get(0).getIdLong();
+            final long SHETHEY = event.getGuild().getRolesByName("She/They", true).get(0).getIdLong();
+            final long ASK = event.getGuild().getRolesByName("Ask pronouns", true).get(0).getIdLong();
 
             // Remove existing pronoun role
             SlashMenus.RemovePronRole(event);
-            switch(event.getComponentId()) {
+            switch (event.getComponentId()) {
                 case ("Pron_He"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(HE)).queue();
                     event.reply("Added He/Him role!").setEphemeral(true).queue();
@@ -172,19 +174,19 @@ public class Menus implements ISlashCommand {
         }
 
         // Give year role to memeber
-        if(event.getComponentId().startsWith("Year_")){
+        if (event.getComponentId().startsWith("Year_")) {
 
-            final long INCOMING = event.getGuild().getRolesByName("Incoming student",true).get(0).getIdLong();
-            final long FRESHMAN = event.getGuild().getRolesByName("Freshman",true).get(0).getIdLong();
-            final long SOPHOMORE = event.getGuild().getRolesByName("Sophomore",true).get(0).getIdLong();
-            final long JUNIOR = event.getGuild().getRolesByName("Junior",true).get(0).getIdLong();
-            final long SENIOR = event.getGuild().getRolesByName("Senior",true).get(0).getIdLong();
-            final long GRADUATE = event.getGuild().getRolesByName("Graduate Student",true).get(0).getIdLong();
-            final long ALUMNI = event.getGuild().getRolesByName("Alumni",true).get(0).getIdLong();
+            final long INCOMING = event.getGuild().getRolesByName("Incoming student", true).get(0).getIdLong();
+            final long FRESHMAN = event.getGuild().getRolesByName("Freshman", true).get(0).getIdLong();
+            final long SOPHOMORE = event.getGuild().getRolesByName("Sophomore", true).get(0).getIdLong();
+            final long JUNIOR = event.getGuild().getRolesByName("Junior", true).get(0).getIdLong();
+            final long SENIOR = event.getGuild().getRolesByName("Senior", true).get(0).getIdLong();
+            final long GRADUATE = event.getGuild().getRolesByName("Graduate Student", true).get(0).getIdLong();
+            final long ALUMNI = event.getGuild().getRolesByName("Alumni", true).get(0).getIdLong();
 
             // Remove existing year role
             SlashMenus.RemoveYearRole(event);
-            switch(event.getComponentId()) {
+            switch (event.getComponentId()) {
                 case ("Year_Incoming"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(INCOMING)).queue();
                     event.reply("Added Incoming Student role!").setEphemeral(true).queue();
@@ -216,7 +218,7 @@ public class Menus implements ISlashCommand {
             }
         }
         // Give concentration role to memeber
-        if(event.getComponentId().startsWith("Conc_")){
+        if (event.getComponentId().startsWith("Conc_")) {
 
             Guild guild = event.getGuild();
 
@@ -233,7 +235,7 @@ public class Menus implements ISlashCommand {
 
             //remove existing concentration role
             RWHSlashMenus.RemoveConcRole(event);
-            switch(event.getComponentId()) {
+            switch (event.getComponentId()) {
                 case ("Conc_SE"):
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(SOFTWARE_ENGINEER)).queue();
                     event.reply("Added Software Engineering role!").setEphemeral(true).queue();
@@ -280,14 +282,19 @@ public class Menus implements ISlashCommand {
 
     @Override
     public List<String> buttons() {
-        return Arrays.asList("Year_Incoming","Year_Freshman","Year_Sophomore","Year_Junior","Year_Senior","Year_Grad","Year_Alumni","Conc_SE","Conc_Bioinformatics",
-                "Conc_ARG","Conc_Data Science","Conc_IT","Conc_WM","Conc_HCI","Conc_Cybersecurity","Conc_SSN","Conc_UD","CCI_YES_CCIEVENTS","CCI_NO_CCIEVENTS",
-                "Pron_He","Pron_She","Pron_They","Pron_HeThey","Pron_SheThey","Pron_Ask","College_Data","College_Liberal","College_Health",
-                "College_Engineering","College_Education","College_Computing","College_Arts","College_Business","College_Undec","POLI_YES","POLI_NO");
+        return Arrays.asList("Year_Incoming", "Year_Freshman", "Year_Sophomore", "Year_Junior", "Year_Senior", "Year_Grad", "Year_Alumni", "Conc_SE", "Conc_Bioinformatics",
+                "Conc_ARG", "Conc_Data Science", "Conc_IT", "Conc_WM", "Conc_HCI", "Conc_Cybersecurity", "Conc_SSN", "Conc_UD", "CCI_YES_CCIEVENTS", "CCI_NO_CCIEVENTS",
+                "Pron_He", "Pron_She", "Pron_They", "Pron_HeThey", "Pron_SheThey", "Pron_Ask", "College_Data", "College_Liberal", "College_Health",
+                "College_Engineering", "College_Education", "College_Computing", "College_Arts", "College_Business", "College_Undec", "POLI_YES", "POLI_NO");
     }
 
     @Override
     public String commandName() {
         return "menus";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

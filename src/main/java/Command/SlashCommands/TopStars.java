@@ -15,9 +15,6 @@ public class TopStars implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
 
-        event.reply("This command has been disabled.").setEphemeral(true).queue();
-
-        /* Disabled command
         ArrayList<String> topStars = getTopStars();
         StringBuilder starList = new StringBuilder();
         for (int k = 0; k < 15; k++) {
@@ -28,7 +25,6 @@ public class TopStars implements ISlashCommand {
         embed.setDescription("Check out the <#904851888460152863>!");
         embed.addField("Starfroot Leaderboard", starList.toString(), false);
         event.replyEmbeds(embed.build()).queue();
-         */
     }
 
     @Override
@@ -37,11 +33,18 @@ public class TopStars implements ISlashCommand {
     }
 
     @Override
-    public List<String> buttons() {return Collections.emptyList();}
+    public List<String> buttons() {
+        return Collections.emptyList();
+    }
 
     @Override
     public String commandName() {
         return "topstars";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return false;
     }
 
     public ArrayList<String> getTopStars() throws ClassNotFoundException, SQLException {
@@ -51,9 +54,9 @@ public class TopStars implements ISlashCommand {
         Statement prepared = connect.createStatement();
         ResultSet result = prepared.executeQuery(
                 "SELECT Author, SUM(Stars) FROM StarBoard GROUP BY Author ORDER BY SUM(Stars) DESC LIMIT 15;"
-                );
+        );
         int counter = 1;
-        while(result.next()){
+        while (result.next()) {
             String author = result.getString("Author");
             int stars = result.getInt("SUM(Stars)");
             topStars.add(stars + " <:starfroot:468218976430981140> - " + author);

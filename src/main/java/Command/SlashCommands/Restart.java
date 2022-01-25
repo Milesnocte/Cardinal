@@ -16,7 +16,8 @@ public class Restart implements ISlashCommand {
             Thread.sleep(1000);
             Runtime.getRuntime().exec("sh woody.sh");
             System.exit(0);
-        }event.reply("Why would you even try this command? (Not Bot Owner)").queue();
+        }
+        event.reply("Why would you even try this command? (Not Bot Owner)").queue();
     }
 
     @Override
@@ -32,5 +33,10 @@ public class Restart implements ISlashCommand {
     @Override
     public String commandName() {
         return "restart";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

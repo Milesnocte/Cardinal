@@ -14,7 +14,7 @@ public class Stats implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
         long currentTime = System.currentTimeMillis();
-        String command ="ping 8.8.8.8";
+        String command = "ping 8.8.8.8";
         Process process = Runtime.getRuntime().exec(command);
         process.getOutputStream();
         currentTime = System.currentTimeMillis() - currentTime;
@@ -22,7 +22,7 @@ public class Stats implements ISlashCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.cyan);
         embed.setDescription("**Woody By MilesNocte**");
-        embed.addField("**Woody's Stats**","`Ping:` " + currentTime + "ms" +
+        embed.addField("**Woody's Stats**", "`Ping:` " + currentTime + "ms" +
                 "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
@@ -33,7 +33,8 @@ public class Stats implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {}
+    public void run(ButtonClickEvent event) throws Exception {
+    }
 
     @Override
     public List<String> buttons() {
@@ -43,5 +44,10 @@ public class Stats implements ISlashCommand {
     @Override
     public String commandName() {
         return "stats";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

@@ -15,7 +15,7 @@ public class Shutdown implements ISlashCommand {
             event.reply("Shutting down...").queue();
             Thread.sleep(1000);
             System.exit(0);
-        }else {
+        } else {
             event.reply("Why would you even try this command? (Not Bot Owner)").queue();
         }
     }
@@ -33,5 +33,10 @@ public class Shutdown implements ISlashCommand {
     @Override
     public String commandName() {
         return "shutdown";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

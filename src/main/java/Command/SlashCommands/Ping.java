@@ -3,6 +3,7 @@ package Command.SlashCommands;
 import Command.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -25,5 +26,10 @@ public class Ping implements ISlashCommand {
     @Override
     public String commandName() {
         return "ping";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

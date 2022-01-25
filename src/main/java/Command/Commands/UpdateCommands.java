@@ -2,7 +2,7 @@ package Command.Commands;
 
 import Command.ICommand;
 import Main.Credentials;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -12,24 +12,12 @@ import java.util.List;
 
 public class UpdateCommands implements ICommand {
     @Override
-    public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
+    public void run(List<String> args, MessageReceivedEvent event) throws Exception {
         if (event.getAuthor().getId().equals(Credentials.OWNER)) {
 
             event.getChannel().sendMessage("This might take a moment").queue();
 
-            event.getJDA().getGuildById("433825343485247499").updateCommands().addCommands(
-                    new CommandData("translate", "Role Menus")
-                            .addSubcommands(
-                                    new SubcommandData("korean_to_english", "create a year role menu")
-                                            .addOption(OptionType.STRING, "text", "text to translate", true),
-                                    new SubcommandData("english_to_korean", "create a pronoun role menu")
-                                            .addOption(OptionType.STRING, "text", "text to translate", true),
-                                    new SubcommandData("spanish_to_english", "create a year role menu")
-                                            .addOption(OptionType.STRING, "text", "text to translate", true),
-                                    new SubcommandData("english_to_spanish", "create a pronoun role menu")
-                                            .addOption(OptionType.STRING, "text", "text to translate", true)
-                            )
-            ).queue();
+            event.getJDA().getGuildById("433825343485247499").updateCommands().queue();
 
             event.getJDA().updateCommands()
                     .addCommands(

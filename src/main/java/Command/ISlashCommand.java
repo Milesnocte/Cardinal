@@ -9,4 +9,5 @@ public interface ISlashCommand {
     void run(ButtonClickEvent event) throws Exception;
     List<String> buttons();
     String commandName();
+    Boolean enabled();
 }

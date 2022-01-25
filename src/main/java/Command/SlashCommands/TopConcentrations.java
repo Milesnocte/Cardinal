@@ -13,7 +13,7 @@ public class TopConcentrations implements ISlashCommand {
 
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        if(event.getGuild().getId().equals("433825343485247499")) {
+        if (event.getGuild().getId().equals("433825343485247499")) {
             final long AI_GAMING = 822305355828559893L;
             final long DATA_SCIENCE = 822305557426864170L;
             final long SOFTWARE_SYSTEMS = 822305633327120404L;
@@ -64,10 +64,17 @@ public class TopConcentrations implements ISlashCommand {
     }
 
     @Override
-    public List<String> buttons() {return Collections.emptyList();}
+    public List<String> buttons() {
+        return Collections.emptyList();
+    }
 
     @Override
     public String commandName() {
         return "topconcentrations";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }

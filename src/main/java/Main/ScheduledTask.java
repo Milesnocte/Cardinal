@@ -37,7 +37,7 @@ public class ScheduledTask extends ListenerAdapter  {
                     embed.setColor(Color.GREEN);
                     embed.setDescription("VC-Text automatically purged!");
 
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelById("582399042240118814").sendMessage(embed.build()).queue();
+                    event.getJDA().getGuildById("433825343485247499").getTextChannelById("582399042240118814").sendMessageEmbeds(embed.build()).queue();
                 }
             }
         };

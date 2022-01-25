@@ -1,14 +1,14 @@
 package Command.Commands;
 
 import Command.ICommand;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class Echo implements ICommand {
     @Override
-    public void run(List<String> args, GuildMessageReceivedEvent event) throws Exception {
+    public void run(List<String> args, MessageReceivedEvent event) throws Exception {
         String prefix = "$";
         if(event.getAuthor().getId().equals("225772174336720896")){
             if(event.getMessage().getReferencedMessage() != null){

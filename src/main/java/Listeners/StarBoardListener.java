@@ -2,8 +2,8 @@ package Listeners;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class StarBoardListener extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
+    public void onMessageReactionAdd(MessageReactionAddEvent event) {
         boolean star; //True = starfroot, false = antifroot
 
         if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
@@ -72,7 +72,7 @@ public class StarBoardListener extends ListenerAdapter {
 
 
     @Override
-    public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent event) {
+    public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
         boolean star; //True = starfroot, false = antifroot
 
         if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
@@ -143,7 +143,7 @@ public class StarBoardListener extends ListenerAdapter {
         }catch (Exception ignored){}
     }
 
-    private void addMessage(GuildMessageReactionAddEvent event, int starCount) {
+    private void addMessage(MessageReactionAddEvent event, int starCount) {
         RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
         Message message = action.complete();
 

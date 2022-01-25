@@ -1,10 +1,12 @@
 package Command.SlashCommands;
+
 import Command.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -31,26 +33,27 @@ public class Define implements ISlashCommand {
             // Get response
             int status = connection.getResponseCode();
 
-            if(status == 200){
+            if (status == 200) {
 
                 //Get output json
                 responseContent = new String(connection.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-                responseContent = responseContent.substring(1,responseContent.length() - 1);
+                responseContent = responseContent.substring(1, responseContent.length() - 1);
                 JSONTokener tokener = new JSONTokener(responseContent);
                 JSONObject responseJSON = new JSONObject(tokener);
 
                 embed.setTitle(word.toUpperCase() + " DEFINITION");
-                for(int k = 0; k < responseJSON.getJSONArray("meanings").length(); k++){
+                for (int k = 0; k < responseJSON.getJSONArray("meanings").length(); k++) {
 
                     JSONObject meanings = responseJSON.getJSONArray("meanings").getJSONObject(k);
                     JSONObject definitions = meanings.getJSONArray("definitions").getJSONObject(0);
 
                     String definition = definitions.getString("definition");
-                    try{
+                    try {
                         definition += "\n" + "EX: *" + definitions.getString("example") + "*";
-                    }catch (Exception ignored){ }
+                    } catch (Exception ignored) {
+                    }
 
-                    embed.addField("**" + meanings.getString("partOfSpeech") + "**", definition,false);
+                    embed.addField("**" + meanings.getString("partOfSpeech") + "**", definition, false);
                 }
                 embed.setFooter("Using https://dictionaryapi.dev/");
                 event.replyEmbeds(embed.build()).queue();
@@ -60,11 +63,13 @@ public class Define implements ISlashCommand {
             }
 
 
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception { }
+    public void run(ButtonClickEvent event) throws Exception {
+    }
 
     @Override
     public List<String> buttons() {
@@ -74,5 +79,10 @@ public class Define implements ISlashCommand {
     @Override
     public String commandName() {
         return "define";
+    }
+
+    @Override
+    public Boolean enabled() {
+        return true;
     }
 }
