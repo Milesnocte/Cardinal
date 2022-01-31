@@ -1,23 +1,16 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
-import Main.Credentials;
+import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Shutdown implements ISlashCommand {
+public class Ping implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        if (event.getMember().getId().equals(Credentials.OWNER)) {
-            event.reply("Shutting down...").queue();
-            Thread.sleep(1000);
-            System.exit(0);
-        } else {
-            event.reply("Why would you even try this command? (Not Bot Owner)").queue();
-        }
+        event.reply("Pong! " + event.getJDA().getGatewayPing() + "ms").queue();
     }
 
     @Override
@@ -32,7 +25,7 @@ public class Shutdown implements ISlashCommand {
 
     @Override
     public String commandName() {
-        return "shutdown";
+        return "ping";
     }
 
     @Override

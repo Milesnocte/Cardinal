@@ -1,6 +1,6 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;

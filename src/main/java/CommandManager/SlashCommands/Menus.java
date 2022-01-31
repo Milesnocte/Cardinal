@@ -1,6 +1,6 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
 import RoleMenus.RWHSlashMenus;
 import RoleMenus.SlashMenus;
 import net.dv8tion.jda.api.Permission;

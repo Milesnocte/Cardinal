@@ -1,6 +1,6 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
 import Main.Credentials;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;

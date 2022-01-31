@@ -1,6 +1,6 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -23,10 +23,10 @@ public class Stats implements ISlashCommand {
         embed.setColor(Color.cyan);
         embed.setDescription("**Woody By MilesNocte**");
         embed.addField("**Woody's Stats**", "`Ping:` " + currentTime + "ms" +
-                "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() +
+                "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() + "ms" +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
-                "\n`Bot API:` JDA 4.3.0_346", false);
+                "\n`Bot API:` JDA 5.0.0-alpha.4", false);
         event.replyEmbeds(embed.build()).addActionRow(
                 Button.link("https://discordstatus.com/", "Discord Status")
         ).queue();

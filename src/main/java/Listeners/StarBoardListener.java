@@ -1,10 +1,12 @@
 package Listeners;
 
+import Main.Credentials;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.requests.RestAction;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,12 +18,14 @@ public class StarBoardListener extends ListenerAdapter {
 
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
-        boolean star; //True = starfroot, false = antifroot
+        boolean star = false; //True = starfroot, false = antifroot
 
         if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
             star = true;
         } else if (event.getReaction().getReactionEmote().toString().equals("RE:antifroot(925216399360671807)")) {
             star = false;
+        } else if (event.getReaction().getReactionEmote().toString().equals("RE:debugfroot(936344152004755456)") && event.getMember().getId().equals(Credentials.OWNER)) {
+            postMessage(event);
         } else return;
 
         if (!event.getChannel().getName().equals("star-board")) {
@@ -49,23 +53,7 @@ public class StarBoardListener extends ListenerAdapter {
 
             if (stars >= 5 && !getPosted(event.getMessageId())) {
                 setPosted(event.getMessageId());
-                RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
-                Message message = action.complete();
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
-                if (message.getReferencedMessage() != null) {
-                    embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
-                            message.getReferencedMessage().getContentDisplay(), false);
-                }
-                if (!message.getContentDisplay().isBlank()) {
-                    embed.addField("**Message**", message.getContentDisplay(), false);
-                }
-                if (message.getAttachments().size() > 0) {
-                    embed.setImage(message.getAttachments().get(0).getUrl());
-                }
-                embed.setFooter("Sent on: " + message.getTimeCreated().atZoneSameInstant(ZoneId.of("America/New_York"))
-                        .format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a")));
-                event.getGuild().getTextChannelsByName("star-board", true).get(0).sendMessageEmbeds(embed.build()).queue();
+                postMessage(event);
             }
         }
     }
@@ -160,5 +148,28 @@ public class StarBoardListener extends ListenerAdapter {
             prepared.execute();
         } catch (Exception ignored) {
         }
+    }
+
+    private void postMessage(MessageReactionAddEvent event){
+        RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
+        Message message = action.complete();
+        EmbedBuilder embed = new EmbedBuilder();
+
+        embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
+        if (message.getReferencedMessage() != null) {
+            embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
+                    message.getReferencedMessage().getContentDisplay(), false);
+        }
+        if (!message.getContentDisplay().isBlank()) {
+            embed.addField("**Message**", message.getContentDisplay(), false);
+        }
+        if (message.getAttachments().size() > 0) {
+            embed.setImage(message.getAttachments().get(0).getUrl());
+        }
+        embed.setFooter("Sent on: " + message.getTimeCreated().atZoneSameInstant(ZoneId.of("America/New_York"))
+                .format(DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a")));
+
+        event.getGuild().getTextChannelsByName("star-board", true).get(0)
+                .sendMessageEmbeds(embed.build()).setActionRow(Button.link(message.getJumpUrl(),"Jump to message")).queue();
     }
 }

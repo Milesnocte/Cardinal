@@ -1,16 +1,19 @@
-package Command;
+package CommandManager;
 
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
 
+/**
+ * Listens for the onSlashCommand and onButtonClick events
+ * and sends the event to the SlashCommandManager
+ */
 public class SlashCommandListener extends ListenerAdapter {
 
-    public final SlashCommandManager commandManager = new SlashCommandManager();
+    private final SlashCommandManager commandManager = new SlashCommandManager();
 
     @Override
-    public void onSlashCommand(@NotNull SlashCommandEvent event) {
+    public void onSlashCommand(SlashCommandEvent event) {
         try {
             commandManager.run(event);
         } catch (Exception e) {
@@ -19,7 +22,7 @@ public class SlashCommandListener extends ListenerAdapter {
     }
 
     @Override
-    public void onButtonClick(@NotNull ButtonClickEvent event) {
+    public void onButtonClick(ButtonClickEvent event) {
         try {
             commandManager.run(event);
         } catch (Exception e) {

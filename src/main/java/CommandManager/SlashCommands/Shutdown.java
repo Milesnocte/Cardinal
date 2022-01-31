@@ -1,6 +1,6 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
 import Main.Credentials;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -8,16 +8,16 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import java.util.Collections;
 import java.util.List;
 
-public class Restart implements ISlashCommand {
+public class Shutdown implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
-            event.reply("Restarting...").queue();
+            event.reply("Shutting down...").queue();
             Thread.sleep(1000);
-            Runtime.getRuntime().exec("sh woody.sh");
             System.exit(0);
+        } else {
+            event.reply("Why would you even try this command? (Not Bot Owner)").queue();
         }
-        event.reply("Why would you even try this command? (Not Bot Owner)").queue();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Restart implements ISlashCommand {
 
     @Override
     public String commandName() {
-        return "restart";
+        return "shutdown";
     }
 
     @Override

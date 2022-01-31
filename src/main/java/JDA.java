@@ -1,9 +1,5 @@
-import Command.CommandListener;
-import Command.SlashCommandListener;
-import Listeners.BotEventsListener;
-import Listeners.JoinLeaveListener;
-import Listeners.StarBoardListener;
-import Listeners.VoiceChannelListener;
+import CommandManager.SlashCommandListener;
+import Listeners.*;
 import Main.Credentials;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -28,9 +24,9 @@ public class JDA extends ListenerAdapter implements EventListener {
                         new SlashCommandListener(),
                         new VoiceChannelListener(),
                         new BotEventsListener(),
-                        new CommandListener(),
                         new JoinLeaveListener(),
-                        new StarBoardListener()
+                        new StarBoardListener(),
+                        new WatchList()
                 )
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))

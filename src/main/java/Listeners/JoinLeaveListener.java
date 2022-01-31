@@ -1,5 +1,6 @@
 package Listeners;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
@@ -64,6 +65,19 @@ public class JoinLeaveListener extends ListenerAdapter {
 
         event.getGuild().getTextChannelsByName("join-logs", true).get(0).sendMessage("<:entry:918599108502102036> " + event.getMember().getUser().getAsTag() +
                 " | Created " + longAgo + " | ID: " + event.getMember().getId()).queue();
+
+        if(!event.getGuild().getFeatures().contains("WELCOME_SCREEN_ENABLED")){
+            Member member = event.getMember();
+            TextChannel rolesChannel;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("Welcome " + member.getAsMention() + "!");
+            if(!event.getGuild().getTextChannelsByName("roles", true).isEmpty()){
+                rolesChannel = event.getGuild().getTextChannelsByName("roles", true).get(0);
+                stringBuilder.append(" Please visit " + rolesChannel.getAsMention() + " to select roles!");
+            }
+            event.getGuild().getTextChannelsByName("general", true).get(0).sendMessage(stringBuilder).queue();
+        }
 
     }
 

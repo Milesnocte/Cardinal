@@ -1,16 +1,23 @@
-package Command.SlashCommands;
+package CommandManager.SlashCommands;
 
-import Command.ISlashCommand;
+import CommandManager.ISlashCommand;
+import Main.Credentials;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Ping implements ISlashCommand {
+public class Restart implements ISlashCommand {
     @Override
     public void run(SlashCommandEvent event) throws Exception {
-        event.reply("Pong! " + event.getJDA().getGatewayPing() + "ms").queue();
+        if (event.getMember().getId().equals(Credentials.OWNER)) {
+            event.reply("Restarting...").queue();
+            Thread.sleep(1000);
+            Runtime.getRuntime().exec("sh woody.sh");
+            System.exit(0);
+        }
+        event.reply("Why would you even try this command? (Not Bot Owner)").queue();
     }
 
     @Override
@@ -25,7 +32,7 @@ public class Ping implements ISlashCommand {
 
     @Override
     public String commandName() {
-        return "ping";
+        return "restart";
     }
 
     @Override

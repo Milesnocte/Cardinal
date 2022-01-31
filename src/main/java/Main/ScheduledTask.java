@@ -1,6 +1,7 @@
 package Main;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -23,21 +24,16 @@ public class ScheduledTask extends ListenerAdapter  {
                 Calendar cal = Calendar.getInstance();
                 int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day
                 int minute = cal.get(Calendar.MINUTE);//get the minute of the hour
-
                 if(hour == 7 && minute == 0){
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
-
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException ignored) {}
-
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelsByName("vc-text", true).get(0).delete().queue();
-
-                    EmbedBuilder embed = new EmbedBuilder();
-                    embed.setColor(Color.GREEN);
-                    embed.setDescription("VC-Text automatically purged!");
-
-                    event.getJDA().getGuildById("433825343485247499").getTextChannelById("582399042240118814").sendMessageEmbeds(embed.build()).queue();
+                    for(Guild guild : event.getJDA().getGuilds()) {
+                        try {
+                            guild.getTextChannelsByName("vc-text", true).get(0).createCopy().queue();
+                            TimeUnit.SECONDS.sleep(1);
+                            guild.getTextChannelsByName("vc-text", true).get(0).delete().queue();
+                        } catch (Exception e) {
+                            System.out.println("Server doesnt have a VC-Text");
+                        }
+                    }
                 }
             }
         };

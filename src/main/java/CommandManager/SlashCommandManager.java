@@ -1,14 +1,21 @@
-package Command;
+package CommandManager;
 
-import Command.SlashCommands.*;
+import CommandManager.SlashCommands.*;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import java.util.*;
 
+/**
+ * Handles all SlashCommands and Button clicks
+ */
 public class SlashCommandManager {
 
+    /**
+     * Hashmap for the commands to be stored in
+     */
     private final Map<String, ISlashCommand> commands = new HashMap<>();
 
+    // Add commands to the commands hashmap
     SlashCommandManager() {
         addCommand(new Ping());
         addCommand(new Menus());
@@ -25,8 +32,12 @@ public class SlashCommandManager {
         addCommand(new TopStars());
         addCommand(new AddChannel());
         addCommand(new StarCheck());
+        addCommand(new UpdateCommands());
     }
 
+    /**
+     * @param c ISlashCommand to be added to the hashmap
+     */
     private void addCommand(ISlashCommand c) {
         commands.putIfAbsent(c.commandName(), c);
         if(!(c.buttons().isEmpty())){

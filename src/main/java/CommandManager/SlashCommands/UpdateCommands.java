@@ -1,8 +1,9 @@
-package Command.Commands;
+package CommandManager.SlashCommands;
 
-import Command.ICommand;
+import CommandManager.ISlashCommand;
 import Main.Credentials;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -10,17 +11,17 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import java.util.Collections;
 import java.util.List;
 
-public class UpdateCommands implements ICommand {
+public class UpdateCommands implements ISlashCommand {
     @Override
-    public void run(List<String> args, MessageReceivedEvent event) throws Exception {
-        if (event.getAuthor().getId().equals(Credentials.OWNER)) {
+    public void run(SlashCommandEvent event) throws Exception {
+        if (event.getMember().getId().equals(Credentials.OWNER)) {
 
-            event.getChannel().sendMessage("This might take a moment").queue();
-
-            event.getJDA().getGuildById("433825343485247499").updateCommands().queue();
+            event.getJDA().getGuildById("433825343485247499").updateCommands().addCommands().queue();
 
             event.getJDA().updateCommands()
                     .addCommands(
+                            new CommandData("updatecommands", "update the commands list"),
+
                             new CommandData("ping", "Ping the bot"),
 
                             new CommandData("purgevctxt", "Purge vc text"),
@@ -65,17 +66,27 @@ public class UpdateCommands implements ICommand {
                             new CommandData("starcheck", "Check the number of stars a user has")
                                     .addOption(OptionType.USER, "user", "The user to check", false)
                     ).queue();
-            event.getMessage().addReaction("\uD83D\uDC4D").queue();
+            event.reply("Updating Commands...").queue();
+        } else {
+            event.reply("This is an owner only command!").queue();
         }
     }
 
     @Override
-    public String getCommandName() {
+    public void run(ButtonClickEvent event) throws Exception {}
+
+    @Override
+    public List<String> buttons() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public String commandName() {
         return "updatecommands";
     }
 
     @Override
-    public List<String> getCommandAlias() {
-        return Collections.emptyList();
+    public Boolean enabled() {
+        return true;
     }
 }
