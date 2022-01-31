@@ -56,4 +56,9 @@ public class Purge implements ISlashCommand {
     public Boolean enabled() {
         return true;
     }
+
+    @Override
+    public String description() {
+        return null;
+    }
 }

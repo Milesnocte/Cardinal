@@ -10,8 +10,15 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  */
 public class SlashCommandListener extends ListenerAdapter {
 
+    /**
+     * Hashmap for the commands with a command name key
+     */
     private final SlashCommandManager commandManager = new SlashCommandManager();
 
+    /**
+     * Send the event to the SlashCommandManager
+     * @param event SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         try {
@@ -21,6 +28,10 @@ public class SlashCommandListener extends ListenerAdapter {
         }
     }
 
+    /**
+     * Send the event to the SlashCommandManager
+     * @param event ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         try {

@@ -48,6 +48,11 @@ public class StarCheck implements ISlashCommand {
         return true;
     }
 
+    @Override
+    public String description() {
+        return null;
+    }
+
     public HashMap<String, Integer> getStarsSum(SlashCommandEvent event) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");

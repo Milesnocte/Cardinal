@@ -47,6 +47,11 @@ public class TopStars implements ISlashCommand {
         return false;
     }
 
+    @Override
+    public String description() {
+        return null;
+    }
+
     public ArrayList<String> getTopStars() throws ClassNotFoundException, SQLException {
         ArrayList<String> topStars = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");

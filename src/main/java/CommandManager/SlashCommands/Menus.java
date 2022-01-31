@@ -297,4 +297,9 @@ public class Menus implements ISlashCommand {
     public Boolean enabled() {
         return true;
     }
+
+    @Override
+    public String description() {
+        return null;
+    }
 }

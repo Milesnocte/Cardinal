@@ -39,4 +39,9 @@ public class Restart implements ISlashCommand {
     public Boolean enabled() {
         return true;
     }
+
+    @Override
+    public String description() {
+        return null;
+    }
 }

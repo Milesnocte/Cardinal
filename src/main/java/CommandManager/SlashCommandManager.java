@@ -15,7 +15,9 @@ public class SlashCommandManager {
      */
     private final Map<String, ISlashCommand> commands = new HashMap<>();
 
-    // Add commands to the commands hashmap
+    /**
+     * Add commands to the commands hashmap
+     */
     SlashCommandManager() {
         addCommand(new Ping());
         addCommand(new Menus());
@@ -47,10 +49,11 @@ public class SlashCommandManager {
         }
     }
 
-    public Collection<ISlashCommand> getCommands(){
-        return commands.values();
-    }
-
+    /**
+     * Execute the run method of the command name issued by the user
+     * @param event SlashCommandEvent
+     * @throws Exception to be caught by the listener
+     */
     void run(SlashCommandEvent event) throws Exception {
         final String name = event.getName();
         if(event.getUser().isBot()){
@@ -65,6 +68,11 @@ public class SlashCommandManager {
         }
     }
 
+    /**
+     * Execute the button run method of the command the button is associated with
+     * @param event ButtonClickEvent
+     * @throws Exception to be caught by the listener
+     */
     void run(ButtonClickEvent event) throws Exception {
         final String name = event.getComponentId();
         if(event.getUser().isBot()){
