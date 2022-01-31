@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"CommandManager"},{"l":"CommandManager.SlashCommands"},{"l":"Listeners"},{"l":"Main"},{"l":"RoleMenus"}];updateSearchResults();
