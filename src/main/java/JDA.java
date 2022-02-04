@@ -1,6 +1,7 @@
 import CommandManager.SlashCommandListener;
 import Listeners.*;
 import Main.Credentials;
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -16,8 +17,8 @@ public class JDA extends ListenerAdapter implements EventListener {
         //Online the bot and create the listeners
         DefaultShardManagerBuilder.create(
                 GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES,
-                GatewayIntent.GUILD_EMOJIS
-        ).setToken(Credentials.TOKEN)
+                        GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_PRESENCES
+                ).setToken(Credentials.TOKEN)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .addEventListeners(
@@ -31,11 +32,10 @@ public class JDA extends ListenerAdapter implements EventListener {
                 //Set the bot activity to "Watching for cheaters"
                 .setActivity(Activity.watching("for Cheaters"))
                 .setStatus(OnlineStatus.ONLINE)
-                .setRawEventsEnabled(true)
                 .build();
 
-        //Print invite link to console
-        System.out.println("https://discord.com/oauth2/authorize?client_id="+ Credentials.BOTID +"&permissions=8&scope=bot+applications.commands");
+            //Print invite link to console
+            System.out.println("https://discord.com/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=8&scope=bot+applications.commands");
 
     }
 }

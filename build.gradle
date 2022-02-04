@@ -5,9 +5,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
-sourceCompatibility = targetCompatibility = 17
+sourceCompatibility = targetCompatibility = 16
 mainClassName = 'JDA'
-
 
 
 repositories {

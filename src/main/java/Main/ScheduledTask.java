@@ -15,7 +15,6 @@ public class ScheduledTask extends ListenerAdapter  {
         Timer timer = new Timer();
         TimerTask tt = new TimerTask(){
             public void run(){
-
                 Calendar cal = Calendar.getInstance();
                 int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day
                 int minute = cal.get(Calendar.MINUTE);//get the minute of the hour

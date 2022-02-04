@@ -140,11 +140,11 @@ public class StarBoardListener extends ListenerAdapter {
             Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
             PreparedStatement prepared;
             prepared = connect.prepareStatement("INSERT INTO StarBoard values(?,?,?,?,?);");
-            prepared.setString(1, event.getMessageId());
-            prepared.setInt(2, starCount);
+            prepared.setString(1,event.getGuild().getId());
+            prepared.setString(2, event.getMessageId());
             prepared.setString(3, message.getAuthor().getAsMention());
-            prepared.setBoolean(4, false);
-            prepared.setString(5,event.getGuild().getId());
+            prepared.setInt(4, starCount);
+            prepared.setBoolean(5, false);
             prepared.execute();
         } catch (Exception ignored) {
         }

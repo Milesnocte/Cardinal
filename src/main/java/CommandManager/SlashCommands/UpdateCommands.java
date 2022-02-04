@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,10 @@ public class UpdateCommands implements ISlashCommand {
     public void run(SlashCommandEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
 
-            event.getJDA().getGuildById("433825343485247499").updateCommands().addCommands().queue();
+            event.getJDA().getGuildById("433825343485247499").updateCommands()
+                    .addCommands(
+                            new CommandData("update", "update stuff ;)")
+                    ).queue();
 
             event.getJDA().updateCommands()
                     .addCommands(
@@ -64,9 +68,31 @@ public class UpdateCommands implements ISlashCommand {
                                     .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true),
 
                             new CommandData("starcheck", "Check the number of stars a user has")
-                                    .addOption(OptionType.USER, "user", "The user to check", false)
+                                    .addOption(OptionType.USER, "user", "The user to check", false),
+
+                            new CommandData("settings", "Server Settings")
+                                    .addSubcommandGroups(
+                                            new SubcommandGroupData("set", "Set command").addSubcommands(
+                                                    new SubcommandData("star", "Set the star emote"),
+                                                    new SubcommandData("antistar", "Set the anti-star emote"),
+                                                    new SubcommandData("joinlogchannel", "Set the join log channel"),
+                                                    new SubcommandData("welcomechannel", "Set the welcome channel")
+                                            ),
+                                            new SubcommandGroupData("toggle", "Toggle command").addSubcommands(
+                                                    new SubcommandData("joinleavelogs","Toggle join leave logging"),
+                                                    new SubcommandData("wlecomechannel", "Toggle welcome channel"),
+                                                    new SubcommandData("starboard","Toggle starboard")
+                                            )
+                                    ),
+                            new CommandData("watchlist", "watchlist command")
+                                    .addSubcommands(
+                                            new SubcommandData("add", "Add a user to the watchlist"),
+                                            new SubcommandData("remove", "Remove a user from the watchlist")
+                                    )
                     ).queue();
+
             event.reply("Updating Commands...").queue();
+
         } else {
             event.reply("This is an owner only command!").queue();
         }

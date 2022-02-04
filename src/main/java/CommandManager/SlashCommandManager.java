@@ -35,6 +35,7 @@ public class SlashCommandManager {
         addCommand(new AddChannel());
         addCommand(new StarCheck());
         addCommand(new UpdateCommands());
+        addCommand(new Update());
     }
 
     /**
