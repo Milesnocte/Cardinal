@@ -36,6 +36,8 @@ public class SlashCommandManager {
         addCommand(new StarCheck());
         addCommand(new UpdateCommands());
         addCommand(new Update());
+        addCommand(new Settings());
+        addCommand(new Watchlist());
     }
 
     /**
