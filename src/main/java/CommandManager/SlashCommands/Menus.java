@@ -154,30 +154,59 @@ public class Menus implements ISlashCommand {
                 }
             }
 
-            // Remove existing pronoun role
-            SlashMenus.removeRoles(pronounNames, event);
+            // Allows for the selection of multiple roles, removes if they select one they already have
             switch (event.getComponentId()) {
                 case ("Pron_He") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(0))){
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(0)).queue();
+                        event.reply("Removed He/Him role!").setEphemeral(true).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(0)).queue();
                     event.reply("Added He/Him role!").setEphemeral(true).queue();
                 }
                 case ("Pron_She") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(1))){
+                        event.reply("Removed She/Her role!").setEphemeral(true).queue();
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(1)).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(1)).queue();
                     event.reply("Added She/Her role!").setEphemeral(true).queue();
                 }
                 case ("Pron_They") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(2))){
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(2)).queue();
+                        event.reply("Removed They/Them role!").setEphemeral(true).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(2)).queue();
                     event.reply("Added They/Them role!").setEphemeral(true).queue();
                 }
                 case ("Pron_HeThey") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(3))){
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(3)).queue();
+                        event.reply("Removed He/They role!").setEphemeral(true).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(3)).queue();
                     event.reply("Added He/They role!").setEphemeral(true).queue();
                 }
                 case ("Pron_SheThey") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(4))){
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(4)).queue();
+                        event.reply("Removed She/They role!").setEphemeral(true).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(4)).queue();
                     event.reply("Added She/They role!").setEphemeral(true).queue();
                 }
                 case ("Pron_Ask") -> {
+                    if(event.getMember().getRoles().contains(pronounRoles.get(5))){
+                        event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(5)).queue();
+                        event.reply("Removed Ask Me role!").setEphemeral(true).queue();
+                        break;
+                    }
                     event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(5)).queue();
                     event.reply("Added Ask Me role!").setEphemeral(true).queue();
                 }
