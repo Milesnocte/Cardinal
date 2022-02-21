@@ -2,17 +2,16 @@ package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.components.Button;
-
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
 public class Stats implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         long currentTime = System.currentTimeMillis();
         String command = "ping 8.8.8.8";
         Process process = Runtime.getRuntime().exec(command);
@@ -26,14 +25,14 @@ public class Stats implements ISlashCommand {
                 "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() + "ms" +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
-                "\n`Bot API:` JDA 5.0.0-alpha.4", false);
+                "\n`Bot API:` JDA 5.0.0-alpha.6", false);
         event.replyEmbeds(embed.build()).addActionRow(
                 Button.link("https://discordstatus.com/", "Discord Status")
         ).queue();
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
     }
 
     @Override

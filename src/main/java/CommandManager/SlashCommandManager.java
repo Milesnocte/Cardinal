@@ -1,8 +1,9 @@
 package CommandManager;
 
 import CommandManager.SlashCommands.*;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+
 import java.util.*;
 
 /**
@@ -54,10 +55,10 @@ public class SlashCommandManager {
 
     /**
      * Execute the run method of the command name issued by the user
-     * @param event SlashCommandEvent
+     * @param event SlashCommandInteractionEvent
      * @throws Exception to be caught by the listener
      */
-    void run(SlashCommandEvent event) throws Exception {
+    void run(SlashCommandInteractionEvent event) throws Exception {
         final String name = event.getName();
         if(event.getUser().isBot()){
             return;
@@ -73,10 +74,10 @@ public class SlashCommandManager {
 
     /**
      * Execute the button run method of the command the button is associated with
-     * @param event ButtonClickEvent
+     * @param event ButtonInteractionEvent
      * @throws Exception to be caught by the listener
      */
-    void run(ButtonClickEvent event) throws Exception {
+    void run(ButtonInteractionEvent event) throws Exception {
         final String name = event.getComponentId();
         if(event.getUser().isBot()){
             return;

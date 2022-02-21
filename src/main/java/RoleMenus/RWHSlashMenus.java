@@ -1,11 +1,11 @@
 package RoleMenus;
 
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class RWHSlashMenus {
 
-    public static void SlashConcetrationMenu(SlashCommandEvent event){
+    public static void SlashConcetrationMenu(SlashCommandInteractionEvent event){
         event.reply("\n**__What is your concentration?__**\n").addActionRow(
                 Button.primary("Conc_SE", "Software Engineering"),
                 Button.primary("Conc_Bioinformatics", "Bioinformatics")
@@ -24,7 +24,7 @@ public class RWHSlashMenus {
         ).queue(); // reply immediately
     }
 
-    public static void SlashCCIEvents(SlashCommandEvent event){
+    public static void SlashCCIEvents(SlashCommandInteractionEvent event){
         event.reply("\n**__Receive pings for events?__**\n").addActionRow(
                 Button.success("CCI_YES_CCIEVENTS", "Yes"),
                 Button.danger("CCI_NO_CCIEVENTS", "No")

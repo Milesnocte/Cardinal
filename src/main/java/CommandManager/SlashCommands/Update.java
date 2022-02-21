@@ -2,13 +2,8 @@ package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
 import Main.Credentials;
-import net.dv8tion.jda.api.entities.Emote;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +11,7 @@ import static java.lang.Thread.sleep;
 
 public class Update implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if(event.getMember().getId().equals(Credentials.OWNER)) {
             event.reply("Nothing to update..").setEphemeral(true).queue();
         } else {
@@ -25,7 +20,7 @@ public class Update implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
 
     }
 

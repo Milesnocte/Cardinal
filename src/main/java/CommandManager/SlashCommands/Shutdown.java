@@ -2,15 +2,15 @@ package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
 import Main.Credentials;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Shutdown implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
             event.reply("Shutting down...").queue();
             Thread.sleep(1000);
@@ -21,7 +21,7 @@ public class Shutdown implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
 
     }
 

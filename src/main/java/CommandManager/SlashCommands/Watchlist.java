@@ -1,15 +1,15 @@
 package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Watchlist implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if(event.getSubcommandName().equals("add")){
             event.reply("Watchlist add").queue();
         }
@@ -19,7 +19,7 @@ public class Watchlist implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
 
     }
 

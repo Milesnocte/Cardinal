@@ -1,14 +1,16 @@
 package RoleMenus;
 
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+
 import java.util.List;
+import java.util.Locale;
 
 public class SlashMenus {
 
-    public static void SlashYearMenu(SlashCommandEvent event) {
+    public static void SlashYearMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What year are you?__**\n").addActionRow(
                 Button.primary("Year_Incoming", "Incoming"),
                 Button.primary("Year_Freshman", "Freshman"),
@@ -21,7 +23,7 @@ public class SlashMenus {
                 Button.primary("Year_Alumni", "Alumni")
         ).queue();
     }
-    public static void PronounMenu(SlashCommandEvent event) {
+    public static void PronounMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What are your pronouns?__**\n").addActionRow(
                 Button.primary("Pron_He", "He/Him"),
                 Button.primary("Pron_She", "She/Her"),
@@ -34,7 +36,7 @@ public class SlashMenus {
         ).queue();
     }
 
-    public static void CollegeMenu(SlashCommandEvent event) {
+    public static void CollegeMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What is your major?__**\n").addActionRow(
                 Button.primary("College_Data", "Data Science"),
                 Button.primary("College_Liberal", "Liberal Arts and Sciences")
@@ -52,7 +54,7 @@ public class SlashMenus {
         ).queue();
     }
 
-    public static void PoliMenu(SlashCommandEvent event){
+    public static void PoliMenu(SlashCommandInteractionEvent event){
         event.reply("\n**__Would you like access to politics?__**\nMature and potentially triggering subjects may be discussed here.")
                 .addActionRow(
                         Button.success("POLI_YES", "Yes"),
@@ -60,7 +62,7 @@ public class SlashMenus {
                 ).queue();
     }
 
-    public static void PlatformsMenu(SlashCommandEvent event) {
+    public static void PlatformsMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What platforms do you play on?__**")
                 .addActionRow(
                         Button.primary("Platform_PC", "PC"),
@@ -72,7 +74,7 @@ public class SlashMenus {
                 ).queue();
     }
 
-    public static void LivingMenu(SlashCommandEvent event) {
+    public static void LivingMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__Do you live on or off campus?__**")
                 .addActionRow(
                         Button.primary("Living_On", "On Campus"),
@@ -81,12 +83,14 @@ public class SlashMenus {
                 ).queue();
     }
 
-    public static void removeRoles(List<String> roleNames, ButtonClickEvent event){
+    public static void removeRoles(List<String> roleNames, ButtonInteractionEvent event){
         List<Role> roles = event.getMember().getRoles();
         // Removes any class role the user has, we will give them one again in the switch
         for (Role role : roles) {
-            if (roleNames.contains(role.getName())) {
-                event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
+            for (String roleName : roleNames){
+                if (roleName.equalsIgnoreCase(role.getName())) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
+                }
             }
         }
     }

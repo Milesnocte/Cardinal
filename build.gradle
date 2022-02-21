@@ -23,7 +23,7 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
     implementation 'org.jetbrains:annotations:22.0.0'
-    implementation 'net.dv8tion:JDA:5.0.0-alpha.4'
+    implementation 'net.dv8tion:JDA:5.0.0-alpha.+'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
     implementation 'com.vdurmont:emoji-java:5.1.1'

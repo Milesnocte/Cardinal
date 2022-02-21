@@ -2,8 +2,8 @@ package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.awt.*;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.*;
 public class TopConcentrations implements ISlashCommand {
 
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getGuild().getId().equals("433825343485247499")) {
             final long AI_GAMING = 822305355828559893L;
             final long DATA_SCIENCE = 822305557426864170L;
@@ -59,7 +59,7 @@ public class TopConcentrations implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
 
     }
 

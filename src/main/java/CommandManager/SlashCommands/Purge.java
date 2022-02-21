@@ -3,8 +3,8 @@ package CommandManager.SlashCommands;
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Purge implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
 
             OffsetDateTime twoWeeksAgo = OffsetDateTime.now().minus(2, ChronoUnit.WEEKS);
@@ -39,7 +39,7 @@ public class Purge implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
     }
 
     @Override

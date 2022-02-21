@@ -2,10 +2,10 @@ package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
 import Main.Credentials;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class UpdateCommands implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
 
             // RWH
             event.getJDA().getGuildById("433825343485247499").updateCommands()
                     .addCommands(
-                            new CommandData("update", "update stuff ;)")
+                            Commands.slash("update", "update stuff ;)")
                     ).queue();
 
             // Test Server
@@ -28,24 +28,24 @@ public class UpdateCommands implements ISlashCommand {
 
             event.getJDA().updateCommands()
                     .addCommands(
-                            new CommandData("updatecommands", "update the commands list"),
+                            Commands.slash("updatecommands", "update the commands list"),
 
-                            new CommandData("ping", "Ping the bot"),
+                            Commands.slash("ping", "Ping the bot"),
 
-                            new CommandData("purgevctxt", "Purge vc text"),
+                            Commands.slash("purgevctxt", "Purge vc text"),
 
-                            new CommandData("stats", "Get Woody's status"),
+                            Commands.slash("stats", "Get Woody's status"),
 
-                            new CommandData("avatar", "Get user avatar")
+                            Commands.slash("avatar", "Get user avatar")
                                     .addOption(OptionType.USER, "user", "user to get avatar from", false),
 
-                            new CommandData("whois", "Get information about user")
+                            Commands.slash("whois", "Get information about user")
                                     .addOption(OptionType.USER, "user", "user to get information about", false),
 
-                            new CommandData("purge", "bulk delete")
+                            Commands.slash("purge", "bulk delete")
                                     .addOption(OptionType.INTEGER, "num_messages", "number of messages to delete 1-100", true),
 
-                            new CommandData("menus", "Role Menus")
+                            Commands.slash("menus", "Role Menus")
                                     .addSubcommands(
                                             new SubcommandData("yearroles", "create a year role menu"),
                                             new SubcommandData("pronounroles", "create a pronoun role menu"),
@@ -56,27 +56,27 @@ public class UpdateCommands implements ISlashCommand {
                                             new SubcommandData("living", "create a living situation role menu")
                                     ),
 
-                            new CommandData("define", "Get definition of word")
+                            Commands.slash("define", "Get definition of word")
                                     .addOption(OptionType.STRING, "word_to_define", "A word to define", true),
 
-                            new CommandData("eightball", "Shake the 8-ball")
+                            Commands.slash("eightball", "Shake the 8-ball")
                                     .addOption(OptionType.STRING, "question", "Ask the 8-ball a question.", true),
 
-                            new CommandData("shutdown", "shutdown the bot"),
+                            Commands.slash("shutdown", "shutdown the bot"),
 
-                            new CommandData("restart", "restart the bot"),
+                            Commands.slash("restart", "restart the bot"),
 
-                            new CommandData("topconcentrations", "Get concentrations leaderboard"),
+                            Commands.slash("topconcentrations", "Get concentrations leaderboard"),
 
-                            new CommandData("topstars", "Get starfroot leaderboard"),
+                            Commands.slash("topstars", "Get starfroot leaderboard"),
 
-                            new CommandData("addchannel", "Set text channel as vc-text channel")
+                            Commands.slash("addchannel", "Set text channel as vc-text channel")
                                     .addOption(OptionType.CHANNEL, "channel", "The channel to modify", true),
 
-                            new CommandData("starcheck", "Check the number of stars a user has")
+                            Commands.slash("starcheck", "Check the number of stars a user has")
                                     .addOption(OptionType.USER, "user", "The user to check", false),
 
-                            new CommandData("settings", "Server Settings")
+                            Commands.slash("settings", "Server Settings")
                                     .addSubcommandGroups(
                                             new SubcommandGroupData("set", "Set command").addSubcommands(
                                                     new SubcommandData("star", "Set the star emote"),
@@ -90,7 +90,7 @@ public class UpdateCommands implements ISlashCommand {
                                                     new SubcommandData("starboard","Toggle starboard")
                                             )
                                     ),
-                            new CommandData("watchlist", "watchlist command")
+                            Commands.slash("watchlist", "watchlist command")
                                     .addSubcommands(
                                             new SubcommandData("add", "Add a user to the watchlist"),
                                             new SubcommandData("remove", "Remove a user from the watchlist")
@@ -105,7 +105,7 @@ public class UpdateCommands implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {}
+    public void run(ButtonInteractionEvent event) throws Exception {}
 
     @Override
     public List<String> buttons() {

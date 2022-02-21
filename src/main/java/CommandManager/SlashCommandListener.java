@@ -1,7 +1,7 @@
 package CommandManager;
 
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
@@ -17,10 +17,10 @@ public class SlashCommandListener extends ListenerAdapter {
 
     /**
      * Send the event to the SlashCommandManager
-     * @param event SlashCommandEvent
+     * @param event SlashCommandInteractionEvent
      */
     @Override
-    public void onSlashCommand(SlashCommandEvent event) {
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         try {
             commandManager.run(event);
         } catch (Exception e) {
@@ -30,10 +30,10 @@ public class SlashCommandListener extends ListenerAdapter {
 
     /**
      * Send the event to the SlashCommandManager
-     * @param event ButtonClickEvent
+     * @param event ButtonInteractionEvent
      */
     @Override
-    public void onButtonClick(ButtonClickEvent event) {
+    public void onButtonInteraction(ButtonInteractionEvent event) {
         try {
             commandManager.run(event);
         } catch (Exception e) {

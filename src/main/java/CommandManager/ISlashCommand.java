@@ -1,7 +1,8 @@
 package CommandManager;
 
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+
 import java.util.List;
 
 /**
@@ -11,17 +12,17 @@ import java.util.List;
 public interface ISlashCommand {
     /**
      * Run when a slash command is executed
-     * @param event SlashCommandEvent
+     * @param event SlashCommandInteractionEvent
      * @throws Exception to be caught my the manager
      */
-    void run(SlashCommandEvent event) throws Exception;
+    void run(SlashCommandInteractionEvent event) throws Exception;
 
     /**
      * Run when a button component is clicked
-     * @param event ButtonClickEvent
+     * @param event ButtonInteractionEvent
      * @throws Exception to be caught my the manager
      */
-    void run(ButtonClickEvent event) throws Exception;
+    void run(ButtonInteractionEvent event) throws Exception;
 
     /**
      * List of buttons associated with this command

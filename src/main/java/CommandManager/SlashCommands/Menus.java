@@ -5,8 +5,8 @@ import RoleMenus.RWHSlashMenus;
 import RoleMenus.SlashMenus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,12 +17,12 @@ public class Menus implements ISlashCommand {
     public List<String> yearNames = new ArrayList<>(List.of("Incoming student", "Freshman", "Sophomore", "Junior", "Senior", "Graduate Student", "Alumni"));
     public List<String> pronounNames = new ArrayList<>(List.of("He/Him", "She/Her", "They/Them", "He/They", "She/They", "Ask pronouns"));
     public List<String> collegeNames = new ArrayList<>(List.of("Data Science", "Liberal Arts & Sciences", "Health & Human Services", "Engineering", "Education", "Computing & Informatics", "Arts + Architecture", "Business", "Undeclared"));
-    public List<String> concentrationNames = new ArrayList<>(List.of("ai-gaming", "data-sci", "software-systems", "cyber-sec", "hci", "info-tech", "software-eng", "web-mobile", "bio-inf", "Undeclared"));
+    public List<String> concentrationNames = new ArrayList<>(List.of("software-eng", "bio-inf", "ai-gaming", "data-sci", "info-tech", "web-mobile", "hci", "cyber-sec", "software-systems", "Undeclared"));
     public List<String> livingNames = new ArrayList<>(List.of("On Campus", "Off Campus", "Commuter"));
     public List<String> platformNames = new ArrayList<>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
 
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().hasPermission(Permission.MANAGE_ROLES)) {
             switch (event.getSubcommandName()) {
                 case "yearroles" -> SlashMenus.SlashYearMenu(event);
@@ -39,7 +39,7 @@ public class Menus implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
 
         //Give or take Debate role
         if (event.getComponentId().startsWith("POLI_")) {
@@ -266,7 +266,7 @@ public class Menus implements ISlashCommand {
             }
 
             //remove existing concentration role
-            SlashMenus.removeRoles(collegeNames, event);
+            SlashMenus.removeRoles(concentrationNames, event);
             switch (event.getComponentId()) {
                 case ("Conc_SE") -> {
                     event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(0)).queue();

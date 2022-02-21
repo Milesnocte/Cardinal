@@ -1,8 +1,8 @@
 package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import java.sql.*;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StarCheck implements ISlashCommand {
     @Override
-    public void run(SlashCommandEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         String author;
         if (event.getOption("user") != null) {
             author = event.getOption("user").getAsUser().getAsMention();
@@ -30,7 +30,7 @@ public class StarCheck implements ISlashCommand {
     }
 
     @Override
-    public void run(ButtonClickEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
     }
 
     @Override
@@ -53,7 +53,7 @@ public class StarCheck implements ISlashCommand {
         return null;
     }
 
-    public HashMap<String, Integer> getStarsSum(SlashCommandEvent event) throws ClassNotFoundException, SQLException {
+    public HashMap<String, Integer> getStarsSum(SlashCommandInteractionEvent event) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
         Statement prepared = connect.createStatement();
