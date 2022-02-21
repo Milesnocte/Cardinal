@@ -18,7 +18,7 @@ public class Purge implements ISlashCommand {
 
             OffsetDateTime twoWeeksAgo = OffsetDateTime.now().minus(2, ChronoUnit.WEEKS);
 
-            int num_messages = Integer.parseInt(event.getOption("num_messages").getAsString());
+            int num_messages = (int) event.getOption("num_messages").getAsLong();
 
             if (num_messages <= 100 && num_messages >= 2) {
                 List<Message> messages = event.getChannel().getHistory().retrievePast(num_messages).complete();

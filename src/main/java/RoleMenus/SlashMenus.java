@@ -51,12 +51,34 @@ public class SlashMenus {
                 Button.primary("College_Undec", "Undeclared")
         ).queue();
     }
+
     public static void PoliMenu(SlashCommandEvent event){
         event.reply("\n**__Would you like access to politics?__**\nMature and potentially triggering subjects may be discussed here.")
                 .addActionRow(
-                Button.success("POLI_YES", "Yes"),
-                Button.danger("POLI_NO", "No")
-        ).queue();
+                        Button.success("POLI_YES", "Yes"),
+                        Button.danger("POLI_NO", "No")
+                ).queue();
+    }
+
+    public static void PlatformsMenu(SlashCommandEvent event) {
+        event.reply("\n**__What platforms do you play on?__**")
+                .addActionRow(
+                        Button.primary("Platform_PC", "PC"),
+                        Button.primary("Platform_XBOX", "XBOX"),
+                        Button.primary("Platform_Mobile", "Mobile")
+                ).addActionRow(
+                        Button.primary("Platform_PS", "Playstation"),
+                        Button.primary("Platform_Switch", "Switch")
+                ).queue();
+    }
+
+    public static void LivingMenu(SlashCommandEvent event) {
+        event.reply("\n**__Do you live on or off campus?__**")
+                .addActionRow(
+                        Button.primary("Living_On", "On Campus"),
+                        Button.primary("Living_Off", "Off Campus"),
+                        Button.primary("Living_Commuter", "Commuter")
+                ).queue();
     }
 
     public static void removeRoles(List<String> roleNames, ButtonClickEvent event){

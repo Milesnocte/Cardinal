@@ -17,10 +17,14 @@ public class UpdateCommands implements ISlashCommand {
     public void run(SlashCommandEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
 
+            // RWH
             event.getJDA().getGuildById("433825343485247499").updateCommands()
                     .addCommands(
                             new CommandData("update", "update stuff ;)")
                     ).queue();
+
+            // Test Server
+            event.getJDA().getGuildById("931663140687585290").updateCommands().queue();
 
             event.getJDA().updateCommands()
                     .addCommands(
@@ -47,7 +51,9 @@ public class UpdateCommands implements ISlashCommand {
                                             new SubcommandData("pronounroles", "create a pronoun role menu"),
                                             new SubcommandData("polirole", "create a debate role menu"),
                                             new SubcommandData("collegeroles", "create a college role menu"),
-                                            new SubcommandData("concentration", "create a concentration role menu")
+                                            new SubcommandData("concentration", "create a concentration role menu"),
+                                            new SubcommandData("platforms", "create a gaming platform role menu"),
+                                            new SubcommandData("living", "create a living situation role menu")
                                     ),
 
                             new CommandData("define", "Get definition of word")

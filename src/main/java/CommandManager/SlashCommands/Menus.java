@@ -18,29 +18,20 @@ public class Menus implements ISlashCommand {
     public List<String> pronounNames = new ArrayList<>(List.of("He/Him", "She/Her", "They/Them", "He/They", "She/They", "Ask pronouns"));
     public List<String> collegeNames = new ArrayList<>(List.of("Data Science", "Liberal Arts & Sciences", "Health & Human Services", "Engineering", "Education", "Computing & Informatics", "Arts + Architecture", "Business", "Undeclared"));
     public List<String> concentrationNames = new ArrayList<>(List.of("ai-gaming", "data-sci", "software-systems", "cyber-sec", "hci", "info-tech", "software-eng", "web-mobile", "bio-inf", "Undeclared"));
+    public List<String> livingNames = new ArrayList<>(List.of("On Campus", "Off Campus", "Commuter"));
+    public List<String> platformNames = new ArrayList<>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
 
     @Override
     public void run(SlashCommandEvent event) throws Exception {
         if (event.getMember().hasPermission(Permission.MANAGE_ROLES)) {
             switch (event.getSubcommandName()) {
-                case "yearroles" -> {
-                    SlashMenus.SlashYearMenu(event);
-                }
-                case "pronounroles" -> {
-                    SlashMenus.PronounMenu(event);
-                }
-                case "collegeroles" -> {
-                    SlashMenus.CollegeMenu(event);
-                }
-                case "polirole" -> {
-                    SlashMenus.PoliMenu(event);
-                }
-                case "concentration" -> {
-                    RWHSlashMenus.SlashConcetrationMenu(event);
-                }
-                case "ccievents" -> {
-                    RWHSlashMenus.SlashCCIEvents(event);
-                }
+                case "yearroles" -> SlashMenus.SlashYearMenu(event);
+                case "pronounroles" -> SlashMenus.PronounMenu(event);
+                case "collegeroles" -> SlashMenus.CollegeMenu(event);
+                case "polirole" -> SlashMenus.PoliMenu(event);
+                case "concentration" -> RWHSlashMenus.SlashConcetrationMenu(event);
+                case "platforms" -> SlashMenus.PlatformsMenu(event);
+                case "living" -> SlashMenus.LivingMenu(event);
             }
         } else {
             event.reply("You don't have the `MANAGE_ROLES` permission, which is required to run this command!").setEphemeral(true).queue();
@@ -57,7 +48,7 @@ public class Menus implements ISlashCommand {
 
             try {
                 politics = (event.getGuild().getRolesByName("Debate", true).get(0));
-            }catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 event.getGuild().createRole().setName("Debate").complete();
                 politics = (event.getGuild().getRolesByName("Debate", true).get(0));
             }
@@ -88,12 +79,12 @@ public class Menus implements ISlashCommand {
 
             List<Role> collegeRoles = new ArrayList<>();
 
-            for(int k = 0; k < collegeNames.size(); k++){
+            for (String collegeName : collegeNames) {
                 try {
-                    collegeRoles.add(event.getGuild().getRolesByName(collegeNames.get(k), true).get(0));
-                }catch (IndexOutOfBoundsException e){
-                    event.getGuild().createRole().setName(collegeNames.get(k)).complete();
-                    collegeRoles.add(event.getGuild().getRolesByName(collegeNames.get(k), true).get(0));
+                    collegeRoles.add(event.getGuild().getRolesByName(collegeName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(collegeName).complete();
+                    collegeRoles.add(event.getGuild().getRolesByName(collegeName, true).get(0));
                 }
             }
 
@@ -145,19 +136,19 @@ public class Menus implements ISlashCommand {
 
             List<Role> pronounRoles = new ArrayList<>();
 
-            for(int k = 0; k < pronounNames.size(); k++){
+            for (String pronounName : pronounNames) {
                 try {
-                    pronounRoles.add(event.getGuild().getRolesByName(pronounNames.get(k), true).get(0));
-                }catch (IndexOutOfBoundsException e){
-                    event.getGuild().createRole().setName(pronounNames.get(k)).complete();
-                    pronounRoles.add(event.getGuild().getRolesByName(pronounNames.get(k), true).get(0));
+                    pronounRoles.add(event.getGuild().getRolesByName(pronounName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(pronounName).complete();
+                    pronounRoles.add(event.getGuild().getRolesByName(pronounName, true).get(0));
                 }
             }
 
             // Allows for the selection of multiple roles, removes if they select one they already have
             switch (event.getComponentId()) {
                 case ("Pron_He") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(0))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(0))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(0)).queue();
                         event.reply("Removed He/Him role!").setEphemeral(true).queue();
                         break;
@@ -166,7 +157,7 @@ public class Menus implements ISlashCommand {
                     event.reply("Added He/Him role!").setEphemeral(true).queue();
                 }
                 case ("Pron_She") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(1))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(1))) {
                         event.reply("Removed She/Her role!").setEphemeral(true).queue();
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(1)).queue();
                         break;
@@ -175,7 +166,7 @@ public class Menus implements ISlashCommand {
                     event.reply("Added She/Her role!").setEphemeral(true).queue();
                 }
                 case ("Pron_They") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(2))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(2))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(2)).queue();
                         event.reply("Removed They/Them role!").setEphemeral(true).queue();
                         break;
@@ -184,7 +175,7 @@ public class Menus implements ISlashCommand {
                     event.reply("Added They/Them role!").setEphemeral(true).queue();
                 }
                 case ("Pron_HeThey") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(3))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(3))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(3)).queue();
                         event.reply("Removed He/They role!").setEphemeral(true).queue();
                         break;
@@ -193,7 +184,7 @@ public class Menus implements ISlashCommand {
                     event.reply("Added He/They role!").setEphemeral(true).queue();
                 }
                 case ("Pron_SheThey") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(4))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(4))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(4)).queue();
                         event.reply("Removed She/They role!").setEphemeral(true).queue();
                         break;
@@ -202,7 +193,7 @@ public class Menus implements ISlashCommand {
                     event.reply("Added She/They role!").setEphemeral(true).queue();
                 }
                 case ("Pron_Ask") -> {
-                    if(event.getMember().getRoles().contains(pronounRoles.get(5))){
+                    if (event.getMember().getRoles().contains(pronounRoles.get(5))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), pronounRoles.get(5)).queue();
                         event.reply("Removed Ask Me role!").setEphemeral(true).queue();
                         break;
@@ -218,12 +209,12 @@ public class Menus implements ISlashCommand {
 
             List<Role> yearRoles = new ArrayList<>();
 
-            for(int k = 0; k < yearNames.size(); k++){
+            for (String yearName : yearNames) {
                 try {
-                    yearRoles.add(event.getGuild().getRolesByName(yearNames.get(k), true).get(0));
-                }catch (IndexOutOfBoundsException e){
-                    event.getGuild().createRole().setName(yearNames.get(k)).complete();
-                    yearRoles.add(event.getGuild().getRolesByName(yearNames.get(k), true).get(0));
+                    yearRoles.add(event.getGuild().getRolesByName(yearName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(yearName).complete();
+                    yearRoles.add(event.getGuild().getRolesByName(yearName, true).get(0));
                 }
             }
 
@@ -265,12 +256,12 @@ public class Menus implements ISlashCommand {
 
             List<Role> concentrationRoles = new ArrayList<>();
 
-            for(int k = 0; k < concentrationNames.size(); k++){
+            for (String concentrationName : concentrationNames) {
                 try {
-                    concentrationRoles.add(event.getGuild().getRolesByName(concentrationNames.get(k), true).get(0));
-                }catch (IndexOutOfBoundsException e){
-                    event.getGuild().createRole().setName(concentrationNames.get(k)).complete();
-                    concentrationRoles.add(event.getGuild().getRolesByName(concentrationNames.get(k), true).get(0));
+                    concentrationRoles.add(event.getGuild().getRolesByName(concentrationName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(concentrationName).complete();
+                    concentrationRoles.add(event.getGuild().getRolesByName(concentrationName, true).get(0));
                 }
             }
 
@@ -319,14 +310,110 @@ public class Menus implements ISlashCommand {
                 }
             }
         }
+
+        if (event.getComponentId().startsWith("Platform_")) {
+
+            List<Role> platformRoles = new ArrayList<>();
+
+            for (String platformName : platformNames) {
+                try {
+                    platformRoles.add(event.getGuild().getRolesByName(platformName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(platformName).complete();
+                    platformRoles.add(event.getGuild().getRolesByName(platformName, true).get(0));
+                }
+            }
+
+            // Allows for the selection of multiple roles, removes if they select one they already have
+            switch (event.getComponentId()) {
+                case ("Platform_PC") -> {
+                    if (event.getMember().getRoles().contains(platformRoles.get(0))) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), platformRoles.get(0)).queue();
+                        event.reply("Removed PC Gamers role!").setEphemeral(true).queue();
+                        break;
+                    }
+                    event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(0)).queue();
+                    event.reply("Added PC Gamers role!").setEphemeral(true).queue();
+                }
+                case ("Platform_XBOX") -> {
+                    if (event.getMember().getRoles().contains(platformRoles.get(1))) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), platformRoles.get(1)).queue();
+                        event.reply("Removed Xbox Gamers role!").setEphemeral(true).queue();
+                        break;
+                    }
+                    event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(1)).queue();
+                    event.reply("Added Xbox Gamers role!").setEphemeral(true).queue();
+                }
+                case ("Platform_Mobile") -> {
+                    if (event.getMember().getRoles().contains(platformRoles.get(2))) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), platformRoles.get(2)).queue();
+                        event.reply("Removed Mobile Gamers role!").setEphemeral(true).queue();
+                        break;
+                    }
+                    event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(2)).queue();
+                    event.reply("Added Mobile Gamers role!").setEphemeral(true).queue();
+                }
+                case ("Platform_PS") -> {
+                    if (event.getMember().getRoles().contains(platformRoles.get(3))) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), platformRoles.get(3)).queue();
+                        event.reply("Removed Playstation Gamers role!").setEphemeral(true).queue();
+                        break;
+                    }
+                    event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(3)).queue();
+                    event.reply("Added Playstation Gamers role!").setEphemeral(true).queue();
+                }
+                case ("Platform_Switch") -> {
+                    if (event.getMember().getRoles().contains(platformRoles.get(4))) {
+                        event.getGuild().removeRoleFromMember(event.getMember(), platformRoles.get(4)).queue();
+                        event.reply("Removed Switch Gamers role!").setEphemeral(true).queue();
+                        break;
+                    }
+                    event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(4)).queue();
+                    event.reply("Added Switch Gamers role!").setEphemeral(true).queue();
+                }
+            }
+        }
+
+        if (event.getComponentId().startsWith("Living_")) {
+
+            List<Role> livingRoles = new ArrayList<>();
+
+            for (String livingName : livingNames) {
+                try {
+                    livingRoles.add(event.getGuild().getRolesByName(livingName, true).get(0));
+                } catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(livingName).complete();
+                    livingRoles.add(event.getGuild().getRolesByName(livingName, true).get(0));
+                }
+            }
+
+            //remove existing concentration role
+            SlashMenus.removeRoles(livingNames, event);
+            switch (event.getComponentId()) {
+                case ("Living_On") -> {
+                    event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(0)).queue();
+                    event.reply("Added On Campus role!").setEphemeral(true).queue();
+                }
+                case ("Living_Off") -> {
+                    event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(1)).queue();
+                    event.reply("Added Off Campus role!").setEphemeral(true).queue();
+                }
+                case ("Living_Commuter") -> {
+                    event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(2)).queue();
+                    event.reply("Added Commuter role!").setEphemeral(true).queue();
+                }
+            }
+        }
     }
+
 
     @Override
     public List<String> buttons() {
         return Arrays.asList("Year_Incoming", "Year_Freshman", "Year_Sophomore", "Year_Junior", "Year_Senior", "Year_Grad", "Year_Alumni", "Conc_SE", "Conc_Bioinformatics",
                 "Conc_ARG", "Conc_Data Science", "Conc_IT", "Conc_WM", "Conc_HCI", "Conc_Cybersecurity", "Conc_SSN", "Conc_UD", "Pron_He", "Pron_She", "Pron_They",
                 "Pron_HeThey", "Pron_SheThey", "Pron_Ask", "College_Data", "College_Liberal", "College_Health", "College_Engineering", "College_Education",
-                "College_Computing", "College_Arts", "College_Business", "College_Undec", "POLI_YES", "POLI_NO");
+                "College_Computing", "College_Arts", "College_Business", "College_Undec", "POLI_YES", "POLI_NO", "Living_On", "Living_Off", "Living_Commuter",
+                "Platform_PC", "Platform_XBOX", "Platform_Mobile", "Platform_PS", "Platform_Switch");
     }
 
     @Override
