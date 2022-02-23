@@ -20,7 +20,13 @@ public class UpdateCommands implements ISlashCommand {
             // RWH
             event.getJDA().getGuildById("433825343485247499").updateCommands()
                     .addCommands(
-                            Commands.slash("update", "update stuff ;)")
+                            Commands.slash("update", "update stuff ;)"),
+
+                            Commands.slash("uncc", "Role Menus")
+                                    .addSubcommands(
+                                            new SubcommandData("sovi", "create a year role menu"),
+                                            new SubcommandData("crown", "create a pronoun role menu")
+                                    )
                     ).queue();
 
             // Test Server
@@ -28,6 +34,7 @@ public class UpdateCommands implements ISlashCommand {
 
             event.getJDA().updateCommands()
                     .addCommands(
+
                             Commands.slash("updatecommands", "update the commands list"),
 
                             Commands.slash("ping", "Ping the bot"),
@@ -95,6 +102,7 @@ public class UpdateCommands implements ISlashCommand {
                                             new SubcommandData("add", "Add a user to the watchlist"),
                                             new SubcommandData("remove", "Remove a user from the watchlist")
                                     )
+
                     ).queue();
 
             event.reply("Updating Commands...").queue();

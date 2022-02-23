@@ -39,6 +39,7 @@ public class SlashCommandManager {
         addCommand(new Update());
         addCommand(new Settings());
         addCommand(new Watchlist());
+        addCommand(new UNCC());
     }
 
     /**
