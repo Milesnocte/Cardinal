@@ -3,6 +3,8 @@ package Main;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +20,8 @@ public class ScheduledTask extends ListenerAdapter  {
                 Calendar cal = Calendar.getInstance();
                 int hour = cal.get(Calendar.HOUR_OF_DAY);//get the hour number of the day
                 int minute = cal.get(Calendar.MINUTE);//get the minute of the hour
+
+                // Reset vc-text once a day
                 if(hour == 7 && minute == 0){
                     for(Guild guild : event.getJDA().getGuilds()) {
                         try {
@@ -27,6 +31,15 @@ public class ScheduledTask extends ListenerAdapter  {
                         } catch (Exception e) {
                             System.out.println("Server doesnt have a VC-Text");
                         }
+                    }
+                }
+
+                // Update uncc parking and dining ever 5 minutes
+                if(minute % 5 == 0){
+                    try {
+                        new FetchUNCC().screenshot();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }

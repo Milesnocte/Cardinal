@@ -19,18 +19,36 @@ public class UpdateCommands implements ISlashCommand {
 
             // RWH
             event.getJDA().getGuildById("433825343485247499").updateCommands()
-                    .addCommands(
-                            Commands.slash("update", "update stuff ;)"),
+                    .addCommands(Commands.slash("update", "update stuff ;)"))
+                    .addCommands(Commands.slash("uncc", "Role Menus")
+                            .addSubcommands(
+                                    new SubcommandData("sovi", "Get the occupancy of sovi"),
+                                    new SubcommandData("crown", "Get the occupancy of crown"),
+                                    new SubcommandData("parking", "Get the occupancy of parking")
+                            )
+                    ).queue();
 
+            // RPH
+            event.getJDA().getGuildById("931663140687585290").updateCommands()
+                    .addCommands(
                             Commands.slash("uncc", "Role Menus")
                                     .addSubcommands(
-                                            new SubcommandData("sovi", "create a year role menu"),
-                                            new SubcommandData("crown", "create a pronoun role menu")
+                                            new SubcommandData("sovi", "Get the occupancy of sovi"),
+                                            new SubcommandData("crown", "Get the occupancy of crown"),
+                                            new SubcommandData("parking", "Get the occupancy of parking")
                                     )
                     ).queue();
 
-            // Test Server
-            event.getJDA().getGuildById("931663140687585290").updateCommands().queue();
+            // Haven
+            event.getJDA().getGuildById("935650201291620392").updateCommands()
+                    .addCommands(
+                            Commands.slash("uncc", "Role Menus")
+                                    .addSubcommands(
+                                            new SubcommandData("sovi", "Get the occupancy of sovi"),
+                                            new SubcommandData("crown", "Get the occupancy of crown"),
+                                            new SubcommandData("parking", "Get the occupancy of parking")
+                                    )
+                    ).queue();
 
             event.getJDA().updateCommands()
                     .addCommands(

@@ -1,7 +1,7 @@
 import CommandManager.SlashCommandListener;
 import Listeners.*;
 import Main.Credentials;
-import net.dv8tion.jda.api.JDABuilder;
+import Main.FetchUNCC;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -37,5 +37,7 @@ public class JDA extends ListenerAdapter implements EventListener {
             //Print invite link to console
             System.out.println("https://discord.com/oauth2/authorize?client_id=" + Credentials.BOTID + "&permissions=8&scope=bot+applications.commands");
 
+            // Get dining on startup
+            new FetchUNCC().screenshot();
     }
 }
