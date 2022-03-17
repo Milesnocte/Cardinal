@@ -35,7 +35,7 @@ public class ScheduledTask extends ListenerAdapter  {
                 }
 
                 // Update uncc parking and dining ever 5 minutes
-                if(minute % 5 == 0){
+                if(minute % 10 == 0){
                     try {
                         new FetchUNCC().screenshot();
                     } catch (IOException e) {
