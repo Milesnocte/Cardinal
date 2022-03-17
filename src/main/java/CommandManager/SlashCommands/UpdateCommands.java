@@ -17,39 +17,15 @@ public class UpdateCommands implements ISlashCommand {
     public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().getId().equals(Credentials.OWNER)) {
 
+            // Clear commands
+            event.getJDA().updateCommands().queue();
+
             // RWH
             event.getJDA().getGuildById("433825343485247499").updateCommands()
-                    .addCommands(Commands.slash("update", "update stuff ;)"))
-                    .addCommands(Commands.slash("uncc", "Role Menus")
-                            .addSubcommands(
-                                    new SubcommandData("sovi", "Get the occupancy of sovi"),
-                                    new SubcommandData("crown", "Get the occupancy of crown"),
-                                    new SubcommandData("parking", "Get the occupancy of parking")
-                            )
+                    .addCommands(Commands.slash("update", "update stuff ;)")
                     ).queue();
 
-            // RPH
-            event.getJDA().getGuildById("931663140687585290").updateCommands()
-                    .addCommands(
-                            Commands.slash("uncc", "Role Menus")
-                                    .addSubcommands(
-                                            new SubcommandData("sovi", "Get the occupancy of sovi"),
-                                            new SubcommandData("crown", "Get the occupancy of crown"),
-                                            new SubcommandData("parking", "Get the occupancy of parking")
-                                    )
-                    ).queue();
-
-            // Haven
-            event.getJDA().getGuildById("935650201291620392").updateCommands()
-                    .addCommands(
-                            Commands.slash("uncc", "Role Menus")
-                                    .addSubcommands(
-                                            new SubcommandData("sovi", "Get the occupancy of sovi"),
-                                            new SubcommandData("crown", "Get the occupancy of crown"),
-                                            new SubcommandData("parking", "Get the occupancy of parking")
-                                    )
-                    ).queue();
-
+            // Global
             event.getJDA().updateCommands()
                     .addCommands(
 
@@ -115,12 +91,13 @@ public class UpdateCommands implements ISlashCommand {
                                                     new SubcommandData("starboard","Toggle starboard")
                                             )
                                     ),
-                            Commands.slash("watchlist", "watchlist command")
-                                    .addSubcommands(
-                                            new SubcommandData("add", "Add a user to the watchlist"),
-                                            new SubcommandData("remove", "Remove a user from the watchlist")
-                                    )
 
+                            Commands.slash("uncc", "Role Menus")
+                                    .addSubcommands(
+                                            new SubcommandData("sovi", "Get the occupancy of sovi"),
+                                            new SubcommandData("crown", "Get the occupancy of crown"),
+                                            new SubcommandData("parking", "Get the occupancy of parking")
+                                    )
                     ).queue();
 
             event.reply("Updating Commands...").queue();
