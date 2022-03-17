@@ -55,6 +55,6 @@ public class FetchUNCC {
         BufferedImage listScreenshot = p.getImage().getSubimage(list.getLocation().getX(), list.getLocation().getY(),
                 list.getSize().getWidth() / 2, (int) ((double) list.getSize().getHeight() / 1.175));
         ImageIO.write(listScreenshot,"PNG",new File("./img/parking.png"));
-        crown.quit();
+        parking.quit();
     }
 }
