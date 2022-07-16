@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 
 public class RWHSlashMenus
 {
-    public static void SlashConcetrationMenu(final SlashCommandInteractionEvent event) {
+    public static void SlashConcetrationMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What is your concentration?__**\n")
                 .addActionRow(
                         SelectMenu.create("concentration")

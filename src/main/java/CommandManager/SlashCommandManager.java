@@ -27,7 +27,7 @@ public class SlashCommandManager
     private final Map<String, ISlashCommand> commands;
     
     SlashCommandManager() {
-        commands = new HashMap<String, ISlashCommand>();
+        commands = new HashMap<>();
         addCommand(new Ping());
         addCommand(new Menus());
         addCommand(new WhoIs());
@@ -46,17 +46,17 @@ public class SlashCommandManager
         addCommand(new UNCC());
     }
     
-    private void addCommand(final ISlashCommand c) {
+    private void addCommand(ISlashCommand c) {
         this.commands.putIfAbsent(c.commandName(), c);
         if (!c.buttons().isEmpty()) {
-            for (final String k : c.buttons()) {
+            for (String k : c.buttons()) {
                 this.commands.putIfAbsent(k, c);
             }
         }
     }
     
-    void run(final SlashCommandInteractionEvent event) throws Exception {
-        final String name = event.getName();
+    void run(SlashCommandInteractionEvent event) throws Exception {
+        String name = event.getName();
         if (event.getUser().isBot()) {
             return;
         }
@@ -70,8 +70,8 @@ public class SlashCommandManager
         }
     }
     
-    void run(final ButtonInteractionEvent event) throws Exception {
-        final String name = event.getComponentId();
+    void run(ButtonInteractionEvent event) throws Exception {
+        String name = event.getComponentId();
         if (event.getUser().isBot()) {
             return;
         }
@@ -80,8 +80,8 @@ public class SlashCommandManager
         }
     }
     
-    void run(final SelectMenuInteractionEvent event) throws Exception {
-        final String name = event.getComponentId();
+    void run(SelectMenuInteractionEvent event) throws Exception {
+        String name = event.getComponentId();
         if (event.getUser().isBot()) {
             return;
         }

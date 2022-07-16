@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.interactions.components.selections.SelectMenu;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class SlashMenus {
-    public static void SlashYearMenu(final SlashCommandInteractionEvent event) {
+    public static void SlashYearMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What year are you?__**\n")
                 .addActionRow(
                         SelectMenu.create("years")
@@ -23,7 +23,7 @@ public class SlashMenus {
                                 ).setRequiredRange(0, 1).setPlaceholder("Select Your Year").build()).queue();
     }
 
-    public static void PronounMenu(final SlashCommandInteractionEvent event) {
+    public static void PronounMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What are your pronouns?__**\n")
                 .addActionRow(
                         SelectMenu.create("pronouns")
@@ -37,7 +37,7 @@ public class SlashMenus {
                                 ).setRequiredRange(0, 6).setPlaceholder("Select pronouns").build()).queue();
     }
 
-    public static void CollegeMenu(final SlashCommandInteractionEvent event) {
+    public static void CollegeMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What is your major?__**\n")
                 .addActionRow(SelectMenu.create("college")
                         .addOptions(
@@ -53,7 +53,7 @@ public class SlashMenus {
                         ).setRequiredRange(0, 2).setPlaceholder("Select Your College(s)").build()).queue();
     }
 
-    public static void PlatformsMenu(final SlashCommandInteractionEvent event) {
+    public static void PlatformsMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__What platforms do you play on?__**")
                 .addActionRow(SelectMenu.create("platform")
                         .addOptions(
@@ -65,7 +65,7 @@ public class SlashMenus {
                         ).setRequiredRange(0, 5).setPlaceholder("Select Your platform(s)").build()).queue();
     }
 
-    public static void LivingMenu(final SlashCommandInteractionEvent event) {
+    public static void LivingMenu(SlashCommandInteractionEvent event) {
         event.reply("\n**__Do you live on or off campus?__**")
                 .addActionRow(
                         SelectMenu.create("living")
@@ -76,10 +76,10 @@ public class SlashMenus {
                                 ).setRequiredRange(0, 1).setPlaceholder("Select One").build()).queue();
     }
 
-    public static void removeRoles(final List<String> roleNames, final SelectMenuInteractionEvent event) {
-        final List<Role> roles = event.getMember().getRoles();
-        for (final Role role : roles) {
-            for (final String roleName : roleNames) {
+    public static void removeRoles(List<String> roleNames, SelectMenuInteractionEvent event) {
+        List<Role> roles = event.getMember().getRoles();
+        for (Role role : roles) {
+            for (String roleName : roleNames) {
                 if (roleName.equalsIgnoreCase(role.getName())) {
                     event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
                 }

@@ -10,22 +10,21 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class ScheduledTask extends ListenerAdapter
 {
-    public ScheduledTask(final ReadyEvent event) {
+    public ScheduledTask(ReadyEvent event) {
         Timer timer = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 Calendar cal = Calendar.getInstance();
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
                 int minute = cal.get(Calendar.MINUTE);
                 if (minute % 10 == 0) {
                     try {
                         new FetchUNCC().screenshot();
                         int users = 0;
-                        for (final Guild guild : event.getJDA().getGuilds()) {
+                        for (Guild guild : event.getJDA().getGuilds()) {
                             users += guild.getMemberCount();
                         }
-                        event.getJDA().getPresence().setActivity(Activity.watching( users + "users"));
+                        event.getJDA().getPresence().setActivity(Activity.watching( users + " Users"));
                     }
                     catch (Exception e) {
                         e.printStackTrace();

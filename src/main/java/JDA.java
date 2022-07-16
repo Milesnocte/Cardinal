@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class JDA extends ListenerAdapter implements EventListener
 {
-    public static void main(final String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         DefaultShardManagerBuilder
                 .create(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES,
                         GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_PRESENCES,
@@ -31,7 +31,7 @@ public class JDA extends ListenerAdapter implements EventListener
                         new StarBoardListener(),
                         new MessageCmd()
                 ).setStatus(OnlineStatus.ONLINE).build();
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(3);
         System.out.println("****************************************\n*********    BOT LOGGED IN    *********\n****************************************\n" +
                 "\nInvite URL: \nhttps://discord.com/oauth2/authorize?client_id=776643673265012766&permissions=8&scope=bot+applications.commands\n");
     }

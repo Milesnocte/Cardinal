@@ -14,7 +14,7 @@ public class SlashCommandListener extends ListenerAdapter
     }
     
     @Override
-    public void onSlashCommandInteraction(final SlashCommandInteractionEvent event) {
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         try {
             this.commandManager.run(event);
         }
@@ -24,7 +24,7 @@ public class SlashCommandListener extends ListenerAdapter
     }
     
     @Override
-    public void onButtonInteraction(final ButtonInteractionEvent event) {
+    public void onButtonInteraction(ButtonInteractionEvent event) {
         try {
             this.commandManager.run(event);
         }
@@ -34,7 +34,7 @@ public class SlashCommandListener extends ListenerAdapter
     }
     
     @Override
-    public void onSelectMenuInteraction(final SelectMenuInteractionEvent event) {
+    public void onSelectMenuInteraction(SelectMenuInteractionEvent event) {
         try {
             this.commandManager.run(event);
         }

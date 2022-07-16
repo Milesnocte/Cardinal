@@ -1,8 +1,6 @@
 package CommandManager.SlashCommands;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.entities.Role;
 import java.util.Objects;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
@@ -11,7 +9,6 @@ import RoleMenus.RWHSlashMenus;
 import RoleMenus.SlashMenus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
 import CommandManager.ISlashCommand;
@@ -27,44 +24,32 @@ public class Menus implements ISlashCommand
     public List<String> poliBanned;
     
     public Menus() {
-        this.yearNames = new ArrayList<String>(List.of("Incoming student", "Freshman", "Sophomore", "Junior", "Senior", "Graduate Student", "Alumni"));
-        this.pronounNames = new ArrayList<String>(List.of("He/Him", "She/Her", "They/Them", "He/They", "She/They", "Ask pronouns"));
-        this.collegeNames = new ArrayList<String>(List.of("Data Science", "Liberal Arts & Sciences", "Health & Human Services", "Engineering", "Education", "Computing & Informatics", "Arts + Architecture", "Business", "Undeclared"));
-        this.concentrationNames = new ArrayList<String>(List.of("software-eng", "bio-inf", "ai-gaming", "data-sci", "info-tech", "web-mobile", "hci", "cyber-sec", "software-systems", "Undeclared"));
-        this.livingNames = new ArrayList<String>(List.of("On Campus", "Off Campus", "Commuter"));
-        this.platformNames = new ArrayList<String>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
-        this.poliBanned = new ArrayList<String>(List.of("124662647433068546"));
+        yearNames = new ArrayList<>(List.of("Incoming student", "Freshman", "Sophomore", "Junior", "Senior", "Graduate Student", "Alumni"));
+        pronounNames = new ArrayList<>(List.of("He/Him", "She/Her", "They/Them", "He/They", "She/They", "Ask pronouns"));
+        collegeNames = new ArrayList<>(List.of("Data Science", "Liberal Arts & Sciences", "Health & Human Services", "Engineering", "Education", "Computing & Informatics", "Arts + Architecture", "Business", "Undeclared"));
+        concentrationNames = new ArrayList<>(List.of("software-eng", "bio-inf", "ai-gaming", "data-sci", "info-tech", "web-mobile", "hci", "cyber-sec", "software-systems", "Undeclared"));
+        livingNames = new ArrayList<>(List.of("On Campus", "Off Campus", "Commuter"));
+        platformNames = new ArrayList<>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
+        poliBanned = new ArrayList<>(List.of("124662647433068546"));
     }
     
     @Override
-    public void run(final SlashCommandInteractionEvent event) throws Exception {
+    public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getMember().hasPermission(Permission.MANAGE_ROLES)) {
-            final String subcommandName = event.getSubcommandName();
+            String subcommandName = event.getSubcommandName();
             switch (subcommandName) {
-                case "yearroles": {
-                    SlashMenus.SlashYearMenu(event);
-                    break;
-                }
-                case "pronounroles": {
-                    SlashMenus.PronounMenu(event);
-                    break;
-                }
-                case "collegeroles": {
-                    SlashMenus.CollegeMenu(event);
-                    break;
-                }
-                case "concentration": {
-                    RWHSlashMenus.SlashConcetrationMenu(event);
-                    break;
-                }
-                case "platforms": {
-                    SlashMenus.PlatformsMenu(event);
-                    break;
-                }
-                case "living": {
-                    SlashMenus.LivingMenu(event);
-                    break;
-                }
+                case "yearroles" -> SlashMenus.SlashYearMenu(event);
+
+                case "pronounroles" -> SlashMenus.PronounMenu(event);
+
+                case "collegeroles" -> SlashMenus.CollegeMenu(event);
+
+                case "concentration" -> RWHSlashMenus.SlashConcetrationMenu(event);
+
+                case "platforms" -> SlashMenus.PlatformsMenu(event);
+
+                case "living" -> SlashMenus.LivingMenu(event);
+
             }
         }
         else {
@@ -73,14 +58,14 @@ public class Menus implements ISlashCommand
     }
     
     @Override
-    public void run(final ButtonInteractionEvent event) throws Exception {
+    public void run(ButtonInteractionEvent event) throws Exception {
     }
     
     @Override
-    public void run(final SelectMenuInteractionEvent event) throws Exception {
+    public void run(SelectMenuInteractionEvent event) throws Exception {
         if (Objects.equals(event.getComponent().getId(), "college")) {
-            final List<Role> collegeRoles = new ArrayList<Role>();
-            for (final String collegeName : this.collegeNames) {
+            List<Role> collegeRoles = new ArrayList<>();
+            for (String collegeName : this.collegeNames) {
                 try {
                     collegeRoles.add(event.getGuild().getRolesByName(collegeName, true).get(0));
                 }
@@ -90,51 +75,33 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.collegeNames, event);
-            for (final String s : event.getValues()) {
-                switch (s) {
-                    case "College_Data": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "College_Liberal": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "College_Health": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(2)).queue();
-                        continue;
-                    }
-                    case "College_Engineering": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(3)).queue();
-                        continue;
-                    }
-                    case "College_Education": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(4)).queue();
-                        continue;
-                    }
-                    case "College_Computing": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(5)).queue();
-                        continue;
-                    }
-                    case "College_Arts": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(6)).queue();
-                        continue;
-                    }
-                    case "College_Business": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(7)).queue();
-                        continue;
-                    }
-                    case "College_Undec": {
-                        event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(8)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "College_Data" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(0)).queue();
+
+                    case "College_Liberal" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(1)).queue();
+
+                    case "College_Health" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(2)).queue();
+
+                    case "College_Engineering" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(3)).queue();
+
+                    case "College_Education" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(4)).queue();
+
+                    case "College_Computing" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(5)).queue();
+
+                    case "College_Arts" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(6)).queue();
+
+                    case "College_Business" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(7)).queue();
+
+                    case "College_Undec" -> event.getGuild().addRoleToMember(event.getMember(), collegeRoles.get(8)).queue();
+
                 }
             }
             event.reply("Updated college role!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "pronouns")) {
-            final List<Role> pronounRoles = new ArrayList<Role>();
-            for (final String pronounName : this.pronounNames) {
+            List<Role> pronounRoles = new ArrayList<>();
+            for (String pronounName : this.pronounNames) {
                 try {
                     pronounRoles.add(event.getGuild().getRolesByName(pronounName, true).get(0));
                 }
@@ -144,39 +111,27 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.pronounNames, event);
-            for (final String s2 : event.getValues()) {
-                switch (s2) {
-                    case "Pron_He": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "Pron_She": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "Pron_They": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(2)).queue();
-                        continue;
-                    }
-                    case "Pron_HeThey": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(3)).queue();
-                        continue;
-                    }
-                    case "Pron_SheThey": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(4)).queue();
-                        continue;
-                    }
-                    case "Pron_Ask": {
-                        event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(5)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "Pron_He" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(0)).queue();
+
+                    case "Pron_She" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(1)).queue();
+
+                    case "Pron_They" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(2)).queue();
+
+                    case "Pron_HeThey" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(3)).queue();
+
+                    case "Pron_SheThey" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(4)).queue();
+
+                    case "Pron_Ask" -> event.getGuild().addRoleToMember(event.getMember(), pronounRoles.get(5)).queue();
+
                 }
             }
             event.reply("Pronouns updated!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "years")) {
-            final List<Role> yearRoles = new ArrayList<Role>();
-            for (final String yearName : this.yearNames) {
+            List<Role> yearRoles = new ArrayList<>();
+            for (String yearName : this.yearNames) {
                 try {
                     yearRoles.add(event.getGuild().getRolesByName(yearName, true).get(0));
                 }
@@ -186,43 +141,29 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.yearNames, event);
-            for (final String s3 : event.getValues()) {
-                switch (s3) {
-                    case "Year_Incoming": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "Year_Freshman": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "Year_Sophomore": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(2)).queue();
-                        continue;
-                    }
-                    case "Year_Junior": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(3)).queue();
-                        continue;
-                    }
-                    case "Year_Senior": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(4)).queue();
-                        continue;
-                    }
-                    case "Year_Grad": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(5)).queue();
-                        continue;
-                    }
-                    case "Year_Alumni": {
-                        event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(6)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "Year_Incoming" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(0)).queue();
+
+                    case "Year_Freshman" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(1)).queue();
+
+                    case "Year_Sophomore" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(2)).queue();
+
+                    case "Year_Junior" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(3)).queue();
+
+                    case "Year_Senior" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(4)).queue();
+
+                    case "Year_Grad" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(5)).queue();
+
+                    case "Year_Alumni" -> event.getGuild().addRoleToMember(event.getMember(), yearRoles.get(6)).queue();
+
                 }
             }
             event.reply("Updated year role").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "concentration")) {
-            final List<Role> concentrationRoles = new ArrayList<Role>();
-            for (final String concentrationName : this.concentrationNames) {
+            List<Role> concentrationRoles = new ArrayList<>();
+            for (String concentrationName : this.concentrationNames) {
                 try {
                     concentrationRoles.add(event.getGuild().getRolesByName(concentrationName, true).get(0));
                 }
@@ -232,55 +173,35 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.concentrationNames, event);
-            for (final String s4 : event.getValues()) {
-                switch (s4) {
-                    case "Conc_SE": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "Conc_Bioinformatics": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "Conc_ARG": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(2)).queue();
-                        continue;
-                    }
-                    case "Conc_DataScience": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(3)).queue();
-                        continue;
-                    }
-                    case "Conc_IT": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(4)).queue();
-                        continue;
-                    }
-                    case "Conc_WM": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(5)).queue();
-                        continue;
-                    }
-                    case "Conc_HCI": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(6)).queue();
-                        continue;
-                    }
-                    case "Conc_Cybersecurity": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(7)).queue();
-                        continue;
-                    }
-                    case "Conc_SSN": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(8)).queue();
-                        continue;
-                    }
-                    case "Conc_UD": {
-                        event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(9)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "Conc_SE" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(0)).queue();
+
+                    case "Conc_Bioinformatics" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(1)).queue();
+
+                    case "Conc_ARG" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(2)).queue();
+
+                    case "Conc_DataScience" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(3)).queue();
+
+                    case "Conc_IT" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(4)).queue();
+
+                    case "Conc_WM" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(5)).queue();
+
+                    case "Conc_HCI" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(6)).queue();
+
+                    case "Conc_Cybersecurity" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(7)).queue();
+
+                    case "Conc_SSN" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(8)).queue();
+
+                    case "Conc_UD" -> event.getGuild().addRoleToMember(event.getMember(), concentrationRoles.get(9)).queue();
+
                 }
             }
             event.reply("Updated concentration role!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "platform")) {
-            final List<Role> platformRoles = new ArrayList<Role>();
-            for (final String platformName : this.platformNames) {
+            List<Role> platformRoles = new ArrayList<>();
+            for (String platformName : this.platformNames) {
                 try {
                     platformRoles.add(event.getGuild().getRolesByName(platformName, true).get(0));
                 }
@@ -290,35 +211,25 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.platformNames, event);
-            for (final String s5 : event.getValues()) {
-                switch (s5) {
-                    case "Platform_PC": {
-                        event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "Platform_XBOX": {
-                        event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "Platform_Mobile": {
-                        event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(2)).queue();
-                        continue;
-                    }
-                    case "Platform_PS": {
-                        event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(3)).queue();
-                        continue;
-                    }
-                    case "Platform_Switch": {
-                        event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(4)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "Platform_PC" -> event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(0)).queue();
+
+                    case "Platform_XBOX" -> event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(1)).queue();
+
+                    case "Platform_Mobile" -> event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(2)).queue();
+
+                    case "Platform_PS" -> event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(3)).queue();
+
+                    case "Platform_Switch" -> event.getGuild().addRoleToMember(event.getMember(), platformRoles.get(4)).queue();
+
                 }
             }
             event.reply("Updated platform roles!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "living")) {
-            final List<Role> livingRoles = new ArrayList<Role>();
-            for (final String livingName : this.livingNames) {
+            List<Role> livingRoles = new ArrayList<>();
+            for (String livingName : this.livingNames) {
                 try {
                     livingRoles.add(event.getGuild().getRolesByName(livingName, true).get(0));
                 }
@@ -328,20 +239,14 @@ public class Menus implements ISlashCommand
                 }
             }
             SlashMenus.removeRoles(this.livingNames, event);
-            for (final String s6 : event.getValues()) {
-                switch (s6) {
-                    case "Living_On": {
-                        event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(0)).queue();
-                        continue;
-                    }
-                    case "Living_Off": {
-                        event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(1)).queue();
-                        continue;
-                    }
-                    case "Living_Commuter": {
-                        event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(2)).queue();
-                        continue;
-                    }
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "Living_On" -> event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(0)).queue();
+
+                    case "Living_Off" -> event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(1)).queue();
+
+                    case "Living_Commuter" -> event.getGuild().addRoleToMember(event.getMember(), livingRoles.get(2)).queue();
+
                 }
             }
             event.reply("Updated location role!").setEphemeral(true).queue();

@@ -2,9 +2,6 @@ package Listeners;
 
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
-import java.util.Iterator;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.Guild;
 import Main.ScheduledTask;
 import org.jetbrains.annotations.NotNull;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -18,10 +15,10 @@ public class BotEventsListener extends ListenerAdapter
     }
     
     @Override
-    public void onGuildJoin(@NotNull final GuildJoinEvent event) {
+    public void onGuildJoin(@NotNull GuildJoinEvent event) {
     }
     
     @Override
-    public void onGuildLeave(@NotNull final GuildLeaveEvent event) {
+    public void onGuildLeave(@NotNull GuildLeaveEvent event) {
     }
 }
