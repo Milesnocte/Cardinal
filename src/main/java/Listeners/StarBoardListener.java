@@ -20,11 +20,11 @@ public class StarBoardListener extends ListenerAdapter {
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
         boolean star = false; //True = starfroot, false = antifroot
 
-        if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
+        if (event.getReaction().getEmoji().getAsReactionCode().equals("starfroot:991751462302519316")) {
             star = true;
-        } else if (event.getReaction().getReactionEmote().toString().equals("RE:antifroot(925216399360671807)")) {
+        } else if (event.getReaction().getEmoji().getAsReactionCode().equals("antifroot:991751461144887337")) {
             star = false;
-        } else if (event.getReaction().getReactionEmote().toString().equals("RE:debugfroot(936344152004755456)") && event.getMember().getId().equals(Credentials.OWNER)) {
+        } else if (event.getReaction().getEmoji().getAsReactionCode().equals("debugfroot:936344152004755456") && event.getMember().getId().equals(Credentials.OWNER)) {
             postMessage(event);
         } else return;
 
@@ -63,9 +63,9 @@ public class StarBoardListener extends ListenerAdapter {
     public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
         boolean star; //True = starfroot, false = antifroot
 
-        if (event.getReaction().getReactionEmote().toString().equals("RE:starfroot(468218976430981140)")) {
+        if (event.getReaction().getEmoji().getAsReactionCode().equals("starfroot:991751462302519316")) {
             star = true;
-        } else if (event.getReaction().getReactionEmote().toString().equals("RE:antifroot(925216399360671807)")) {
+        } else if (event.getReaction().toString().equals("antifroot:991751461144887337")) {
             star = false;
         } else return;
 
@@ -79,13 +79,13 @@ public class StarBoardListener extends ListenerAdapter {
     }
 
     private int getStars(String messageID) throws SQLException, ClassNotFoundException {
-            Class.forName("org.sqlite.JDBC");
-            Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-            Statement prepared = connect.createStatement();
-            ResultSet inStarBoard = prepared.executeQuery("SELECT Stars FROM StarBoard WHERE MessageID =  " + messageID + ";");
-            int messageIn = inStarBoard.getInt(1);
-            connect.close();
-            return messageIn;
+        Class.forName("org.sqlite.JDBC");
+        Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+        Statement prepared = connect.createStatement();
+        ResultSet inStarBoard = prepared.executeQuery("SELECT Stars FROM StarBoard WHERE MessageID =  " + messageID + ";");
+        int messageIn = inStarBoard.getInt(1);
+        connect.close();
+        return messageIn;
     }
 
     private boolean getPosted(String messageID){

@@ -1,32 +1,27 @@
 package Listeners;
 
-import Main.ScheduledTask;
-import net.dv8tion.jda.api.events.ReadyEvent;
-import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import java.util.Iterator;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.Guild;
+import Main.ScheduledTask;
 import org.jetbrains.annotations.NotNull;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.awt.*;
-
-public class BotEventsListener extends ListenerAdapter {
-
+public class BotEventsListener extends ListenerAdapter
+{
     @Override
-    public void onReady(@NotNull ReadyEvent event) {
-        // Create scheduled task that runs once a day
+    public void onReady(ReadyEvent event) {
         new ScheduledTask(event);
     }
-
+    
     @Override
-    public void onGuildJoin(@NotNull GuildJoinEvent event) {
-        boolean roleExists = (event.getGuild().getRolesByName("InVC", true).isEmpty());
-        if(roleExists) {
-            event.getGuild().createRole().setMentionable(true).setName("InVC").setColor(Color.CYAN).queue();
-        }
+    public void onGuildJoin(@NotNull final GuildJoinEvent event) {
     }
-
+    
     @Override
-    public void onGuildLeave(@NotNull GuildLeaveEvent event) {
-
+    public void onGuildLeave(@NotNull final GuildLeaveEvent event) {
     }
 }

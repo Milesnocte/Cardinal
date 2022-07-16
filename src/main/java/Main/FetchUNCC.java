@@ -1,60 +1,53 @@
 package Main;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.awt.image.BufferedImage;
+import org.openqa.selenium.WebElement;
+import ru.yandex.qatools.ashot.Screenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import javax.imageio.ImageIO;
+import java.io.File;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
+import ru.yandex.qatools.ashot.AShot;
 import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.util.concurrent.TimeUnit;
 
-public class FetchUNCC {
-    public void screenshot() throws IOException {
-        // Load sovi
-        System.setProperty("webdriver.gecko.driver", "geckodriver");
-        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
-        FirefoxOptions options = new FirefoxOptions().setHeadless(true).setLogLevel(FirefoxDriverLogLevel.INFO);
-        WebDriver sovi = new FirefoxDriver(options);
-        String soviurl = "https://app.safespace.io/api/display/live-occupancy/15da3cfa?view=percent";
+public class FetchUNCC
+{
+    public void screenshot() throws IOException, InterruptedException {
+        TimeUnit.SECONDS.sleep(3L);
+        System.out.println("\n\n********************************\n***   Fetching UNCC Pages   ***\n********************************\n\n");
+        System.setProperty("webdriver.gecko.driver", "chromedriver");
+        System.setProperty("webdriver.chrome.verboseLogging", "true");
+        final ChromeOptions options = new ChromeOptions().setHeadless(true).setLogLevel(ChromeDriverLogLevel.SEVERE);
+        final WebDriver sovi = new ChromeDriver(options);
+        final String soviurl = "https://app.safespace.io/api/display/live-occupancy/15da3cfa?view=percent";
         sovi.get(soviurl);
-        sovi.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        // capture screenshot and save the image
-        Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(sovi);
-        ImageIO.write(s.getImage(),"PNG",new File("./img/sovi.png"));
+        sovi.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
+        final Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(sovi);
+        ImageIO.write(s.getImage(), "PNG", new File("./img/sovi.png"));
         sovi.quit();
-
-        // Load crown
-        WebDriver crown = new FirefoxDriver(options);
-        String crownurl = "https://app.safespace.io/api/display/live-occupancy/7a9c0a24?view=percent";
+        final WebDriver crown = new ChromeDriver(options);
+        final String crownurl = "https://app.safespace.io/api/display/live-occupancy/7a9c0a24?view=percent";
         crown.get(crownurl);
-        crown.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        // capture screenshot and save the image
-        Screenshot c = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(crown);
-        ImageIO.write(c.getImage(),"PNG",new File("./img/crown.png"));
+        crown.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
+        final Screenshot c = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(crown);
+        ImageIO.write(c.getImage(), "PNG", new File("./img/crown.png"));
         crown.quit();
-
-        // Load parking
-        WebDriver parking = new FirefoxDriver(options);
-        String parkingurl = "https://parkingavailability.charlotte.edu/";
+        final WebDriver parking = new ChromeDriver(options);
+        final String parkingurl = "https://parkingavailability.charlotte.edu/";
         parking.get(parkingurl);
-        parking.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        WebElement list = parking.findElement(By.className("mat-list"));
-
-        // capture screenshot, crop it, and then save the image
-        Screenshot p = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(parking);
-        BufferedImage listScreenshot = p.getImage().getSubimage(list.getLocation().getX(), list.getLocation().getY(),
-                list.getSize().getWidth() / 2, (int) ((double) list.getSize().getHeight() / 1.175));
-        ImageIO.write(listScreenshot,"PNG",new File("./img/parking.png"));
+        parking.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
+        final WebElement list = parking.findElement(By.className("mat-list"));
+        final Screenshot p = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(parking);
+        final BufferedImage listScreenshot = p.getImage().getSubimage(list.getLocation().getX(), list.getLocation().getY(), list.getSize().getWidth() / 2, list.getSize().getHeight());
+        ImageIO.write(listScreenshot, "PNG", new File("./img/parking.png"));
         parking.quit();
+        listScreenshot.flush();
+        System.out.println("\n\n********************************\n*** Done Fetching UNCC Pages ***\n********************************\n\n");
     }
 }

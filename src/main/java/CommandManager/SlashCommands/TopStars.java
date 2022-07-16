@@ -4,6 +4,7 @@ import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.awt.*;
 import java.sql.*;
@@ -29,6 +30,11 @@ public class TopStars implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
 
     }
 

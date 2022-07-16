@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -63,6 +64,11 @@ public class WhoIs implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
 
     }
 

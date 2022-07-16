@@ -4,6 +4,7 @@ import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import java.awt.*;
 import java.util.Collections;
@@ -25,7 +26,7 @@ public class Stats implements ISlashCommand {
                 "\n`Gateway Ping:` " + event.getJDA().getGatewayPing() + "ms" +
                 "\n`Guilds:` " + event.getJDA().getGuilds().size() +
                 "\n`Bot ID:` " + event.getJDA().getSelfUser().getId() +
-                "\n`Bot API:` JDA 5.0.0-alpha.6", false);
+                "\n`Bot API:` 5.0.0-alpha.13", false);
         event.replyEmbeds(embed.build()).addActionRow(
                 Button.link("https://discordstatus.com/", "Discord Status")
         ).queue();
@@ -33,6 +34,11 @@ public class Stats implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package CommandManager.SlashCommands;
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,11 @@ public class Ping implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
 
     }
 

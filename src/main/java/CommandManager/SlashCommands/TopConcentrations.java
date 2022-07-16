@@ -4,6 +4,7 @@ import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.awt.*;
 import java.util.List;
@@ -14,15 +15,15 @@ public class TopConcentrations implements ISlashCommand {
     @Override
     public void run(SlashCommandInteractionEvent event) throws Exception {
         if (event.getGuild().getId().equals("433825343485247499")) {
-            final long AI_GAMING = 822305355828559893L;
-            final long DATA_SCIENCE = 822305557426864170L;
-            final long SOFTWARE_SYSTEMS = 822305633327120404L;
-            final long CYBER_SECURITY = 822305682882691094L;
-            final long HCI = 822305742476148786L;
-            final long INFO_TECH = 822305775967141930L;
-            final long SOFTWARE_ENGINEER = 822305835086512178L;
-            final long WEB_MOBILE = 822305884712992818L;
-            final long BIO_INFORMATICS = 822305921672937472L;
+            final long AI_GAMING = 991735308083286116L;
+            final long DATA_SCIENCE = 991735308632723467L;
+            final long SOFTWARE_SYSTEMS = 991735315519766658L;
+            final long CYBER_SECURITY = 991735314697683034L;
+            final long HCI = 991735314055970857L;
+            final long INFO_TECH = 991735312747335840L;
+            final long SOFTWARE_ENGINEER = 991735306548166706L;
+            final long WEB_MOBILE = 991735313095471167L;
+            final long BIO_INFORMATICS = 991735307571572848L;
             final List<Long> concentrationRoles = Arrays.asList(AI_GAMING, DATA_SCIENCE, SOFTWARE_SYSTEMS, CYBER_SECURITY, HCI, INFO_TECH, SOFTWARE_ENGINEER, WEB_MOBILE, BIO_INFORMATICS);
             List<String> roleNumberArray = new ArrayList<>();
 
@@ -60,6 +61,11 @@ public class TopConcentrations implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
 
     }
 

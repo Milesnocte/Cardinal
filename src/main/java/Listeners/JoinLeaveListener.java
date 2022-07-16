@@ -1,10 +1,7 @@
 package Listeners;
 
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
-import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdatePendingEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,22 +15,6 @@ public class JoinLeaveListener extends ListenerAdapter {
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     private static final Long MONTH_MILLIS = 30L * DAY_MILLIS; // Not perfect
     private static final Long YEAR_MILLIS = 12L * MONTH_MILLIS;
-
-    @Override
-    public void onGuildMemberUpdatePending(@NotNull GuildMemberUpdatePendingEvent event) {
-        try {
-            Member member = event.getMember();
-            TextChannel rolesChannel;
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.append("Welcome " + member.getAsMention() + "!");
-            if (!event.getGuild().getTextChannelsByName("roles", true).isEmpty()) {
-                rolesChannel = event.getGuild().getTextChannelsByName("roles", true).get(0);
-                stringBuilder.append(" Please visit " + rolesChannel.getAsMention() + " to select roles!");
-            }
-            event.getGuild().getTextChannelsByName("general", true).get(0).sendMessage(stringBuilder).queue();
-        } catch (Exception ignored){}
-    }
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
@@ -68,18 +49,6 @@ public class JoinLeaveListener extends ListenerAdapter {
             event.getGuild().getTextChannelsByName("join-logs", true).get(0).sendMessage("<:entry:918599108502102036> " + event.getMember().getUser().getAsTag() +
                     " | Created " + longAgo + " | ID: " + event.getMember().getId()).queue();
 
-            if (!event.getGuild().getFeatures().contains("WELCOME_SCREEN_ENABLED")) {
-                Member member = event.getMember();
-                TextChannel rolesChannel;
-                StringBuilder stringBuilder = new StringBuilder();
-
-                stringBuilder.append("Welcome " + member.getAsMention() + "!");
-                if (!event.getGuild().getTextChannelsByName("roles", true).isEmpty()) {
-                    rolesChannel = event.getGuild().getTextChannelsByName("roles", true).get(0);
-                    stringBuilder.append(" Please visit " + rolesChannel.getAsMention() + " to select roles!");
-                }
-                event.getGuild().getTextChannelsByName("general", true).get(0).sendMessage(stringBuilder).queue();
-            }
         }catch (Exception ignored){}
     }
 

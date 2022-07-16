@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -40,6 +41,11 @@ public class Purge implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
+
     }
 
     @Override

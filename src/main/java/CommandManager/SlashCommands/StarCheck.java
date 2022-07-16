@@ -3,6 +3,7 @@ package CommandManager.SlashCommands;
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.sql.*;
 import java.util.Collections;
@@ -25,12 +26,17 @@ public class StarCheck implements ISlashCommand {
         } catch (Exception ignored) {
         }
 
-        event.reply(author + " has " + stars + "<:starfroot:468218976430981140>")
+        event.reply(author + " has " + stars + "<:starfroot:991751462302519316>")
                 .allowedMentions(Collections.emptyList()).queue();
     }
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
+
     }
 
     @Override

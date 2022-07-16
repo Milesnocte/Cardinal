@@ -4,6 +4,7 @@ import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -69,6 +70,11 @@ public class Define implements ISlashCommand {
 
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+    }
+
+    @Override
+    public void run(SelectMenuInteractionEvent event) throws Exception {
+
     }
 
     @Override
