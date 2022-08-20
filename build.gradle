@@ -30,5 +30,5 @@ dependencies {
     implementation group: 'ru.yandex.qatools.ashot', name: 'ashot', version: '1.5.4'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '4.1.2'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '4.3.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '4.4.0'
 }

@@ -26,7 +26,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.concurrent.TimeUnit;
 
 public class FetchUNCC {
-    public static String openInfo(String location) throws IOException, InterruptedException {
+    public static String[] openInfo(String location) throws IOException, InterruptedException {
         String dineOnCampusUrl = "https://api.dineoncampus.com/v1/locations/status?site_id=5751fd2790975b60e0489226&platform=0";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -40,11 +40,12 @@ public class FetchUNCC {
         for (; index < locations.length(); index++) {
             JSONObject obj = locations.getJSONObject(index);
             if (obj.getString("name").equals(location)) {
+                String label = obj.getJSONObject("status").getString("label");
                 String message = obj.getJSONObject("status").getString("message");
-                return message; 
+                return new String[] {label, message};
             }
         }
-        return "";
+        return new String[] {"", ""};
     }
 
     public void screenshot() throws IOException, InterruptedException {

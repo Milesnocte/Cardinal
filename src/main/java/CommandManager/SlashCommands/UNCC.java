@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class UNCC implements ISlashCommand {
     @Override
@@ -18,12 +19,24 @@ public class UNCC implements ISlashCommand {
         switch (event.getSubcommandName()) {
             case "sovi" -> {
                 
-                String openInfo = FetchUNCC.openInfo("SoVi");
-                event.getHook().editOriginal(new File("./img/sovi.png")).setContent("Sovi Occupancy: "+openInfo).queue();
+                String openMessage = FetchUNCC.openInfo("SoVi")[1];
+                String openLabel = FetchUNCC.openInfo("SoVi")[0].toLowerCase();
+                if(openLabel.equals("open")){
+                    event.getHook().editOriginal(new File("./img/sovi.png")).setContent("Sovi Occupancy: " + openMessage).queue();
+                } else {
+                    event.getHook().editOriginal(new File("./img/closed.png")).setContent(openMessage).queue();
+                }
 
             }
-            case "crown" ->
-                event.getHook().editOriginal(new File("./img/crown.png")).setContent("Crown Occupancy").queue();
+            case "crown" -> {
+                String openMessage = FetchUNCC.openInfo("Crown Commons")[1];
+                String openLabel = FetchUNCC.openInfo("Crown Commons")[0].toLowerCase();
+                if(openLabel.equals("open")) {
+                    event.getHook().editOriginal(new File("./img/crown.png")).setContent("Crown Occupancy: " + openMessage).queue();
+                } else {
+                    event.getHook().editOriginal(new File("./img/closed.png")).setContent(openMessage).queue();
+                }
+            }
             case "parking" ->
                 event.getHook().editOriginal(new File("./img/parking.png")).setContent("Parking Availability").queue();
 
