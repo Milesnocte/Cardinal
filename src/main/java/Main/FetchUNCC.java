@@ -56,21 +56,27 @@ public class FetchUNCC {
         System.setProperty("webdriver.chrome.verboseLogging", "true");
         ChromeOptions options = new ChromeOptions().setHeadless(true).setLogLevel(ChromeDriverLogLevel.SEVERE);
 
-        WebDriver sovi = new ChromeDriver(options);
-        String soviurl = "https://app.safespace.io/api/display/live-occupancy/15da3cfa?view=percent";
-        sovi.get(soviurl);
-        sovi.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
-        Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(sovi);
-        ImageIO.write(s.getImage(), "PNG", new File("./img/sovi.png"));
-        sovi.quit();
+        String soviLabel = FetchUNCC.openInfo("SoVi")[0].toLowerCase();
+        if(soviLabel.equals("open")) {
+            WebDriver sovi = new ChromeDriver(options);
+            String soviurl = "https://app.safespace.io/api/display/live-occupancy/15da3cfa?view=percent";
+            sovi.get(soviurl);
+            sovi.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
+            Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(sovi);
+            ImageIO.write(s.getImage(), "PNG", new File("./img/sovi.png"));
+            sovi.quit();
+        }
 
-        WebDriver crown = new ChromeDriver(options);
-        String crownurl = "https://app.safespace.io/api/display/live-occupancy/7a9c0a24?view=percent";
-        crown.get(crownurl);
-        crown.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
-        Screenshot c = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(crown);
-        ImageIO.write(c.getImage(), "PNG", new File("./img/crown.png"));
-        crown.quit();
+        String crownLabel = FetchUNCC.openInfo("Crown Commons")[0].toLowerCase();
+        if(crownLabel.equals("open")) {
+            WebDriver crown = new ChromeDriver(options);
+            String crownurl = "https://app.safespace.io/api/display/live-occupancy/7a9c0a24?view=percent";
+            crown.get(crownurl);
+            crown.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
+            Screenshot c = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(crown);
+            ImageIO.write(c.getImage(), "PNG", new File("./img/crown.png"));
+            crown.quit();
+        }
 
         WebDriver parking = new ChromeDriver(options);
         String parkingurl = "https://parkingavailability.charlotte.edu/";
