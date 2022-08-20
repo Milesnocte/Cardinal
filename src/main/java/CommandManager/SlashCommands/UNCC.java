@@ -1,6 +1,7 @@
 package CommandManager.SlashCommands;
 
 import CommandManager.ISlashCommand;
+import Main.FetchUNCC;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
@@ -15,9 +16,16 @@ public class UNCC implements ISlashCommand {
     public void run(SlashCommandInteractionEvent event) throws IOException, InterruptedException {
         event.deferReply().queue();
         switch (event.getSubcommandName()) {
-            case "sovi" -> event.getHook().editOriginal(new File("./img/sovi.png")).setContent("Sovi Occupancy").queue();
-            case "crown" -> event.getHook().editOriginal(new File("./img/crown.png")).setContent("Crown Occupancy").queue();
-            case "parking" -> event.getHook().editOriginal(new File("./img/parking.png")).setContent("Parking Availability").queue();
+            case "sovi" -> {
+                
+                String openInfo = FetchUNCC.openInfo("SoVi");
+                event.getHook().editOriginal(new File("./img/sovi.png")).setContent("Sovi Occupancy: "+openInfo).queue();
+
+            }
+            case "crown" ->
+                event.getHook().editOriginal(new File("./img/crown.png")).setContent("Crown Occupancy").queue();
+            case "parking" ->
+                event.getHook().editOriginal(new File("./img/parking.png")).setContent("Parking Availability").queue();
 
         }
     }

@@ -2,7 +2,6 @@ import java.util.concurrent.TimeUnit;
 
 import Main.Credentials;
 import net.dv8tion.jda.api.OnlineStatus;
-import Main.MessageCmd;
 import Listeners.StarBoardListener;
 import Listeners.JoinLeaveListener;
 import Listeners.BotEventsListener;
@@ -28,9 +27,9 @@ public class JDA extends ListenerAdapter implements EventListener
                         new SlashCommandListener(),
                         new BotEventsListener(),
                         new JoinLeaveListener(),
-                        new StarBoardListener(),
-                        new MessageCmd()
+                        new StarBoardListener()
                 ).setStatus(OnlineStatus.ONLINE).build();
+                
         TimeUnit.SECONDS.sleep(3);
         System.out.println("****************************************\n*********    BOT LOGGED IN    *********\n****************************************\n" +
                 "\nInvite URL: \nhttps://discord.com/oauth2/authorize?client_id=776643673265012766&permissions=8&scope=bot+applications.commands\n");
