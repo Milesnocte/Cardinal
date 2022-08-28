@@ -1,5 +1,6 @@
 import java.util.concurrent.TimeUnit;
 
+import Listeners.ReadyListener;
 import Main.Credentials;
 import net.dv8tion.jda.api.OnlineStatus;
 import Listeners.StarBoardListener;
@@ -27,7 +28,8 @@ public class JDA extends ListenerAdapter implements EventListener
                         new SlashCommandListener(),
                         new BotEventsListener(),
                         new JoinLeaveListener(),
-                        new StarBoardListener()
+                        new StarBoardListener(),
+                        new ReadyListener()
                 ).setStatus(OnlineStatus.ONLINE).build();
                 
         TimeUnit.SECONDS.sleep(3);

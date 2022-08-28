@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
+    implementation group: 'org.scilab.forge', name: 'jlatexmath', version: '1.0.7'
     implementation 'net.dv8tion:JDA:5.0.0-alpha.13'
     implementation 'ch.qos.logback:logback-classic:1.2.11'
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.32.3.2'
