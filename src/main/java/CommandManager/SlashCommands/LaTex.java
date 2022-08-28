@@ -21,8 +21,9 @@ public class LaTex implements ISlashCommand {
             TeXFormula formula = new TeXFormula(event.getOption("content").getAsString());
             event.deferReply().queue();
             //Grouped by guild members and guild id to prevent it from returning the wrong result with simultaneous use
-            formula.createImage("png", TeXConstants.STYLE_DISPLAY, 20, String.format("./img/%s_%s.png", event.getGuild().getId(), event.getMember().getId()), Color.white, Color.black, false);
-            event.getHook().editOriginal(new File("./img/out.png")).setContent("Output: ").queue();
+            String path = String.format("./img/%s_%s.png", event.getGuild().getId(), event.getMember().getId());
+            formula.createImage("png", TeXConstants.STYLE_DISPLAY, 20, path, Color.white, Color.black, false);
+            event.getHook().editOriginal(new File(path)).setContent("Output: ").queue();
         } catch (ParseException e) {
             event.reply("An error has occurred parsing the LaTex formula").queue();
         }
