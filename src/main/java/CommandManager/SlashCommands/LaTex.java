@@ -22,8 +22,8 @@ public class LaTex implements ISlashCommand {
             event.deferReply().queue();
             //Grouped by guild members and guild id to prevent it from returning the wrong result with simultaneous use
             String path = String.format("./img/%s_%s.png", event.getGuild().getId(), event.getMember().getId());
-            formula.createImage("png", TeXConstants.STYLE_DISPLAY, 20, path, Color.white, Color.black, false);
-            event.getHook().editOriginal(new File(path)).setContent("Output: ").queue();
+            formula.createImage("png", TeXConstants.STYLE_DISPLAY, 40, path, Color.BLACK, Color.white, true);
+            event.getHook().editOriginal(new File(path)).queue();
         } catch (ParseException e) {
             event.reply("An error has occurred parsing the LaTex formula").queue();
         }
