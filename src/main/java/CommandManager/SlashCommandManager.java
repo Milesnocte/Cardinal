@@ -1,24 +1,10 @@
 package CommandManager;
 
+import CommandManager.SlashCommands.*;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import CommandManager.SlashCommands.UNCC;
-import CommandManager.SlashCommands.Update;
-import CommandManager.SlashCommands.UpdateCommands;
-import CommandManager.SlashCommands.StarCheck;
-import CommandManager.SlashCommands.TopStars;
-import CommandManager.SlashCommands.TopConcentrations;
-import CommandManager.SlashCommands.Shutdown;
-import CommandManager.SlashCommands.Restart;
-import CommandManager.SlashCommands.EightBall;
-import CommandManager.SlashCommands.Define;
-import CommandManager.SlashCommands.Stats;
-import CommandManager.SlashCommands.Purge;
-import CommandManager.SlashCommands.Avatar;
-import CommandManager.SlashCommands.WhoIs;
-import CommandManager.SlashCommands.Menus;
-import CommandManager.SlashCommands.Ping;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +30,7 @@ public class SlashCommandManager
         addCommand(new UpdateCommands());
         addCommand(new Update());
         addCommand(new UNCC());
+        addCommand(new LaTex());
     }
     
     private void addCommand(ISlashCommand c) {
