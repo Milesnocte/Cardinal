@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -13,18 +12,29 @@ public class Avatar implements ISlashCommand {
     @Override
     public void run(SlashCommandInteractionEvent event) throws Exception {
         try {
-            event.deferReply(false).queue();
-            String userid;
-
-            if (event.getOption("user") != null) {
-                userid = event.getOption("user").getAsMember().getId();
-            } else {
-                userid = event.getMember().getId();
-            }
-
+            event.deferReply().queue();
             EmbedBuilder embed = new EmbedBuilder();
-            embed.setTitle(event.getGuild().getMemberById(userid).getEffectiveName() + "'s Avatar");
-            embed.setImage(event.getGuild().getMemberById(userid).getUser().getAvatarUrl());
+            String subcommandName = event.getSubcommandName();
+            switch (subcommandName) {
+                case "server" -> {
+                    if (event.getOption("user") == null) {
+                        embed.setImage(event.getMember().getEffectiveAvatarUrl() + "?size=4096");
+                        embed.setTitle(event.getMember().getEffectiveName() + "'s Avatar");
+                    } else {
+                        embed.setImage(event.getOption("user").getAsMember().getEffectiveAvatarUrl() + "?size=4096");
+                        embed.setTitle(event.getOption("user").getAsMember().getEffectiveName() + "'s Avatar");
+                    }
+                }
+                case "global" -> {
+                    if (event.getOption("user") == null) {
+                        embed.setImage(event.getUser().getEffectiveAvatarUrl() + "?size=4096");
+                        embed.setTitle(event.getMember().getEffectiveName() + "'s Avatar");
+                    } else {
+                        embed.setImage(event.getOption("user").getAsUser().getEffectiveAvatarUrl() + "?size=4096");
+                        embed.setTitle(event.getOption("user").getAsMember().getEffectiveName() + "'s Avatar");
+                    }
+                }
+            }
             event.getHook().editOriginalEmbeds(embed.build()).queue();
         } catch (Exception e) {
             e.printStackTrace();

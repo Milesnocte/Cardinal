@@ -1,5 +1,6 @@
 package Listeners;
 
+import CommandManager.SlashCommands.UNCC;
 import Main.Credentials;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -13,47 +14,53 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.*;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class StarBoardListener extends ListenerAdapter {
 
+    private ArrayList<String> UNCCServers = new ArrayList<>(List.of(
+            "433825343485247499", // Party Hours
+            "433825343485247499", // Woodward Hours
+            "935650201291620392", // Charlotte Haven
+            "778743841187823636" // Fretwell hours
+    ));
+
+
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
-        boolean star = false; //True = starfroot, false = antifroot
-
-        if (event.getReaction().getEmoji().getAsReactionCode().equals("starfroot:991751462302519316")) {
-            star = true;
-        } else if (event.getReaction().getEmoji().getAsReactionCode().equals("antifroot:991751461144887337")) {
-            star = false;
-        } else if (event.getReaction().getEmoji().getAsReactionCode().equals("debugfroot:936344152004755456") && event.getMember().getId().equals(Credentials.OWNER)) {
-            postMessage(event);
-        } else return;
-
-        if (!event.getChannel().getName().equals("star-board")) {
-
-            int stars = 0;
-            boolean logged = true;
-
-            try {
-                stars = getStars(event.getMessageId());
-            } catch (Exception ignored) {
-                logged = false;
-                addMessage(event, star ? 1 : -1); // Initialize entry based on whether first reaction is star or anti
-            }
-
-            if (logged) {
-                if (star) {
-                    addStar(event.getMessageId());
-                } else {
-                    revokeStar(event.getMessageId());
+        if (UNCCServers.contains(event.getGuild().getId())) {
+            if (!event.getChannel().getName().equals("star-board")) {
+                switch (event.getReaction().getEmoji().getAsReactionCode()) {
+                    case "starfroot:991751462302519316" -> {
+                        if (!getExists(event.getMessageId())) {
+                            addMessage(event);
+                        }
+                        addStar(event.getMessageId());
+                    }
+                    case "antifroot:991751461144887337" -> {
+                        if (!getExists(event.getMessageId())) {
+                            addMessage(event);
+                        }
+                        revokeStar(event.getMessageId());
+                    }
+                    case "debugfroot:936344152004755456" -> {
+                        if (event.getMember().getId().equals(Credentials.OWNER)) {
+                            postMessage(event);
+                        }
+                    }
+                    default -> {
+                        return;
+                    }
                 }
-            }
 
-            // Add the star that was just reacted
-            stars += 1;
+                int stars = getStars(event.getMessageId());
 
-            if (stars >= 5 && !getPosted(event.getMessageId())) {
-                setPosted(event.getMessageId());
-                postMessage(event);
+                if (stars >= 5 && !getPosted(event.getMessageId())) {
+                    setPosted(event.getMessageId());
+                    postMessage(event);
+                }
             }
         }
     }
@@ -61,31 +68,38 @@ public class StarBoardListener extends ListenerAdapter {
 
     @Override
     public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
-        boolean star; //True = starfroot, false = antifroot
-
-        if (event.getReaction().getEmoji().getAsReactionCode().equals("starfroot:991751462302519316")) {
-            star = true;
-        } else if (event.getReaction().toString().equals("antifroot:991751461144887337")) {
-            star = false;
-        } else return;
-
         if (!event.getChannel().getName().equals("star-board")) {
-            if (star) {
-                revokeStar(event.getMessageId());
-            } else {
-                addStar(event.getMessageId());
+            switch (event.getReaction().getEmoji().getAsReactionCode()) {
+                case "starfroot:991751462302519316" -> revokeStar(event.getMessageId());
+                case "antifroot:991751461144887337" -> addStar(event.getMessageId());
             }
         }
     }
 
-    private int getStars(String messageID) throws SQLException, ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
-        Statement prepared = connect.createStatement();
-        ResultSet inStarBoard = prepared.executeQuery("SELECT Stars FROM StarBoard WHERE MessageID =  " + messageID + ";");
-        int messageIn = inStarBoard.getInt(1);
-        connect.close();
-        return messageIn;
+    private boolean getExists(String messageID){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+            Statement prepared = connect.createStatement();
+            ResultSet inStarBoard = prepared.executeQuery("SELECT EXISTS(SELECT 1 FROM StarBoard WHERE MessageID =  " + messageID + ");");
+            boolean exists = inStarBoard.getBoolean(1);
+            connect.close();
+            return exists;
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    private int getStars(String messageID) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:VCP.db");
+            Statement prepared = connect.createStatement();
+            ResultSet inStarBoard = prepared.executeQuery("SELECT Stars FROM StarBoard WHERE MessageID =  " + messageID + ";");
+            int messageIn = inStarBoard.getInt(1);
+            connect.close();
+            return messageIn;
+        } catch (Exception ignored) {}
+        return 0;
     }
 
     private boolean getPosted(String messageID){
@@ -131,7 +145,7 @@ public class StarBoardListener extends ListenerAdapter {
         }catch (Exception ignored){}
     }
 
-    private void addMessage(MessageReactionAddEvent event, int starCount) {
+    private void addMessage(MessageReactionAddEvent event) {
         RestAction<Message> action = event.getChannel().retrieveMessageById(event.getMessageId());
         Message message = action.complete();
 
@@ -143,7 +157,7 @@ public class StarBoardListener extends ListenerAdapter {
             prepared.setString(1,event.getGuild().getId());
             prepared.setString(2, event.getMessageId());
             prepared.setString(3, message.getAuthor().getAsMention());
-            prepared.setInt(4, starCount);
+            prepared.setInt(4, 0);
             prepared.setBoolean(5, false);
             prepared.execute();
         } catch (Exception ignored) {

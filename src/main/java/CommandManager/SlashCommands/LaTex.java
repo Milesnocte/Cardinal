@@ -3,13 +3,11 @@ package CommandManager.SlashCommands;
 import CommandManager.ISlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
-
 import java.awt.*;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import org.scilab.forge.jlatexmath.ParseException;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXConstants;

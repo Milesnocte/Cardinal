@@ -21,16 +21,16 @@ public class Menus implements ISlashCommand
     public List<String> concentrationNames;
     public List<String> livingNames;
     public List<String> platformNames;
-    public List<String> poliBanned;
+    public List<String> schoolNames;
     
     public Menus() {
         yearNames = new ArrayList<>(List.of("Incoming student", "Freshman", "Sophomore", "Junior", "Senior", "Graduate Student", "Alumni"));
         pronounNames = new ArrayList<>(List.of("He/Him", "She/Her", "They/Them", "He/They", "She/They", "Ask pronouns"));
         collegeNames = new ArrayList<>(List.of("Data Science", "Liberal Arts & Sciences", "Health & Human Services", "Engineering", "Education", "Computing & Informatics", "Arts + Architecture", "Business", "Undeclared"));
         concentrationNames = new ArrayList<>(List.of("software-eng", "bio-inf", "ai-gaming", "data-sci", "info-tech", "web-mobile", "hci", "cyber-sec", "software-systems", "Undeclared"));
+        schoolNames = new ArrayList<>(List.of("UNCG", "ECU", "NCSU", "WCU", "UNC", "UNCC", "UNCW", "NCA&T", "APP", "UNCA", "ECSU", "WSSU", "FSU", "NCCU", "UNCP", "NCSA", "NCSSM", "Future Student"));
         livingNames = new ArrayList<>(List.of("On Campus", "Off Campus", "Commuter"));
         platformNames = new ArrayList<>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
-        poliBanned = new ArrayList<>(List.of("124662647433068546"));
     }
     
     @Override
@@ -59,6 +59,70 @@ public class Menus implements ISlashCommand
     
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+        if (Objects.equals(event.getComponent().getId(), "EventPing")) {
+            Role Events = null;
+            try {
+                Events = event.getGuild().getRolesByName("Events", true).get(0);
+            } catch (Exception e) {
+                return;
+            }
+
+            if(event.getMember().getRoles().contains(Events)){
+                event.getGuild().removeRoleFromMember(event.getMember(), Events).queue();
+                event.reply("Removed events ping role!").setEphemeral(true).queue();
+            } else {
+                event.getGuild().addRoleToMember(event.getMember(), Events).queue();
+                event.reply("Added events ping role!").setEphemeral(true).queue();
+            }
+        }
+        if (Objects.equals(event.getComponent().getId(), "MeetupPing")) {
+            Role Meetups = null;
+            try {
+                Meetups = event.getGuild().getRolesByName("Meetups", true).get(0);
+            } catch (Exception e) {
+                return;
+            }
+
+            if(event.getMember().getRoles().contains(Meetups)){
+                event.getGuild().removeRoleFromMember(event.getMember(), Meetups).queue();
+                event.reply("Removed meetups ping role!").setEphemeral(true).queue();
+            } else {
+                event.getGuild().addRoleToMember(event.getMember(), Meetups).queue();
+                event.reply("Added meetups ping role!").setEphemeral(true).queue();
+            }
+        }
+        if (Objects.equals(event.getComponent().getId(), "VCPing")) {
+            Role VCPing = null;
+            try {
+                VCPing = event.getGuild().getRolesByName("VCPing", true).get(0);
+            } catch (Exception e) {
+                return;
+            }
+
+            if(event.getMember().getRoles().contains(VCPing)){
+                event.getGuild().removeRoleFromMember(event.getMember(), VCPing).queue();
+                event.reply("Removed VC ping role!").setEphemeral(true).queue();
+            } else {
+                event.getGuild().addRoleToMember(event.getMember(), VCPing).queue();
+                event.reply("Added VC ping role!").setEphemeral(true).queue();
+            }
+        }
+        if (Objects.equals(event.getComponent().getId(), "ChatPing")) {
+            Role ChatPing = null;
+            try {
+                ChatPing = event.getGuild().getRolesByName("ChatPing", true).get(0);
+            } catch (Exception e) {
+                return;
+            }
+
+            if(event.getMember().getRoles().contains(ChatPing)){
+                event.getGuild().removeRoleFromMember(event.getMember(), ChatPing).queue();
+                event.reply("Removed Chat ping role!").setEphemeral(true).queue();
+            } else {
+                event.getGuild().addRoleToMember(event.getMember(), ChatPing).queue();
+                event.reply("Added Chat ping role!").setEphemeral(true).queue();
+            }
+        }
     }
     
     @Override
@@ -251,11 +315,74 @@ public class Menus implements ISlashCommand
             }
             event.reply("Updated location role!").setEphemeral(true).queue();
         }
+        if (Objects.equals(event.getComponent().getId(), "schools")) {
+            event.deferReply().setEphemeral(true).queue();
+            List<Role> schoolRoles = new ArrayList<>();
+            for (String schoolName : this.schoolNames) {
+                try {
+                    schoolRoles.add(event.getGuild().getRolesByName(schoolName, true).get(0));
+                }
+                catch (IndexOutOfBoundsException e) {
+                    event.getGuild().createRole().setName(schoolName).complete();
+                    schoolRoles.add(event.getGuild().getRolesByName(schoolName, true).get(0));
+                }
+            }
+            SlashMenus.removeRoles(this.schoolNames, event);
+            for (String roles : event.getValues()) {
+                switch (roles) {
+                    case "UNCG" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(0)).queue();
+
+                    case "ECU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(1)).queue();
+
+                    case "NCSU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(2)).queue();
+
+                    case "WCU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(3)).queue();
+
+                    case "UNC" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(4)).queue();
+
+                    case "UNCC" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(5)).queue();
+
+                    case "UNCW" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(6)).queue();
+
+                    case "NCA&T" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(7)).queue();
+
+                    case "APP" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(8)).queue();
+
+                    case "UNCA" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(9)).queue();
+
+                    case "ECSU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(10)).queue();
+
+                    case "WSSU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(11)).queue();
+
+                    case "FSU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(12)).queue();
+
+                    case "NCCU" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(13)).queue();
+
+                    case "UNCP" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(14)).queue();
+
+                    case "NCSA" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(15)).queue();
+
+                    case "NCSSM" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(16)).queue();
+
+                    case "Future_Student" -> event.getGuild().addRoleToMember(event.getMember(), schoolRoles.get(17)).queue();
+
+                }
+            }
+            event.getHook().editOriginal("Updated school role!").queue();
+        }
     }
     
     @Override
     public List<String> buttons() {
-        return Arrays.asList("Year_Incoming", "Year_Freshman", "Year_Sophomore", "Year_Junior", "Year_Senior", "Year_Grad", "Year_Alumni", "Conc_SE", "Conc_Bioinformatics", "Conc_ARG", "Conc_Data Science", "Conc_IT", "Conc_WM", "Conc_HCI", "Conc_Cybersecurity", "Conc_SSN", "Conc_UD", "Pron_He", "Pron_She", "Pron_They", "Pron_HeThey", "Pron_SheThey", "Pron_Ask", "College_Data", "College_Liberal", "College_Health", "College_Engineering", "College_Education", "College_Computing", "College_Arts", "College_Business", "College_Undec", "Living_On", "Living_Off", "Living_Commuter", "Platform_PC", "Platform_XBOX", "Platform_Mobile", "Platform_PS", "Platform_Switch", "pronouns", "years", "college", "concentration", "platform", "living");
+        return Arrays.asList("Year_Incoming", "Year_Freshman", "Year_Sophomore", "Year_Junior", "Year_Senior", "Year_Grad",
+                "Year_Alumni", "Conc_SE", "Conc_Bioinformatics", "Conc_ARG", "Conc_Data Science", "Conc_IT", "Conc_WM",
+                "Conc_HCI", "Conc_Cybersecurity", "Conc_SSN", "Conc_UD", "Pron_He", "Pron_She", "Pron_They", "Pron_HeThey",
+                "Pron_SheThey", "Pron_Ask", "College_Data", "College_Liberal", "College_Health", "College_Engineering",
+                "College_Education", "College_Computing", "College_Arts", "College_Business", "College_Undec", "Living_On",
+                "Living_Off", "Living_Commuter", "Platform_PC", "Platform_XBOX", "Platform_Mobile", "Platform_PS", "Platform_Switch",
+                "pronouns", "years", "college", "concentration", "platform", "living", "EventPing", "MeetupPing", "schools",
+                "UNCG", "ECU", "NCSU", "WCU", "UNC", "UNCC", "UNCW", "NCA&T", "APP", "UNCA", "ECSU", "WSSU", "FSU",
+                "NCCU", "UNCP", "NCSA", "NCSSM", "Future Student", "VCPing", "ChatPing");
     }
     
     @Override

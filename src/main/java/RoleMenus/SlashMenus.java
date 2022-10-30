@@ -3,6 +3,8 @@ package RoleMenus;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import java.util.List;
+
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.selections.SelectOption;
 import net.dv8tion.jda.api.interactions.components.selections.SelectMenu;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -50,7 +52,7 @@ public class SlashMenus {
                                 SelectOption.of("Arts and Architectures", "College_Arts"),
                                 SelectOption.of("Business", "College_Business"),
                                 SelectOption.of("Undeclared", "College_Undec")
-                        ).setRequiredRange(0, 2).setPlaceholder("Select Your College(s)").build()).queue();
+                        ).setRequiredRange(0, 2).setPlaceholder("Select Your Major(s)").build()).queue();
     }
 
     public static void PlatformsMenu(SlashCommandInteractionEvent event) {
@@ -85,5 +87,13 @@ public class SlashMenus {
                 }
             }
         }
+    }
+
+    public static void PingRoles(SlashCommandInteractionEvent event) {
+        event.reply("\n**__Do you live on or off campus?__**")
+                .addActionRow(
+                        Button.primary("EventPing","Events"),
+                        Button.primary("MeetupPing","Meetups")
+                ).queue();
     }
 }
