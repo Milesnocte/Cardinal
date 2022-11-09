@@ -64,6 +64,7 @@ public class FetchUNCC {
             sovi.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
             Screenshot s = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(sovi);
             ImageIO.write(s.getImage(), "PNG", new File("./img/sovi.png"));
+            sovi.close();
             sovi.quit();
         }
 
@@ -75,6 +76,7 @@ public class FetchUNCC {
             crown.manage().timeouts().implicitlyWait(Duration.ofSeconds(10L));
             Screenshot c = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(crown);
             ImageIO.write(c.getImage(), "PNG", new File("./img/crown.png"));
+            crown.close();
             crown.quit();
         }
 
@@ -87,6 +89,8 @@ public class FetchUNCC {
         BufferedImage listScreenshot = p.getImage().getSubimage(list.getLocation().getX(), list.getLocation().getY(),
                 list.getSize().getWidth() / 2, list.getSize().getHeight());
         ImageIO.write(listScreenshot, "PNG", new File("./img/parking.png"));
+        parking.navigate().refresh();
+        parking.close();
         parking.quit();
 
         listScreenshot.flush();
