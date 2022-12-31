@@ -56,7 +56,7 @@ public class StarBoardListener extends ListenerAdapter {
                 }
 
                 int stars = getStars(event.getMessageId());
-
+                
                 if (stars >= 5 && !getPosted(event.getMessageId())) {
                     setPosted(event.getMessageId());
                     postMessage(event);
@@ -172,10 +172,10 @@ public class StarBoardListener extends ListenerAdapter {
         embed.setAuthor(message.getAuthor().getAsTag(), message.getJumpUrl(), message.getAuthor().getAvatarUrl());
         if (message.getReferencedMessage() != null) {
             embed.addField("**Reply to " + message.getReferencedMessage().getAuthor().getAsTag() + "**",
-                    message.getReferencedMessage().getContentDisplay(), false);
+                    message.getReferencedMessage().getContentRaw(), false);
         }
         if (!message.getContentDisplay().isBlank()) {
-            embed.addField("**Message**", message.getContentDisplay(), false);
+            embed.addField("**Message**", message.getContentRaw(), false);
         }
         if (message.getAttachments().size() > 0) {
             embed.setImage(message.getAttachments().get(0).getUrl());
