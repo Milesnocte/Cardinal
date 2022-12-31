@@ -46,13 +46,16 @@ public class StarBoardListener extends ListenerAdapter {
                         revokeStar(event.getMessageId());
                     }
                     case "debugfroot:936344152004755456" -> {
+                        if (!getExists(event.getMessageId())) {
+                            addMessage(event);
+                        }
                         if(getPosted(event.getMessageId())) {
                             return;
                         }
                         if (event.getMember().getId().equals(Credentials.OWNER)) {
                             postMessage(event);
+                            setPosted(event.getMessageId());
                         }
-                        setPosted(event.getMessageId());
                     }
                     default -> {
                         return;
