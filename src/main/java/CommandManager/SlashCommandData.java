@@ -37,6 +37,7 @@ public class SlashCommandData {
             Commands.slash("restart", "restart the bot"),
     };
     public static final CommandData[] UNCCcommands = {
+            Commands.slash("christina", "Femnocte Pic"),
             Commands.slash("menus", "Role Menus")
                     .addSubcommands(
                     new SubcommandData("yearroles", "create a year role menu"),

@@ -70,11 +70,17 @@ public class MessageCmd extends ListenerAdapter
                 Button.primary("ChatPing","Revive Chat")
         );
 
+        ActionRow AlumnRoles = ActionRow.of(
+                Button.primary("Alum_Bachelors","Bachelors"),
+                Button.primary("Alum_Masters","Masters"),
+                Button.primary("Alum_PHD","PHD")
+        );
+
 
         if (event.getAuthor().getId().equals("225772174336720896") && event.getMessage().getContentRaw().startsWith("$combinedmenu")) {
             event.getMessage().delete().queue();
             EmbedBuilder embed = new EmbedBuilder();
-            embed.setImage("https://cdn.discordapp.com/attachments/1013591623025819748/1034992544427298816/UNC-System-Logo.jpg");
+            embed.setImage("https://cdn.discordapp.com/attachments/1040674718941978695/1057823881378943128/Fe-o0I0XwAUQiWK.jpg");
             embed.setTitle("Roles Menu");
             embed.setDescription("Below you can select your roles. These are cosmetic and let others \nknow more about you!");
             event.getChannel().sendMessageEmbeds(embed.build()).setActionRows(SchoolsRow, YearRow, PronRow).queue();
@@ -82,6 +88,14 @@ public class MessageCmd extends ListenerAdapter
             embed.setTitle("Ping Roles");
             embed.setDescription("Click the buttons below to be added to the ping roles. \nIf you have the role clicking it will remove you from it!");
             event.getChannel().sendMessageEmbeds(embed.build()).setActionRows(PingsRow).queue();
+        }
+
+        if (event.getAuthor().getId().equals("225772174336720896") && event.getMessage().getContentRaw().startsWith("$alum")) {
+            event.getMessage().delete().queue();
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setTitle("Alum Roles");
+            embed.setDescription("Select your highest completed degree!");
+            event.getChannel().sendMessageEmbeds(embed.build()).setActionRows(AlumnRoles).queue();
         }
 
         if (event.getAuthor().getId().equals("225772174336720896") && event.getMessage().getContentRaw().startsWith("$me")) {

@@ -27,10 +27,10 @@ public class SlashCommandManager
         addCommand(new TopConcentrations());
         addCommand(new TopStars());
         addCommand(new StarCheck());
-        addCommand(new UpdateCommands());
         addCommand(new Update());
         addCommand(new UNCC());
         addCommand(new LaTex());
+        addCommand(new Christina());
     }
     
     private void addCommand(ISlashCommand c) {

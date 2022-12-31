@@ -1,6 +1,7 @@
 package RoleMenus;
 
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import java.util.List;
 
@@ -79,6 +80,17 @@ public class SlashMenus {
     }
 
     public static void removeRoles(List<String> roleNames, SelectMenuInteractionEvent event) {
+        List<Role> roles = event.getMember().getRoles();
+        for (Role role : roles) {
+            for (String roleName : roleNames) {
+                if (roleName.equalsIgnoreCase(role.getName())) {
+                    event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
+                }
+            }
+        }
+    }
+
+    public static void removeRoles(List<String> roleNames, ButtonInteractionEvent event) {
         List<Role> roles = event.getMember().getRoles();
         for (Role role : roles) {
             for (String roleName : roleNames) {

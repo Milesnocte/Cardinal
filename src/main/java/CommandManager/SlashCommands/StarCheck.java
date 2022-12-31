@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,10 @@ public class StarCheck implements ISlashCommand {
         } catch (Exception ignored) {
         }
 
-        event.reply(author + " has " + stars + "<:starfroot:991751462302519316>")
+
+        String starsFormat = NumberFormat.getNumberInstance().format(stars);
+
+        event.reply(author + " has " + starsFormat + "<:starfroot:991751462302519316>")
                 .allowedMentions(Collections.emptyList()).queue();
     }
 

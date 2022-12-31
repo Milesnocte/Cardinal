@@ -22,6 +22,7 @@ public class Menus implements ISlashCommand
     public List<String> livingNames;
     public List<String> platformNames;
     public List<String> schoolNames;
+    public List<String> alumRoles;
     
     public Menus() {
         yearNames = new ArrayList<>(List.of("Incoming student", "Freshman", "Sophomore", "Junior", "Senior", "Graduate Student", "Alumni"));
@@ -30,6 +31,7 @@ public class Menus implements ISlashCommand
         concentrationNames = new ArrayList<>(List.of("software-eng", "bio-inf", "ai-gaming", "data-sci", "info-tech", "web-mobile", "hci", "cyber-sec", "software-systems", "Undeclared"));
         schoolNames = new ArrayList<>(List.of("UNCG", "ECU", "NCSU", "WCU", "UNC", "UNCC", "UNCW", "NCA&T", "APP", "UNCA", "ECSU", "WSSU", "FSU", "NCCU", "UNCP", "NCSA", "NCSSM", "Future Student"));
         livingNames = new ArrayList<>(List.of("On Campus", "Off Campus", "Commuter"));
+        alumRoles = new ArrayList<>(List.of("PHD", "Masters", "Bachelors"));
         platformNames = new ArrayList<>(List.of("PC Gamers", "XBOX Gamers", "Mobile Gamers", "Playstation Gamers", "Switch Gamers"));
     }
     
@@ -59,6 +61,22 @@ public class Menus implements ISlashCommand
     
     @Override
     public void run(ButtonInteractionEvent event) throws Exception {
+        if (Objects.equals(event.getComponent().getId(), "Alum_Bachelors")) {
+            SlashMenus.removeRoles(this.alumRoles, event);
+            event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRolesByName("Bachelors", true).get(0)).queue();
+            event.reply("Updated alum role!").setEphemeral(true).queue();
+        }
+        if (Objects.equals(event.getComponent().getId(), "Alum_Masters")) {
+            SlashMenus.removeRoles(this.alumRoles, event);
+            event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRolesByName("Masters", true).get(0)).queue();
+            event.reply("Updated alum role!").setEphemeral(true).queue();
+        }
+        if (Objects.equals(event.getComponent().getId(), "Alum_PHD")) {
+            SlashMenus.removeRoles(this.alumRoles, event);
+            event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRolesByName("PHD", true).get(0)).queue();
+            event.reply("Updated alum role!").setEphemeral(true).queue();
+        }
+
         if (Objects.equals(event.getComponent().getId(), "EventPing")) {
             Role Events = null;
             try {
@@ -75,6 +93,7 @@ public class Menus implements ISlashCommand
                 event.reply("Added events ping role!").setEphemeral(true).queue();
             }
         }
+
         if (Objects.equals(event.getComponent().getId(), "MeetupPing")) {
             Role Meetups = null;
             try {
@@ -91,6 +110,7 @@ public class Menus implements ISlashCommand
                 event.reply("Added meetups ping role!").setEphemeral(true).queue();
             }
         }
+
         if (Objects.equals(event.getComponent().getId(), "VCPing")) {
             Role VCPing = null;
             try {
@@ -382,7 +402,7 @@ public class Menus implements ISlashCommand
                 "Living_Off", "Living_Commuter", "Platform_PC", "Platform_XBOX", "Platform_Mobile", "Platform_PS", "Platform_Switch",
                 "pronouns", "years", "college", "concentration", "platform", "living", "EventPing", "MeetupPing", "schools",
                 "UNCG", "ECU", "NCSU", "WCU", "UNC", "UNCC", "UNCW", "NCA&T", "APP", "UNCA", "ECSU", "WSSU", "FSU",
-                "NCCU", "UNCP", "NCSA", "NCSSM", "Future Student", "VCPing", "ChatPing");
+                "NCCU", "UNCP", "NCSA", "NCSSM", "Future Student", "VCPing", "ChatPing", "Alum_Bachelors", "Alum_Masters", "Alum_PHD");
     }
     
     @Override
