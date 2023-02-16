@@ -67,7 +67,8 @@ public class SlashCommandData {
                     .addSubcommands(new SubcommandData("sovi", "Get the occupancy of sovi"),
                     new SubcommandData("crown", "Get the occupancy of crown"),
                     new SubcommandData("parking", "Get the occupancy of parking"),
-                    new SubcommandData("canvas", "Canvas status")
+                    new SubcommandData("canvas", "Canvas status"),
+                    new SubcommandData("atkins", "Atkins status")
             ),
             Commands.slash("starcheck", "Check the number of stars a user has")
                     .addOption(

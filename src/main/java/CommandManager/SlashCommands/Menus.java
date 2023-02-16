@@ -184,6 +184,11 @@ public class Menus implements ISlashCommand
             event.reply("Updated college role!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "pronouns")) {
+            try {
+                if(event.getGuild().getId().equals("1034525090601250887")){
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("1034585110839840839")).queue();
+                }
+            } catch (Exception ignored) {}
             List<Role> pronounRoles = new ArrayList<>();
             for (String pronounName : this.pronounNames) {
                 try {
@@ -214,6 +219,11 @@ public class Menus implements ISlashCommand
             event.reply("Pronouns updated!").setEphemeral(true).queue();
         }
         if (Objects.equals(event.getComponent().getId(), "years")) {
+            try {
+                if(event.getGuild().getId().equals("1034525090601250887")){
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("1034585110839840839")).queue();
+                }
+            } catch (Exception ignored) {}
             List<Role> yearRoles = new ArrayList<>();
             for (String yearName : this.yearNames) {
                 try {
@@ -338,6 +348,11 @@ public class Menus implements ISlashCommand
         if (Objects.equals(event.getComponent().getId(), "schools")) {
             event.deferReply().setEphemeral(true).queue();
             List<Role> schoolRoles = new ArrayList<>();
+            try {
+                if(event.getGuild().getId().equals("1034525090601250887")){
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("1034585110839840839")).queue();
+                }
+            } catch (Exception ignored) {}
             for (String schoolName : this.schoolNames) {
                 try {
                     schoolRoles.add(event.getGuild().getRolesByName(schoolName, true).get(0));
