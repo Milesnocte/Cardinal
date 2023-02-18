@@ -75,7 +75,11 @@ public class UNCC implements ISlashCommand {
                 JSONObject jsonObject = new JSONObject(response.body());
                 int responseCode = response.statusCode();
                 if(responseCode == 200){
-                    event.getHook().editOriginal(jsonObject.getString("atkins_current_occupancy") + " people in Atkins.").queue();
+                    String currentOccupancy = jsonObject.getString("atkins_current_occupancy")
+                    if(currentOccupancy == "CLØSED"){
+                        event.getHook().editOriginal(jsonObject.getString("Atkins is closed.").queue();
+                    }
+                    event.getHook().editOriginal(currentOccupancy + " people in Atkins.").queue();
                 } else {
                     event.getHook().editOriginal(":x: Error loading canvas. Response: " + responseCode).queue();
                 }
