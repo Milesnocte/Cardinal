@@ -64,20 +64,38 @@ public class Reactions
                     });
                 }
 
-                fields.Add(new EmbedFieldBuilder()
+                if (!string.IsNullOrEmpty(message.Content))
                 {
-                    Name = "Message",
-                    Value = message.Content,
-                    IsInline = false
-                });
+                    fields.Add(new EmbedFieldBuilder()
+                    {
+                        Name = "Message",
+                        Value = message.Content,
+                        IsInline = false
+                    });
+                }
 
                 EmbedAuthorBuilder authorBuilder = new EmbedAuthorBuilder();
                 authorBuilder.Name = message.Author.GlobalName;
                 authorBuilder.IconUrl = message.Author.GetAvatarUrl();
 
+                if (message.Attachments.Count > 0)
+                {
+                    if (message.Attachments.First().ContentType.StartsWith("video/") ||
+                        message.Attachments.First().ContentType.StartsWith("audio/"))
+                    {
+                        fields.Add(new EmbedFieldBuilder()
+                        {
+                            Name = "Attachment",
+                            Value = "Could not put attachment in embed, use jump link",
+                            IsInline = false
+                        });
+                    }
+                }
+
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.Author = authorBuilder;
                 embedBuilder.Fields = fields;
+                    
                 if (message.Attachments.Count > 0)
                 {
                     embedBuilder.ImageUrl = message.Attachments.First().Url;
@@ -88,8 +106,8 @@ public class Reactions
                     EmbedFooterBuilder footerBuilder = new EmbedFooterBuilder();
                     footerBuilder.Text = "More attachments in original message, use the jump to link to see them";
                     embedBuilder.Footer = footerBuilder;
-
                 }
+                
 
                 ButtonBuilder buttonBuilder = new ButtonBuilder();
                 buttonBuilder.Url = message.GetJumpUrl();

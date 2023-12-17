@@ -11,7 +11,9 @@ public class Messages
 {
     private static Dictionary<string, List<string>> _xpDictionary = new();
     private DiscordSocketClient _socketClient;
-    private AppDBContext _context = new();
+    private List<string> usersToUpdate = new();
+    private AppDBContext con1 = new();
+    private AppDBContext con2 = new();
     private Random _rng = new();
     private Timer _processMessages;
     private Timer _processRoles;
@@ -22,7 +24,7 @@ public class Messages
         {
             _socketClient = client;
             _processMessages = new Timer(ProcessMessages, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-            _processRoles = new Timer(DistributeRoles, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
+            _processRoles = new Timer(DistributeRoles, null, TimeSpan.FromSeconds(15), TimeSpan.FromMinutes(15));
         }
         catch (Exception e)
         {
@@ -71,7 +73,12 @@ public class Messages
                     parameters.Add("p_member", user);
                     parameters.Add("p_server", guild);
                     parameters.Add("p_xp", xp);
-                    await _context.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
+                    await con1.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
+
+                    if (guild == "776380239961260052")
+                    {
+                        if(!usersToUpdate.Contains(user)) usersToUpdate.Add(user);
+                    }
                 }
             }
         }
@@ -87,9 +94,16 @@ public class Messages
         {
             var guild = _socketClient.GetGuild(776380239961260052);
             if (guild == null) return;
-            
-            List<Levels> members = (await _context.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)", new{Server = "776380239961260052"}, commandType: CommandType.Text)).AsList();
 
+            List<Levels> members =
+                (await con2.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)",
+                    new { Server = "776380239961260052" }, commandType: CommandType.Text))
+                .Where(x => usersToUpdate.Contains(x.Member)).Distinct().ToList();
+            
+            usersToUpdate.Clear();
+            
+            Console.WriteLine($"Updating {members.Count} beanzone members");
+            
             //Ranks
             ulong tadpole = 1114237294988230808;
             ulong froglet = 857136982692724756;
