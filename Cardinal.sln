@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordBot", "DiscordBot\DiscordBot.csproj", "{A860CA67-17C9-453A-9FCB-4183861550C3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D0DD70A5-F74B-43A1-AC04-597CAE7365DE} = {D0DD70A5-F74B-43A1-AC04-597CAE7365DE}

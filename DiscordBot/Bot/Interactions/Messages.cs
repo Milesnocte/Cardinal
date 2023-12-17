@@ -11,9 +11,8 @@ public class Messages
 {
     private static Dictionary<string, List<string>> _xpDictionary = new();
     private DiscordSocketClient _socketClient;
-    private List<string> usersToUpdate = new();
-    private AppDBContext con1 = new();
-    private AppDBContext con2 = new();
+    private List<string> _usersToUpdate = new();
+    private AppDBContext _database = new();
     private Random _rng = new();
     private Timer _processMessages;
     private Timer _processRoles;
@@ -73,11 +72,11 @@ public class Messages
                     parameters.Add("p_member", user);
                     parameters.Add("p_server", guild);
                     parameters.Add("p_xp", xp);
-                    await con1.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
+                    await _database.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
 
                     if (guild == "776380239961260052")
                     {
-                        if(!usersToUpdate.Contains(user)) usersToUpdate.Add(user);
+                        if(!_usersToUpdate.Contains(user)) _usersToUpdate.Add(user);
                     }
                 }
             }
@@ -96,11 +95,11 @@ public class Messages
             if (guild == null) return;
 
             List<Levels> members =
-                (await con2.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)",
+                (await _database.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)",
                     new { Server = "776380239961260052" }, commandType: CommandType.Text))
-                .Where(x => usersToUpdate.Contains(x.Member)).Distinct().ToList();
+                .Where(x => _usersToUpdate.Contains(x.Member)).Distinct().ToList();
             
-            usersToUpdate.Clear();
+            _usersToUpdate.Clear();
             
             Console.WriteLine($"Updating {members.Count} beanzone members");
             
