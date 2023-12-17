@@ -1,3 +1,3 @@
-# CardinalNet
+# Cardinal
 
-Dotnet 8 <br>
+Using Dotnet 8 <br>
