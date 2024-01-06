@@ -10,7 +10,7 @@ namespace DiscordBot.Bot.Interactions;
 public class Messages
 {
     private static Dictionary<string, List<string>> _xpDictionary = new();
-    private DiscordSocketClient _socketClient;
+    private static DiscordSocketClient _socketClient;
     private List<string> _usersToUpdate = new();
     private AppDBContext _database = new();
     private Random _rng = new();
@@ -93,7 +93,7 @@ public class Messages
         {
             var guild = _socketClient.GetGuild(776380239961260052);
             if (guild == null) return;
-
+            
             List<Levels> members =
                 (await _database.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)",
                     new { Server = "776380239961260052" }, commandType: CommandType.Text))
@@ -162,6 +162,70 @@ public class Messages
         {
             Log.Logger.Error($"[Messages] {e}");
             return 0;
+        }
+    }
+
+    public static Task MessageDeleted(Cacheable<IMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2)
+    {
+        try
+        {
+            var guildId = arg1.Value.GetJumpUrl().Split("/")[4];
+            if (guildId != "931663140687585290") return Task.CompletedTask; // Test server
+
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.Title = $"Message Deleted in <#{arg2.Value.Id}>";
+
+            List<EmbedFieldBuilder> fields = new List<EmbedFieldBuilder>();
+            fields.Add(new EmbedFieldBuilder()
+            {
+                Name = "Message",
+                Value = arg1.Value.Content,
+                IsInline = false
+            });
+            embedBuilder.Fields = fields;
+
+            return _socketClient.GetGuild(931663140687585290)
+                .GetTextChannel(1193047128545689610)
+                .SendMessageAsync(embed: embedBuilder.Build());
+        }
+        catch (Exception)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public static Task MessageUpdated(Cacheable<IMessage, ulong> arg1, SocketMessage arg2, ISocketMessageChannel arg3)
+    {
+        try
+        {
+            var guildId = arg2.GetJumpUrl().Split("/")[4];
+            if (guildId != "931663140687585290") return Task.CompletedTask; // Test server
+
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.Title = $"Message Edited in <#{arg3.Id}>";
+
+            List<EmbedFieldBuilder> fields = new List<EmbedFieldBuilder>();
+            fields.Add(new EmbedFieldBuilder()
+            {
+                Name = "Old Message",
+                Value = arg1.Value.Content,
+                IsInline = false
+            });
+            fields.Add(new EmbedFieldBuilder()
+            {
+                Name = "New Message",
+                Value = arg2.Content,
+                IsInline = false
+            });
+            embedBuilder.Fields = fields;
+
+            return _socketClient.GetGuild(931663140687585290)
+                .GetTextChannel(1193047128545689610)
+                .SendMessageAsync(embed: embedBuilder.Build());
+        }
+        catch (Exception e)
+        {
+            return Task.CompletedTask;
         }
     }
 }

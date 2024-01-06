@@ -31,8 +31,14 @@ class Program
                     needAutoCreateTable: true
                 )
                 .CreateLogger();
+            
+            var config = new DiscordSocketConfig
+            {
+                MessageCacheSize = 100,
+                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent
+            };
 
-            Client = new DiscordSocketClient();
+            Client = new DiscordSocketClient(config);
             Client.Log += LogAsync;
 
             // Call constructors
@@ -52,6 +58,8 @@ class Program
             Client.ReactionAdded += Reactions.ReactionAdd;
             Client.ReactionRemoved += Reactions.ReactionRemove;
             Client.MessageReceived += Messages.MessageReceived;
+            Client.MessageDeleted += Messages.MessageDeleted;
+            Client.MessageUpdated += Messages.MessageUpdated;
 
             var users = Client.Guilds.Sum(x => x.MemberCount);
             IActivity activity = new Game($"{users} users", ActivityType.Watching, ActivityProperties.None, null);
