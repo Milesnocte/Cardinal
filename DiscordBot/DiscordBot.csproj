@@ -21,7 +21,7 @@
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.1-dev-10370" />
         <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
         <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
-        <PackageReference Include="Dapper" Version="2.1.24" />
+        <PackageReference Include="Dapper" Version="2.1.28" />
         <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
     </ItemGroup>
 

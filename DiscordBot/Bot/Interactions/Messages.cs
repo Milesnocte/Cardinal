@@ -2,6 +2,7 @@ using System.Data;
 using Dapper;
 using Discord;
 using Discord.WebSocket;
+using DiscordBot.Data.Models;
 using Models;
 using Serilog;
 
@@ -67,11 +68,7 @@ public class Messages
                 foreach (var user in processList[guild])
                 {
                     int xp = _rng.Next(7, 30);
-             
-                    DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("p_member", user);
-                    parameters.Add("p_server", guild);
-                    parameters.Add("p_xp", xp);
+                    
                     await _database.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
 
                     if (guild == "776380239961260052")
@@ -165,12 +162,17 @@ public class Messages
         }
     }
 
-    public static Task MessageDeleted(Cacheable<IMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2)
+    public static async Task MessageDeleted(Cacheable<IMessage, ulong> arg1, Cacheable<IMessageChannel, ulong> arg2)
     {
         try
         {
+            var context = new AppDBContext();
             var guildId = arg1.Value.GetJumpUrl().Split("/")[4];
-            if (guildId != "931663140687585290") return Task.CompletedTask; // Test server
+            
+            Server server = await context.Connection()
+                .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
+            
+            if (server.chat_logs == null) return;
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.Title = $"Message Deleted in <#{arg2.Value.Id}>";
@@ -184,22 +186,27 @@ public class Messages
             });
             embedBuilder.Fields = fields;
 
-            return _socketClient.GetGuild(931663140687585290)
-                .GetTextChannel(1193047128545689610)
+            await _socketClient.GetGuild(Convert.ToUInt64(server.guild_id))
+                .GetTextChannel(Convert.ToUInt64(server.chat_logs))
                 .SendMessageAsync(embed: embedBuilder.Build());
         }
         catch (Exception)
         {
-            return Task.CompletedTask;
+            // Ignored
         }
     }
 
-    public static Task MessageUpdated(Cacheable<IMessage, ulong> arg1, SocketMessage arg2, ISocketMessageChannel arg3)
+    public static async Task MessageUpdated(Cacheable<IMessage, ulong> arg1, SocketMessage arg2, ISocketMessageChannel arg3)
     {
         try
         {
+            var context = new AppDBContext();
             var guildId = arg2.GetJumpUrl().Split("/")[4];
-            if (guildId != "931663140687585290") return Task.CompletedTask; // Test server
+            Server server = await context.Connection()
+                .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
+            
+            if (server.chat_logs == null) return; 
+            if(arg1.Value.Content == arg2.Content) return; // This event is triggered when a link embeds, so we have to check the content
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.Title = $"Message Edited in <#{arg3.Id}>";
@@ -219,13 +226,13 @@ public class Messages
             });
             embedBuilder.Fields = fields;
 
-            return _socketClient.GetGuild(931663140687585290)
-                .GetTextChannel(1193047128545689610)
+            await _socketClient.GetGuild(Convert.ToUInt64(server.guild_id))
+                .GetTextChannel(Convert.ToUInt64(server.chat_logs))
                 .SendMessageAsync(embed: embedBuilder.Build());
         }
         catch (Exception e)
         {
-            return Task.CompletedTask;
+            // Ignored
         }
     }
 }

@@ -1,3 +1,4 @@
+using Dapper;
 using Discord;
 using Discord.WebSocket;
 using DiscordBot.Bot.SlashCommands;
@@ -15,21 +16,26 @@ public class ClientReady
         _discordClient = discordClient;
     }
 
-    public Task OnClientReady()
+    public async Task OnClientReady()
     {
         try
         {
+            var context = new AppDBContext();
+            
+            Timer timer = new Timer(UpdateMemberCount, null, TimeSpan.FromSeconds(0), TimeSpan.FromHours(12));
             var commandFactory = new CommandFactory(_discordClient);
-            int usersCount = _discordClient.Guilds.Sum(discordClientGuild => discordClientGuild.MemberCount);
-            string usersFormatted = string.Format($"{usersCount:n0}");
-            IActivity activity = new Game($"{usersFormatted} users", ActivityType.Watching, ActivityProperties.None,
-                null);
-            return _discordClient.SetActivityAsync(activity);
         }
         catch (Exception e)
         {
             Log.Logger.Error($"[Ready] {e}");
-            return Task.CompletedTask;
         }
+    }
+
+    private async void UpdateMemberCount(object? state)
+    {
+        int usersCount = _discordClient.Guilds.Sum(discordClientGuild => discordClientGuild.MemberCount);
+        string usersFormatted = string.Format($"{usersCount:n0}");
+        IActivity activity = new Game($"{usersFormatted} users", ActivityType.Watching);
+        await _discordClient.SetActivityAsync(activity);
     }
 }

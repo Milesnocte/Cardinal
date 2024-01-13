@@ -1,6 +1,7 @@
 using Dapper;
 using Discord;
 using Discord.WebSocket;
+using DiscordBot.Data.Models;
 using Models;
 using Serilog;
 
@@ -14,7 +15,19 @@ public class Reactions
         {
             var context = new AppDBContext();
             bool debugFroot = false;
+            
+            IUserMessage message = await Message.GetOrDownloadAsync();
+            string user = message.Author.Mention;
+            string messageId = message.Id.ToString();
+            string guildId = message.GetJumpUrl().Split("/")[4];
+            DateTime date = DateTime.Now.ToUniversalTime();
 
+            Server server = await context.Connection()
+                .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
+            string serverStar = server.star_emote;
+            
+            if(server.star_channel == null) return; // If no channel is configured do nothing
+            
             string emote = Reaction.Emote.ToString();
             int starsToAdd = -2;
             
@@ -23,21 +36,12 @@ public class Reactions
                 case "<:debugfroot:936344152004755456>":
                     starsToAdd = 0;
                     break;
-                case "<:starfroot:991751462302519316>":
+                case var value when value == serverStar:
                     starsToAdd = 1;
-                    break;
-                case "<:antifroot:991751461144887337>":
-                    starsToAdd = -1;
                     break;
             }
             
             if (starsToAdd == -2) return;
-
-            IUserMessage message = await Message.GetOrDownloadAsync();
-            string user = message.Author.Mention;
-            string messageId = message.Id.ToString();
-            string guildId = message.GetJumpUrl().Split("/")[4];
-            DateTime date = DateTime.Now.ToUniversalTime();
             
             await context.Connection().ExecuteAsync("SELECT insert_or_update_stars(@Guild, @Message, @Member, @Stars, @Date)", 
                 new {Guild = guildId, Message = messageId, Member = user, Stars = starsToAdd, Date = new DateTime().ToUniversalTime()});
@@ -45,10 +49,10 @@ public class Reactions
             
             if(await context.Connection().QuerySingleAsync<int>("SELECT get_starboard_posted(@Message)", new { Message = messageId }) == 1 && emote != "<:debugfroot:936344152004755456>") return;
             
-            if (currentStars >= 5 || emote == "<:debugfroot:936344152004755456>")
+            if (currentStars >= server.star_count || emote == "<:debugfroot:936344152004755456>")
             {
                 await context.Connection().ExecuteAsync("SELECT set_starboard_posted(@Message)", new {Message = messageId});
-                var channel = Program.GetClient().GetGuild(ulong.Parse(guildId)).TextChannels.FirstOrDefault(x => x.Name == "star-board");
+                var channel = Program.GetClient().GetGuild(ulong.Parse(guildId)).TextChannels.FirstOrDefault(x => x.Id.ToString() == server.star_channel);
                 
                 if (channel == null) return;
                 
@@ -116,7 +120,7 @@ public class Reactions
 
                 ComponentBuilder messageComponent = new ComponentBuilder();
                 messageComponent.WithButton(buttonBuilder);
-                channel.SendMessageAsync(embed: embedBuilder.Build(), components: messageComponent.Build());
+                await channel.SendMessageAsync(embed: embedBuilder.Build(), components: messageComponent.Build());
             }
         }
         catch (Exception e)
@@ -129,7 +133,19 @@ public class Reactions
     {
         try
         {
+            IUserMessage message = Message.GetOrDownloadAsync().GetAwaiter().GetResult();
+            
             var context = new AppDBContext();
+            string user = message.Author.Mention;
+            string messageId = message.Id.ToString();
+            string guildId = message.GetJumpUrl().Split("/")[4];
+            DateTime date = DateTime.Now.ToUniversalTime();
+            
+            Server server = await context.Connection()
+                .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
+            string serverStar = server.star_emote;
+            
+            if(server.star_channel == null) return; 
 
             string emote = Reaction.Emote.ToString();
 
@@ -137,24 +153,12 @@ public class Reactions
             
             switch (emote)
             {
-                case "<:debugfroot:936344152004755456>":
-                    starsToAdd = 0;
-                    break;
-                case "<:starfroot:991751462302519316>":
+                case var value when value == serverStar:
                     starsToAdd = -1;
-                    break;
-                case "<:antifroot:991751461144887337>":
-                    starsToAdd = 1;
                     break;
             }
             
             if (starsToAdd == -2) return;
-
-            IUserMessage message = Message.GetOrDownloadAsync().GetAwaiter().GetResult();
-            string user = message.Author.Mention;
-            string messageId = message.Id.ToString();
-            string guildId = message.GetJumpUrl().Split("/")[4];
-            DateTime date = DateTime.Now.ToUniversalTime();
 
             await context.Connection().ExecuteAsync("SELECT insert_or_update_stars(@Guild, @Message, @Member, @Stars, @Date)", 
                 new {Guild = guildId, Message = messageId, Member = user, Stars = starsToAdd, Date = new DateTime().ToUniversalTime()});

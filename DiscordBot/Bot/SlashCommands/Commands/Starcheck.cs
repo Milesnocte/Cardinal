@@ -1,7 +1,9 @@
 using Dapper;
 using Discord;
 using Discord.WebSocket;
+using DiscordBot.Bot.Interactions;
 using DiscordBot.Data;
+using DiscordBot.Data.Models;
 using Models;
 
 namespace DiscordBot.Bot.SlashCommands.Commands;
@@ -14,6 +16,8 @@ public class Starcheck : ISlashCommand
     public async Task Run(SocketSlashCommand command)
     {
         var context = new AppDBContext();
+        Server server = await context.Connection()
+            .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{command.GuildId.ToString()}' LIMIT 1");
         SocketGuildUser user;
         
         if (command.Data.Options.Count != 0)
@@ -25,9 +29,9 @@ public class Starcheck : ISlashCommand
             user = (SocketGuildUser) command.User;
         }
         
-        int stars = await context.Connection().QuerySingleAsync<int>("SELECT get_user_stars(@Message)", new { Message = user.Mention });;
+        int stars = await context.Connection().QuerySingleAsync<int>("SELECT get_user_stars(@Message, @Guild)", new { Message = user.Mention, Guild = command.GuildId.ToString() });;
 
-        await command.RespondAsync($"{user.Mention} has {string.Format($"{stars:n0}")}<:starfroot:991751462302519316>", allowedMentions: AllowedMentions.None);
+        await command.RespondAsync($"{user.Mention} has {string.Format($"{stars:n0}")}{server.star_emote}", allowedMentions: AllowedMentions.None);
     }
 
     public CommandInfo CommandInfo()

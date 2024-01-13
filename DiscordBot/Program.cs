@@ -34,7 +34,7 @@ class Program
             
             var config = new DiscordSocketConfig
             {
-                MessageCacheSize = 100,
+                MessageCacheSize = 500,
                 GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent
             };
 
@@ -46,7 +46,7 @@ class Program
             var messages = new Messages(Client);
             var component = new Component(Client);
             
-            Console.Write($"Token: {Environment.GetEnvironmentVariable("BOT_TOKEN")}");
+            //Console.Write($"Token: {Environment.GetEnvironmentVariable("BOT_TOKEN")}");
             
             await Client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("BOT_TOKEN"));
             await Client.StartAsync();
@@ -60,10 +60,9 @@ class Program
             Client.MessageReceived += Messages.MessageReceived;
             Client.MessageDeleted += Messages.MessageDeleted;
             Client.MessageUpdated += Messages.MessageUpdated;
-
-            var users = Client.Guilds.Sum(x => x.MemberCount);
-            IActivity activity = new Game($"{users} users", ActivityType.Watching, ActivityProperties.None, null);
-            await Client.SetActivityAsync(activity);
+            Client.JoinedGuild += Guild.Joined;
+            Client.LeftGuild += Guild.Left;
+            Client.GuildUpdated += Guild.Updated;
 
             await Task.Delay(-1);
         }

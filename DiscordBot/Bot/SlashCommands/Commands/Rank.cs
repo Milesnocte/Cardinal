@@ -67,7 +67,7 @@ public class Rank : ISlashCommand
         
         EmbedBuilder embedBuilder = new EmbedBuilder
         {
-            Title = $"{user.GlobalName}",
+            Title = $"{user.Username}",
             Description = $"Rank {rank}\nLevel {level} - {(int) current}/{xpForNext}\n{percentage}% of the way to level up!",
             Footer = footerBuilder
         };
