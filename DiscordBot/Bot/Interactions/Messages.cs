@@ -168,6 +168,7 @@ public class Messages
         {
             var context = new AppDBContext();
             var guildId = arg1.Value.GetJumpUrl().Split("/")[4];
+            var user = arg1.Value.Author;
             
             Server server = await context.Connection()
                 .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
@@ -175,8 +176,9 @@ public class Messages
             if (server.chat_logs == null) return;
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.Title = $"Message Deleted in <#{arg2.Value.Id}>";
-
+            embedBuilder.Title = $"{user.GlobalName ?? user.Username} Deleted in <#{arg2.Value.Id}>";
+            embedBuilder.ThumbnailUrl = user.GetDisplayAvatarUrl();
+            
             List<EmbedFieldBuilder> fields = new List<EmbedFieldBuilder>();
             fields.Add(new EmbedFieldBuilder()
             {
@@ -202,6 +204,8 @@ public class Messages
         {
             var context = new AppDBContext();
             var guildId = arg2.GetJumpUrl().Split("/")[4];
+            var user = arg1.Value.Author;
+            
             Server server = await context.Connection()
                 .QuerySingleAsync<Server>($"SELECT * FROM servers WHERE guild_id = '{guildId}' LIMIT 1");
             
@@ -209,7 +213,8 @@ public class Messages
             if(arg1.Value.Content == arg2.Content) return; // This event is triggered when a link embeds, so we have to check the content
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.Title = $"Message Edited in <#{arg3.Id}>";
+            embedBuilder.Title = $"{user.GlobalName ?? user.Username} Edited in <#{arg3.Id}>";
+            embedBuilder.ThumbnailUrl = user.GetDisplayAvatarUrl();
 
             List<EmbedFieldBuilder> fields = new List<EmbedFieldBuilder>();
             fields.Add(new EmbedFieldBuilder()

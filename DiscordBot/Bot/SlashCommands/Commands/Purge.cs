@@ -1,6 +1,7 @@
 using Discord;
 using Discord.WebSocket;
 using DiscordBot.Data;
+using static Program;
 
 namespace DiscordBot.Bot.SlashCommands.Commands;
 
@@ -10,7 +11,7 @@ public class Purge : ISlashCommand
 
     public Task Run(SocketSlashCommand command)
     {
-        if (!Program.GetClient().GetGuild(command.GuildId.Value).GetUser(command.User.Id).GuildPermissions.ManageMessages)
+        if (!GetClient().GetGuild(command.GuildId.Value).GetUser(command.User.Id).GuildPermissions.ManageMessages)
         {
             command.RespondAsync($"You do not have permission to use this command!", ephemeral: true);
             return Task.CompletedTask;

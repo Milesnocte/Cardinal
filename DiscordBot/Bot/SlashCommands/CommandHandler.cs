@@ -1,6 +1,7 @@
 using System.Reflection;
 using Discord.WebSocket;
 using DiscordBot.Bot.SlashCommands.Commands;
+using Fergun.Interactive;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
@@ -21,6 +22,7 @@ public class CommandHandler
         _commands.Add(Whois.Name, new Whois());
         _commands.Add(Restart.Name, new Restart());
         _commands.Add(EightBall.Name, new EightBall());
+        _commands.Add(Define.Name, new Define());
     }
     
     public static async Task SlashCommandHandler(SocketSlashCommand command)

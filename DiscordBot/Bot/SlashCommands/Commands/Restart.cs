@@ -1,15 +1,17 @@
 using Discord;
 using Discord.WebSocket;
 using DiscordBot.Data;
+using static Program;
 
 namespace DiscordBot.Bot.SlashCommands.Commands;
 
 public class Restart : ISlashCommand
 {
     public static string Name = "restart";
+
     public async Task Run(SocketSlashCommand command)
     {
-        if (!Program.GetClient().GetGuild(command.GuildId.Value).GetUser(command.User.Id).GuildPermissions.Administrator)
+        if (!GetClient().GetGuild(command.GuildId.Value).GetUser(command.User.Id).GuildPermissions.Administrator)
         {
             await command.RespondAsync($"No. :)", ephemeral: false);
             return;

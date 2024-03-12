@@ -79,7 +79,7 @@ public class Reactions
                 }
 
                 EmbedAuthorBuilder authorBuilder = new EmbedAuthorBuilder();
-                authorBuilder.Name = message.Author.GlobalName;
+                authorBuilder.Name = message.Author.GlobalName ?? message.Author.Username;
                 authorBuilder.IconUrl = message.Author.GetAvatarUrl();
 
                 if (message.Attachments.Count > 0)
