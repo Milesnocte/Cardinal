@@ -79,7 +79,7 @@ public class LevelTop : ISlashCommand
                 { new Emoji("\u23e9"), PaginatorAction.SkipToEnd },
             })
             .WithFooter(PaginatorFooter.None)
-            .WithActionOnTimeout(ActionOnStop.DisableInput)
+            .WithActionOnTimeout(ActionOnStop.DeleteInput)
             .Build();
         await GetInteractiveService().SendPaginatorAsync(paginator, command, TimeSpan.FromMinutes(10));
     }
