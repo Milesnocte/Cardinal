@@ -26,6 +26,7 @@ public class CommandHandler
         _commands.Add(Warn.Name, new Warn());
         _commands.Add(AuditUser.Name, new AuditUser());
         _commands.Add(AuditCase.Name, new AuditCase());
+        _commands.Add(LevelTop.Name, new LevelTop());
     }
     
     public static async Task SlashCommandHandler(SocketSlashCommand command)

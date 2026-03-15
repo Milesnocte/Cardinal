@@ -36,7 +36,8 @@ class Program
             var config = new DiscordSocketConfig
             {
                 MessageCacheSize = 500,
-                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent | GatewayIntents.GuildMembers
+                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent | GatewayIntents.GuildMembers,
+                AlwaysDownloadUsers = true
             };
 
             Client = new DiscordSocketClient(config);

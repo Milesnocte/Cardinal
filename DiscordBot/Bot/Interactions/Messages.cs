@@ -24,7 +24,7 @@ public class Messages
         {
             _socketClient = client;
             _processMessages = new Timer(ProcessMessages, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-            _processRoles = new Timer(DistributeRoles, null, TimeSpan.FromSeconds(15), TimeSpan.FromMinutes(15));
+            _processRoles = new Timer(DistributeRoles, null, TimeSpan.FromSeconds(15), TimeSpan.FromMinutes(10));
         }
         catch (Exception e)
         {
@@ -71,10 +71,9 @@ public class Messages
                     
                     await _database.Connection().ExecuteAsync("SELECT insert_or_update_xp(@Member, @Server, @Xp)", new {Member = user, Server = guild, Xp = xp});
 
-                    if (guild == "776380239961260052")
-                    {
-                        if(!_usersToUpdate.Contains(user)) _usersToUpdate.Add(user);
-                    }
+                    if (guild is not ("776380239961260052" or "433825343485247499")) continue;
+                    
+                    if(!_usersToUpdate.Contains(user)) _usersToUpdate.Add(user);
                 }
             }
         }
@@ -88,9 +87,8 @@ public class Messages
     {
         try
         {
-            var beanzone = _socketClient.GetGuild(776380239961260052);
+            var beanzone = _socketClient.GetGuild(776380239961260052); 
             var rwh = _socketClient.GetGuild(433825343485247499);
-            if (beanzone == null) return;
             
             List<Levels> bzMembers =
                 (await _database.Connection().QueryAsync<Levels>("SELECT * FROM get_guild_users_xp(@Server)",
@@ -121,7 +119,6 @@ public class Messages
                     .Distinct()
                     .ToList());
             }
-            
             
             // BZ Ranks
             ulong tadpole = 1114237294988230808;
