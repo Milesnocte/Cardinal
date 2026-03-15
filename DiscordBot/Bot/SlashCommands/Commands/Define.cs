@@ -56,7 +56,7 @@ public class Define : ISlashCommand
                     { new Emoji("\u23e9"), PaginatorAction.SkipToEnd },
                 })
                 .WithFooter(PaginatorFooter.None)
-                .WithActionOnTimeout(ActionOnStop.DisableInput)
+                .WithActionOnTimeout(ActionOnStop.DeleteInput)
                 .Build();
             var result = await GetInteractiveService().SendPaginatorAsync(paginator, command);
         }
